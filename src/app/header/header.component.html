@@ -1,0 +1,176 @@
+
+<div class="top-add">
+  <p>Знижка 20% на все!&nbsp;</p>
+  <a href="#">Переглянути</a>
+  <i class="fa fa-times"></i>
+</div>
+
+<div class="nav-bar container-fluid">
+
+  <div class="nav-bar-mobile row justify-content-between d-md-none no-gutters">
+    
+    <a href="#" class="nav-bar-logo-mobile col" style="border: 1px solid grey">
+      <img src="../../assets/img/logo.jpg" alt="main logo">
+    </a>
+  
+    <div class="nav-bar-mobile-left col row no-gutters justify-content-end">
+      
+      <a href="#" class="align-self-center">
+        <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
+      </a>
+    
+      <a href="#" class="align-self-center">
+        <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
+        <!-- <span class="nav-bar-bag-qty">0</span> -->
+      </a>
+    
+      <div class="hamburger" [ngClass]="{'is-active': isActive}" (click)="isActive = !isActive">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  <div class="nav-bar-fullscreen row no-gutters justify-content-between align-items-center">
+
+    <div class="nav-bar-social col-12 col-md-5">
+      <div>
+        <a href="#" class="fa fa-facebook"></a>
+      </div>
+      <div>
+        <a href="#" class="fa fa-youtube"></a>
+      </div>
+      <div>
+        <a href="#" class="fa fa-twitter"></a>
+      </div>
+      <div>
+        <a href="#" class="fa fa-vk"></a>
+      </div>
+    </div>
+
+    <a href="#" class="nav-bar-logo-main col-2 justify-content-center row d-none d-md-flex" style="height: auto">
+      <img src="../../assets/img/logo.jpg" alt="main logo">
+    </a>
+
+    <div class="nav-bar-fullscreen-right col-12 col-md-5">
+
+      <div class="row justify-content-between no-gutters">
+        <!-- <div class="col-2">aaaa</div>
+        <div class="col-2">bbbb</div>
+        <div class="col-2">cccc</div> -->
+
+        <p class="nav-bar-email col-auto">plito4ka@gmail.com</p>
+    
+        <mat-form-field class="nav-bar-currency col-2">
+          <mat-select placeholder="Favorite food">
+            <mat-option *ngFor="let food of foods" [value]="food">
+              {{ food }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <div class="cart-and-user-icons col-auto row no-gutters justify-content-center align-items-center">
+    
+          <a class="">
+            <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
+          </a>
+          
+          <span class="nav-bar-icons-divider"></span>
+    
+          <a class="">
+            <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
+          </a>
+    
+        </div>
+
+
+
+      </div>
+    
+    </div>
+
+  </div>
+
+  <div class="nav-bar-main-menu row no-gutters justify-content-center">
+    <a href="#" class="col-12 col-md-2">Головна сторінка</a>
+    <a href="#" class="col-12 col-md-2">Акції</a>
+    <a href="#" class="col-12 col-md-2">Про нас</a>
+    <a href="#" class="col-12 col-md-2">Контакти</a>
+  </div>
+
+</div>
+
+<!-- <div class="nav-bar container-fluid">
+
+  <div class="nav-bar-switchable row">
+
+    <div class="nav-bar-social col-3">
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+    </div>
+
+    <a href="#" class="nav-bar-logo-main col-3">
+      <img src="../../assets/img/logo.jpg" alt="main logo">
+    </a>
+
+    <p class="nav-bar-email col-3">plito4ka@gmail.com</p>
+
+    <mat-form-field class="nav-bar-currency col-1">
+      <mat-select placeholder="Favorite food">
+        <mat-option *ngFor="let food of foods" [value]="food">
+          {{ food }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="col-4">
+      <a href="#">
+        <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
+      </a>
+      
+      <span class="nav-bar-icons-divider"></span>
+    
+      <a href="#">
+        <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
+        <span class="nav-bar-bag-qty">0</span>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="nav-bar-main-menu row">
+    <a href="#">Головна сторінка</a>
+    <a href="#">Акції</a>
+    <a href="#">Про нас</a>
+    <a href="#">Контакти</a>
+  </div>
+
+  <div class="nav-bar-allscreen row">
+
+    <a href="#" class="nav-bar-logo-mobile">
+      <img src="../../assets/img/logo.jpg" alt="main logo">
+    </a>
+
+    <a href="#">
+      <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
+    </a>
+
+    <a href="#">
+      <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
+      <span class="nav-bar-bag-qty">0</span>
+    </a>
+
+    <div class="hamburger" [ngClass]="{'is-active': isActive}" (click)="isActive = !isActive">
+      <span class="line"></span>
+      <span class="line"></span>
+      <span class="line"></span>
+    </div>
+
+  </div>
+
+</div> -->

@@ -52,6 +52,22 @@
           display: inline-block;
         }
       }
+      .nav-bar-email {
+        display: flex;
+        align-items: center;
+      }
+      .nav-bar-currency {
+        display: flex;
+        align-items: center;
+        mat-form-field {
+          width: 50px;
+          .mat-form-field-flex {
+            .mat-form-field-inflix {
+              padding: 0;
+            }
+          }
+        }
+      }
     }
     .nav-bar-social {
       div {

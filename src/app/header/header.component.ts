@@ -10,7 +10,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   public isActive = false;
-  foods = ['apple', 'banana', 'grapefruit'];
+  public selected = 'option1';
 
   constructor() { }
 

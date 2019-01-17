@@ -2,12 +2,13 @@
 @import '~font-awesome/css/font-awesome.min.css';
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import '~bootstrap-4-grid/scss/grid.scss';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  transition: 0.7s;
+//   transition: 0.7s;
 }
 
 a {

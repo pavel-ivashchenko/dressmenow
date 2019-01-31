@@ -61,17 +61,16 @@
         <p class="nav-bar-email col-auto">
           <span>plito4ka@gmail.com</span>
         </p>
-        
-        <!-- <div class="nav-bar-currency "> -->
-          <mat-form-field class="col-2">
-            <mat-select [(value)]="selected">
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
+
+        <div class="nav-bar-currency col-2">
+          <mat-form-field>
+            <mat-select [(ngModel)]="selectedCurrency">
+              <mat-option *ngFor="let currency of currencyArr" [value]="currency.uiValue">
+                {{currency.uiValue}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
-        <!-- </div> -->
+        </div>
   
         <div class="cart-and-user-icons col-auto row no-gutters justify-content-center align-items-center">
     

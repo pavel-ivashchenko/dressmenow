@@ -8,9 +8,25 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-//   transition: 0.7s;
+  font-family: Montserrat, Arial;
 }
 
 a {
   text-decoration: none;
+}
+
+app-header {
+    mat-form-field.mat-form-field-appearance-legacy {
+        width: 100%;
+        .mat-form-field-wrapper {
+            padding-bottom: 0;
+        }
+        .mat-form-field-infix {
+            padding: 0;
+            border-top: 0;
+        }
+        .mat-form-field-underline {
+            display: none;
+        }
+    }
 }

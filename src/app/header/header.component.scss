@@ -44,7 +44,7 @@
       display: inline-block;
     }
     * {
-      border: 1px solid green;
+      // border: 1px solid green;
     }
     .nav-bar-fullscreen-right {
       .cart-and-user-icons {
@@ -59,14 +59,7 @@
       .nav-bar-currency {
         display: flex;
         align-items: center;
-        mat-form-field {
-          width: 50px;
-          .mat-form-field-flex {
-            .mat-form-field-inflix {
-              padding: 0;
-            }
-          }
-        }
+        max-width: 60px;
       }
     }
     .nav-bar-social {
@@ -88,7 +81,7 @@
       text-align: center;
     }
     * {
-      border: 1px solid green;
+      // border: 1px solid green;
     }
   }
   .nav-bar-mobile {
@@ -103,7 +96,7 @@
       }
     }
     .nav-bar-mobile-left {
-      border: 1px solid green;
+      // border: 1px solid green;
       * {
         border: 1px solid orange;
       }

@@ -1,5 +1,7 @@
 
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Currency } from './interfaces';
+import { currencyArr } from './models';
 
 @Component({
   selector: 'app-header',
@@ -9,12 +11,15 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  public isActive = false;
-  public selected = 'option1';
+  public currencyArr: Currency[];
+  public selectedCurrency: string = currencyArr[1].uiValue;
 
   constructor() { }
 
   ngOnInit() {
+    debugger;
+    this.currencyArr = currencyArr;
+    console.log(this.selectedCurrency);
   }
 
 }

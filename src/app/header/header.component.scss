@@ -33,7 +33,6 @@
 }
 
 .nav-bar {
-  padding: 10px 20px;
   border: 1px solid blueviolet;
   img {
     display: block;
@@ -43,29 +42,36 @@
     & > div {
       display: inline-block;
     }
-    * {
-      // border: 1px solid green;
-    }
     .nav-bar-fullscreen-right {
+      & > div {
+        & > * {
+          margin: 0 5px;
+        }
+      }
+      * {
+        border: 1px solid orange;
+      }
       .cart-and-user-icons {
         a {
           display: inline-block;
         }
       }
       .nav-bar-email {
+        font-size: 13px;
         display: flex;
         align-items: center;
       }
       .nav-bar-currency {
         display: flex;
         align-items: center;
-        max-width: 60px;
+        min-width: 65px;
       }
     }
     .nav-bar-social {
       div {
         display: inline-block;
         a {
+          padding: 10px;
           display: block;
         }
       }
@@ -73,21 +79,21 @@
     .nav-bar-logo-main {
       img {
         height: 100px;
+        margin: 10px 0;
       }
     }
   }
   .nav-bar-main-menu {
     a {
+      border: 1px solid grey;
+      padding: 10px;
       text-align: center;
-    }
-    * {
-      // border: 1px solid green;
     }
   }
   .nav-bar-mobile {
     display: flex;
     align-items: center;
-    border: 1px solid red;
+    padding: 10px;
     .nav-bar-logo-mobile {
       display: inline-block;
       position: relative;
@@ -96,9 +102,8 @@
       }
     }
     .nav-bar-mobile-left {
-      // border: 1px solid green;
       * {
-        border: 1px solid orange;
+        border: 1px solid lightgreen;
       }
       a {
         margin-right: 10px;
@@ -108,6 +113,13 @@
       }
     }
   }
+}
+
+.nav-bar-icons-divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 15px;
+  background-color: violet;
 }
 
 .nav-bar-bag-qty {
@@ -162,4 +174,12 @@
       transform-origin: bottom right;
     }
   }
+}
+
+.testBorderRed {
+  border: 1px solid red;
+}
+
+.testBorderBlue {
+  border: 1px solid blue;
 }

@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    debugger;
     this.currencyArr = currencyArr;
     console.log(this.selectedCurrency);
   }

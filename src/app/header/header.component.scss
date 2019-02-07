@@ -42,10 +42,14 @@
     & > div {
       display: inline-block;
     }
+    .nav-bar-add {
+      padding: 10px;
+    }
     .nav-bar-fullscreen-right {
       & > div {
+        padding: 10px 0;
         & > * {
-          margin: 0 5px;
+          margin: 0 10px;
         }
       }
       * {
@@ -60,11 +64,13 @@
         font-size: 13px;
         display: flex;
         align-items: center;
+        margin: 0 10px;
       }
       .nav-bar-currency {
         display: flex;
         align-items: center;
         min-width: 65px;
+        margin: 0 10px;
       }
     }
     .nav-bar-social {
@@ -115,27 +121,30 @@
   }
 }
 
+.header-cart-icon {
+  position: relative;
+  span {
+    position: absolute;
+    top: 0px;
+    left: 15px;
+    height: 16px;
+    width: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    background-color: #000;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 50%;
+  }
+}
+
 .nav-bar-icons-divider {
   width: 1px;
   height: 20px;
   margin: 0 15px;
   background-color: violet;
-}
-
-.nav-bar-bag-qty {
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: -10px;
-  background-color: #000;
-  color: #fff;
-  border-radius: 50%;
-  padding: 3px;
-  width: 17px;
-  height: 17px;
-  font-size: 12px;
-  font-family: Montserrat-Medium, Arial;
-  justify-content: center;
 }
 
 .hamburger {

@@ -1,5 +1,6 @@
 
-@import "../../assets/css/colors";
+@import '../../assets/css/colors.scss';
+@import '~bootstrap-4-grid/scss/grid.scss';
 
 .top-add {
   display: flex;
@@ -44,6 +45,11 @@
     }
     .nav-bar-add {
       padding: 10px;
+      font-size: 13px;
+      color: $main-grey;
+      a {
+        color: $main-orange;
+      }
     }
     .nav-bar-fullscreen-right {
       & > div {
@@ -65,20 +71,31 @@
         display: flex;
         align-items: center;
         margin: 0 10px;
+        color: $main-grey;
       }
       .nav-bar-currency {
         display: flex;
         align-items: center;
         min-width: 65px;
         margin: 0 10px;
+        color: $main-grey;
       }
     }
     .nav-bar-social {
+      border-top: 1px solid #ececec;
+      @include media-breakpoint-up(lg) {
+        border-top: 0;
+      }
       div {
         display: inline-block;
         a {
           padding: 10px;
           display: block;
+          font-size: 20px;
+          color: $main-grey;
+          &:hover {
+            color: $main-orange;
+          }
         }
       }
     }
@@ -91,15 +108,28 @@
   }
   .nav-bar-main-menu {
     a {
-      border: 1px solid grey;
       padding: 10px;
       text-align: center;
+      color: #fff;
+      background-color: $main-orange;
+      border: 1px solid transparent;
+      &:hover {
+        border-color: #fff;
+      }
+      @include media-breakpoint-up(lg) {
+        color: #333;
+        background-color: transparent;
+        &:hover {
+          color: $main-orange;
+          border-color: transparent;
+        }
+      }
     }
   }
   .nav-bar-mobile {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 10px 20px;
     .nav-bar-logo-mobile {
       display: inline-block;
       position: relative;
@@ -112,7 +142,6 @@
         border: 1px solid lightgreen;
       }
       a {
-        margin-right: 10px;
         img {
           display: block;
         }
@@ -149,6 +178,7 @@
 
 .hamburger {
   display: inline-block;
+  margin-left: 30px;
   .line {
     display: block;
     width: 35px;
@@ -189,6 +219,6 @@
   border: 1px solid red;
 }
 
-.testBorderBlue {
-  border: 1px solid blue;
+.testColorRed {
+  color: red;
 }

@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import '~bootstrap-4-grid/scss/grid.scss';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import 'global-colors';
 
 * {
     box-sizing: border-box;
@@ -15,7 +16,28 @@ a {
   text-decoration: none;
 }
 
+/**
+    Customizing material select options
+*/
+div.cdk-overlay-pane {
+    div.ng-trigger-transformPanel {
+        mat-option.mat-option {
+            span.mat-option-text {
+                color: $main-grey;
+            }
+            &[aria-selected="true"] {
+                span.mat-option-text {
+                    color: $main-orange;
+                }   
+            }
+        }
+    }
+}
+
 app-header {
+    /**
+        Customizing material select style
+    */
     mat-form-field.mat-form-field-appearance-legacy {
         width: 100%;
         .mat-form-field-wrapper {
@@ -24,6 +46,11 @@ app-header {
         .mat-form-field-infix {
             padding: 0;
             border-top: 0;
+            .mat-select-trigger {
+                span {
+                    color: $main-grey;
+                }
+            }
         }
         .mat-form-field-underline {
             display: none;

@@ -20,7 +20,7 @@
         <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
         <span>0</span>
       </a>
-      <div class="hamburger" [ngClass]="{'is-active': isActive}" (click)="isActive = !isActive">
+      <div class="hamburger" [ngClass]="{'hamburger-active': isHamburgerActive}" (click)="onHamburgerClick()">
         <span class="line"></span>
         <span class="line"></span>
         <span class="line"></span>
@@ -28,63 +28,67 @@
     </div>
   </div>
 
-  <div class="nav-bar-fullscreen row no-gutters justify-content-between align-items-center">
-    <div class="nav-bar-add d-lg-none col-12 order-first">
-      <span>Безкоштовна доставка на сумму понад 2 тисяч гривень, </span>
-      <a href="#">дізнатись деталі
-        <i class="fa fa-external-link"></i>
+  <div class="mobile-menu-wrapper" [ngClass]="{'mobile-menu-hidden': isMobileMenuHidden}">
+
+    <div class="nav-bar-fullscreen row no-gutters justify-content-between align-items-center px-lg-3">
+      <div class="nav-bar-add d-lg-none col-12 order-first">
+        <span>Безкоштовна доставка на сумму понад 2 тисяч гривень, </span>
+        <a href="#">дізнатись деталі
+          <i class="fa fa-external-link"></i>
+        </a>
+      </div>
+      <div class="nav-bar-social col-12 col-lg-4 pl-3 pl-lg-5 order-2 order-lg-first">
+        <div>
+          <a href="#" class="fa fa-facebook"></a>
+        </div>
+        <div>
+          <a href="#" class="fa fa-youtube"></a>
+        </div>
+        <div>
+          <a href="#" class="fa fa-twitter"></a>
+        </div>
+        <div>
+          <a href="#" class="fa fa-vk"></a>
+        </div>
+      </div>
+      <a href="#" class="nav-bar-logo-main col-2 justify-content-center row d-none d-lg-flex">
+        <img src="../../assets/img/logo.jpg" alt="main logo">
       </a>
-    </div>
-    <div class="nav-bar-social col-12 col-lg-4 pl-3 pl-lg-5 order-2 order-lg-first">
-      <div>
-        <a href="#" class="fa fa-facebook"></a>
-      </div>
-      <div>
-        <a href="#" class="fa fa-youtube"></a>
-      </div>
-      <div>
-        <a href="#" class="fa fa-twitter"></a>
-      </div>
-      <div>
-        <a href="#" class="fa fa-vk"></a>
-      </div>
-    </div>
-    <a href="#" class="nav-bar-logo-main col-2 justify-content-center row d-none d-lg-flex">
-      <img src="../../assets/img/logo.jpg" alt="main logo">
-    </a>
-    <div class="nav-bar-fullscreen-right col-12 col-lg-5 order-first order-lg-2">
-      <div class="row no-gutters justify-content-start justify-content-lg-end">
-        <p class="nav-bar-email col-auto align-items-center">
-          plito4ka@gmail.com
-        </p>
-        <div class="nav-bar-currency col-1">
-          <mat-form-field>
-            <mat-select [(ngModel)]="selectedCurrency">
-              <mat-option *ngFor="let currency of currencyArr" [value]="currency.uiValue">
-                {{currency.uiValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="cart-and-user-icons d-none d-lg-flex col-auto row no-gutters justify-content-center align-items-center">
-          <a>
-            <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
-          </a>
-          <span class="nav-bar-icons-divider"></span>
-          <a class="header-cart-icon">
-            <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
-            <span>0</span>
-          </a>
+      <div class="nav-bar-fullscreen-right col-12 col-lg-5 order-first order-lg-2">
+        <div class="row no-gutters justify-content-start justify-content-lg-end">
+          <p class="nav-bar-email col-auto align-items-center">
+            plito4ka@gmail.com
+          </p>
+          <div class="nav-bar-currency col-1">
+            <mat-form-field>
+              <mat-select [(ngModel)]="selectedCurrency">
+                <mat-option *ngFor="let currency of currencyArr" [value]="currency.uiValue">
+                  {{currency.uiValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="cart-and-user-icons d-none d-lg-flex col-auto row no-gutters justify-content-center align-items-center">
+            <a>
+              <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
+            </a>
+            <span class="nav-bar-icons-divider"></span>
+            <a class="header-cart-icon">
+              <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
+              <span>0</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  
+    <div class="nav-bar-main-menu row no-gutters justify-content-center">
+      <a href="#" class="col-12 col-lg-2">Головна сторінка</a>
+      <a href="#" class="col-12 col-lg-2">Акції</a>
+      <a href="#" class="col-12 col-lg-2">Про нас</a>
+      <a href="#" class="col-12 col-lg-2">Контакти</a>
+    </div>
 
-  <div class="nav-bar-main-menu row no-gutters justify-content-center">
-    <a href="#" class="col-12 col-lg-2">Головна сторінка</a>
-    <a href="#" class="col-12 col-lg-2">Акції</a>
-    <a href="#" class="col-12 col-lg-2">Про нас</a>
-    <a href="#" class="col-12 col-lg-2">Контакти</a>
   </div>
 
 </div>

@@ -13,11 +13,18 @@ export class HeaderComponent implements OnInit {
 
   public currencyArr: Currency[];
   public selectedCurrency: string = currencyArr[1].uiValue;
+  public isHamburgerActive: boolean = false;
+  public isMobileMenuHidden: boolean = false;
 
   constructor() { }
 
   ngOnInit() {
     this.currencyArr = currencyArr;
+  }
+
+  public onHamburgerClick(): void {
+    this.isHamburgerActive = !this.isHamburgerActive;
+    this.isMobileMenuHidden = !this.isMobileMenuHidden;
   }
 
 }

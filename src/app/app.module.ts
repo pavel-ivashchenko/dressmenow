@@ -21,7 +21,8 @@ import { SmallDropdownComponent } from './shared/small-dropdown/small-dropdown.c
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

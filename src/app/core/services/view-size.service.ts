@@ -15,11 +15,11 @@ export class ViewSizeService {
 
   private _resizeHandler(event: any) {
     this.$currViewWidth.next(event.currentTarget.innerWidth);
-  };
+  }
 
   public getCurrViewWidth(): Observable<number> {
     return this.$currViewWidth.asObservable().pipe(
-      debounceTime(300),
+      debounceTime(200),
       distinctUntilChanged()
     );
   }

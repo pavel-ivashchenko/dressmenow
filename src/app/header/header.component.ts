@@ -1,9 +1,11 @@
 
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Currency } from './interfaces';
 import { currencyArr } from './models';
 import { ViewSizeService } from '@app/core/services';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, filter } from 'rxjs/operators';
+import { bootstrapGrid } from '@app/core/models';
 
 @Component({
   selector: 'app-header',
@@ -11,30 +13,48 @@ import { Observable } from 'rxjs';
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
+  private $currViewWidth: Observable<number>;
+  private componentDestroyed: Subject<void> = new Subject();
+  private LG_BREAKPOINT = bootstrapGrid.large;
   public currencyArr: Currency[];
   public selectedCurrency: string = currencyArr[1].uiValue;
-  public isHamburgerActive: boolean = false;
-  public isMobileMenuHidden: boolean = false;
-  public $currViewWidth: Observable<number>;
-  public currViewWith: number;
+  public isHamburgerActive = false;
+  public isMobileMenuHidden = false;
 
   constructor(
-    private viewSizeService: ViewSizeService
+    private viewSizeService: ViewSizeService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.currencyArr = currencyArr;
     this.$currViewWidth = this.viewSizeService.getCurrViewWidth();
-    this.$currViewWidth.subscribe(viewWidth => {
-      this.currViewWith = viewWidth;
-    });
+    this.$currViewWidth
+      .pipe(
+        filter(newWidth => newWidth >= this.LG_BREAKPOINT && this.isHamburgerActive),
+        takeUntil(this.componentDestroyed)
+      )
+      .subscribe(() => {
+        this.disableMobileMenu();
+      });
+  }
+
+  private disableMobileMenu(): void {
+    this.isHamburgerActive = false;
+    this.isMobileMenuHidden = false;
+    this.cdr.detectChanges();
   }
 
   public onHamburgerClick(): void {
     this.isHamburgerActive = !this.isHamburgerActive;
     this.isMobileMenuHidden = !this.isMobileMenuHidden;
+  }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
 
 }

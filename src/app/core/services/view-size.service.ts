@@ -19,7 +19,6 @@ export class ViewSizeService {
 
   public getCurrViewWidth(): Observable<number> {
     return this.$currViewWidth.asObservable().pipe(
-      debounceTime(200),
       distinctUntilChanged()
     );
   }

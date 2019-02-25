@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public currencyArr: Currency[];
   public selectedCurrency: string = currencyArr[1].uiValue;
   public isHamburgerActive = false;
-  public isMobileMenuHidden = false;
+  public isTopAddHidden = false;
 
   constructor(
     private viewSizeService: ViewSizeService,
@@ -43,13 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private disableMobileMenu(): void {
     this.isHamburgerActive = false;
-    this.isMobileMenuHidden = false;
     this.cdr.detectChanges();
-  }
-
-  public onHamburgerClick(): void {
-    this.isHamburgerActive = !this.isHamburgerActive;
-    this.isMobileMenuHidden = !this.isMobileMenuHidden;
   }
 
   ngOnDestroy(): void {

@@ -5,24 +5,24 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { CoreModule } from '@app/core/core.module';
+import { SharedModule } from '@app/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { MatSelectModule } from '@angular/material';
-import { SmallDropdownComponent } from './shared/small-dropdown/small-dropdown.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    SmallDropdownComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     MatSelectModule,
-    CoreModule
+    CoreModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

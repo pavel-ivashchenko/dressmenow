@@ -1,0 +1,14 @@
+
+<div class="main-container">
+  <ul>
+    <li *ngFor="let slide of sliderConf"
+      class="bloc"
+      (mouseover)="slide.isAcitve = !slide.isAcitve"
+      [ngClass]="{'active': slide.isAcitve}">
+      <div class="content">
+        <H2>{{ slide.title }}</H2>
+        <H3>{{ slide.subtitle }}</H3>
+      </div>
+    </li>
+  </ul>
+</div>

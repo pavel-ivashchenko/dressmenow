@@ -2,14 +2,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SmallDropdownComponent } from './small-dropdown/small-dropdown.component';
+import { SliderComponent } from './slider/slider.component';
 
 @NgModule({
   declarations: [
-    SmallDropdownComponent
+    SliderComponent
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    SliderComponent
   ]
 })
 export class SharedModule { }

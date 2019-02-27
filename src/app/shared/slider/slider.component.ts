@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-import { SliderConf } from './interfaces';
+import { SliderConf } from '@app/core/interfaces';
 
 @Component({
   selector: 'app-slider',
@@ -9,11 +9,10 @@ import { SliderConf } from './interfaces';
 })
 export class SliderComponent implements OnInit {
 
-  @Input() sliderConf: SliderConf;
+  @Input() sliderConf: SliderConf[];
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

@@ -1,10 +1,12 @@
 
 <div class="main-container">
   <ul>
-    <li *ngFor="let slide of sliderConf"
-      class="bloc"
-      (mouseover)="slide.isAcitve = !slide.isAcitve"
-      [ngClass]="{'active': slide.isAcitve}">
+    <li *ngFor="let slide of sliderConf; let last = last"
+      class="block"
+      (mouseenter)="slide.isAcitve = !slide.isAcitve"
+      (mouseleave)="slide.isAcitve = !slide.isAcitve"
+      [ngClass]="{'active': slide.isAcitve, 'isLastSlide': last}"
+      [ngStyle]="slide.ngStyle">
       <div class="content">
         <H2>{{ slide.title }}</H2>
         <H3>{{ slide.subtitle }}</H3>

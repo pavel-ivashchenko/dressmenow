@@ -1,5 +1,7 @@
 
 import { Component } from '@angular/core';
+import { mainPageSlides } from '@app/core/models';
+import { SliderConf } from '@app/core/interfaces';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  public mainPageSlides: SliderConf[] = mainPageSlides;
+
 }

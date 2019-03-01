@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public selectedCurrency: string = currencyArr[1].uiValue;
   public isHamburgerActive = false;
   public isTopAddHidden = false;
+  public isMobileMode: boolean;
 
   constructor(
     private viewSizeService: ViewSizeService,
@@ -33,16 +34,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.$currViewWidth = this.viewSizeService.getCurrViewWidth();
     this.$currViewWidth
       .pipe(
-        filter(newWidth => newWidth >= this.LG_BREAKPOINT && this.isHamburgerActive),
         takeUntil(this.componentDestroyed)
       )
-      .subscribe(() => {
-        this.disableMobileMenu();
+      .subscribe(newWidth => {
+        if (this.isMobileMode !== newWidth < this.LG_BREAKPOINT) {
+          this.disableMobileMenu();
+        } else {
+          this.isMobileMode = true;
+        }
       });
   }
 
   private disableMobileMenu(): void {
-    this.isHamburgerActive = false;
+    this.isHamburgerActive = this.isMobileMode = false;
     this.cdr.detectChanges();
   }
 

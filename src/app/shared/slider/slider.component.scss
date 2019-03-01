@@ -16,12 +16,13 @@
 ul {
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
   li {
     position: relative;
     display: inline-flex;
-    columns: 3;
-    width: calc(25% - 22px);
-    height: calc(100vh - 20px);
+    flex: 1;
+    height: calc(100vh - 22px);
     margin: 10px;
     background-size: cover;
     background-position: center center;
@@ -33,7 +34,7 @@ ul {
     }
     &.active {
       position: relative;
-      width: calc(50% - 22px);
+      flex: 4;
       transition: .5s all ease-in-out;
       &:before {
         top: 0;
@@ -77,8 +78,4 @@ ul {
       }
     }
   }
-}
-
-.isLastSlide {
-  float: right;
 }

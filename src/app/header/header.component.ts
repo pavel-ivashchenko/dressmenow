@@ -1,10 +1,10 @@
 
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, HostListener, ChangeDetectorRef } from '@angular/core';
 import { Currency } from './interfaces';
 import { currencyArr } from './models';
 import { ViewSizeService } from '@app/core/services';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { bootstrapGrid } from '@app/core/models';
 
 @Component({
@@ -16,13 +16,23 @@ import { bootstrapGrid } from '@app/core/models';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private $currViewWidth: Observable<number>;
-  private componentDestroyed: Subject<void> = new Subject();
+  private _componentDestroyed: Subject<void> = new Subject();
   private LG_BREAKPOINT = bootstrapGrid.large;
   public currencyArr: Currency[];
   public selectedCurrency: string = currencyArr[1].uiValue;
   public isHamburgerActive = false;
   public isTopAddHidden = false;
-  public isMobileMode: boolean;
+  public isShrinkedHeader = false;
+
+  @HostListener("window:scroll")
+  onScroll() {
+    if (window.pageYOffset >= 100) {
+      this.isShrinkedHeader = true;
+    }
+    if (window.pageYOffset < 100) {
+      this.isShrinkedHeader = false;
+    }
+  }
 
   constructor(
     private viewSizeService: ViewSizeService,
@@ -34,25 +44,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.$currViewWidth = this.viewSizeService.getCurrViewWidth();
     this.$currViewWidth
       .pipe(
-        takeUntil(this.componentDestroyed)
+        takeUntil(this._componentDestroyed)
       )
       .subscribe(newWidth => {
-        if (this.isMobileMode !== newWidth < this.LG_BREAKPOINT) {
-          this.disableMobileMenu();
-        } else {
-          this.isMobileMode = true;
+        if (newWidth >= this.LG_BREAKPOINT) {
+          this.isHamburgerActive = false;
+          this.cdr.detectChanges();
         }
       });
   }
 
-  private disableMobileMenu(): void {
-    this.isHamburgerActive = this.isMobileMode = false;
-    this.cdr.detectChanges();
-  }
-
   ngOnDestroy(): void {
-    this.componentDestroyed.next();
-    this.componentDestroyed.unsubscribe();
+    this._componentDestroyed.next();
+    this._componentDestroyed.unsubscribe();
   }
 
 }

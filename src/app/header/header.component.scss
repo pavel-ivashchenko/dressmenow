@@ -2,47 +2,53 @@
 @import 'global-colors';
 @import '~bootstrap-4-grid/scss/grid.scss';
 
-.top-add {
-  max-height: 50px;
-  display: flex;
-  background-color: $main-orange;
-  justify-content: center;
-  position: relative;
-  padding: 15px 0;
-  transition: 0.3s;
-  overflow: hidden;
-  &.top-add-hidden {
-    max-height: 0;
-    padding: 0;
-  }
-  * {
-    color: #fff;
-    align-self: center;
-  }
-  p, a {
-    font-family: Montserrat, Arial;
-    color: #fff;
-    font-size: 13px;
-  }
-  a {
-    text-decoration: underline;
-  }
-  i {
-    position: absolute;
-    right: 0;
-    font-size: 12px;
-    opacity: 0.7;
-    padding: 20px;
-    cursor: pointer;
-    &:hover {
-      opacity: 1;
-    }
-  }
-}
-
 .nav-bar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  overflow: hidden;
+  background-color: #fff;
+  transition: max-height 1s;
   img {
     display: block;
+  }
+  .top-add {
+    max-height: 50px;
+    display: flex;
+    background-color: $main-orange;
+    justify-content: center;
+    position: relative;
+    padding: 15px 0;
+    transition: 0.3s;
+    overflow: hidden;
+    &.top-add-hidden {
+      max-height: 0;
+      padding: 0;
+    }
+    * {
+      color: #fff;
+      align-self: center;
+    }
+    p, a {
+      font-family: Montserrat, Arial;
+      color: #fff;
+      font-size: 13px;
+    }
+    a {
+      text-decoration: underline;
+    }
+    i {
+      position: absolute;
+      right: 0;
+      font-size: 12px;
+      opacity: 0.7;
+      padding: 20px;
+      cursor: pointer;
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
   .nav-bar-fullscreen {
     & > div {
@@ -113,6 +119,12 @@
     }
   }
   .nav-bar-main-menu {
+    &.shrink-main-logo {
+      overflow: hidden;
+      img {
+        width: 100px;
+      }
+    }
     a {
       padding: 10px;
       text-align: center;
@@ -163,8 +175,14 @@
     max-height: 320px;
     overflow: hidden;
     transition: max-height 0.3s;
-    &.mobile-menu-hidden {
+    &.mobile-menu-hidden  {
       max-height: 0;
+    }
+    @include media-breakpoint-up(lg) {
+      max-height: 500px;
+      &.mobile-menu-hidden  {
+        max-height: 500px;
+      }
     }
   }
 }

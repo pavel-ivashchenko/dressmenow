@@ -1,25 +1,18 @@
 
-<div class="top-add" [ngClass]="{'top-add-hidden':isTopAddHidden}">
-  <p>Знижка 20% на все!&nbsp;</p>
-  <a href="#">Переглянути</a>
-  <i class="fa fa-times" (click)="isTopAddHidden=!isTopAddHidden"></i>
-</div>
-
 <div class="nav-bar">
+
+  <div class="top-add" [ngClass]="{'top-add-hidden':isTopAddHidden || (isShrinkedHeader && !isHamburgerActive)}">
+    <p>Знижка 20% на все!&nbsp;</p>
+    <a href="#">Переглянути</a>
+    <i class="fa fa-times" (click)="isTopAddHidden=!isTopAddHidden"></i>
+  </div>
 
   <div class="nav-bar-mobile row justify-content-between d-lg-none no-gutters">
     <a href="#" class="nav-bar-logo-mobile col-auto">
-      <img src="../../assets/img/logo.jpg" alt="main logo">
+      <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
     </a>
     <div class="nav-bar-mobile-left col-auto row no-gutters justify-content-end align-items-center">
-      <a href="#" class="align-self-center">
-        <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
-      </a>
-      <span class="nav-bar-icons-divider"></span>
-      <a href="#" class="header-cart-icon align-self-center">
-        <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
-        <span>0</span>
-      </a>
+      <ng-container *ngTemplateOutlet="userMenu"></ng-container>
       <div class="hamburger" [ngClass]="{'hamburger-active': isHamburgerActive}" (click)="this.isHamburgerActive = !this.isHamburgerActive">
         <span class="line"></span>
         <span class="line"></span>
@@ -28,9 +21,9 @@
     </div>
   </div>
 
-  <div class="mobile-menu-wrapper" [ngClass]="{'mobile-menu-hidden': !isHamburgerActive && isMobileMode}">
+  <div class="mobile-menu-wrapper" [ngClass]="{'mobile-menu-hidden': !isHamburgerActive}">
 
-    <div class="nav-bar-fullscreen row no-gutters justify-content-between align-items-center px-lg-4">
+    <div class="nav-bar-fullscreen row no-gutters justify-content-between align-items-center px-lg-4" *ngIf="!isShrinkedHeader || isHamburgerActive">
       <div class="nav-bar-add d-lg-none col-12 order-first">
         <span>Безкоштовна доставка на сумму понад 2 тисяч гривень, </span>
         <a href="#">дізнатись деталі
@@ -52,7 +45,7 @@
         </div>
       </div>
       <a href="#" class="nav-bar-logo-main col-2 justify-content-center row d-none d-lg-flex">
-        <img src="../../assets/img/logo.jpg" alt="main logo">
+        <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
       </a>
       <div class="nav-bar-fullscreen-right col-12 col-lg-5 order-first order-lg-2">
         <div class="row no-gutters justify-content-start justify-content-lg-end">
@@ -69,20 +62,16 @@
             </mat-form-field>
           </div>
           <div class="cart-and-user-icons d-none d-lg-flex col-auto row no-gutters justify-content-center align-items-center">
-            <a>
-              <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
-            </a>
-            <span class="nav-bar-icons-divider"></span>
-            <a class="header-cart-icon">
-              <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
-              <span>0</span>
-            </a>
+            <ng-container *ngTemplateOutlet="userMenu"></ng-container>
           </div>
         </div>
       </div>
     </div>
   
-    <div class="nav-bar-main-menu row no-gutters justify-content-center">
+    <div class="nav-bar-main-menu row no-gutters" [ngClass]="{'shrink-header':isShrinkedHeader}">
+      <div class="shrink-main-logo d-none d-lg-flex col-lg-2" *ngIf="isShrinkedHeader">
+        <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
+      </div>
       <a href="#" class="col-12 col-lg-2">
         <span>Головна сторінка</span>
       </a>
@@ -95,8 +84,26 @@
       <a href="#" class="col-12 col-lg-2">
         <span>Контакти</span>
       </a>
+      <div class="d-none d-lg-flex col-2" *ngIf="isShrinkedHeader">
+        <ng-container *ngTemplateOutlet="userMenu"></ng-container>
+      </div>
     </div>
 
   </div>
 
 </div>
+
+<ng-template #userMenu>
+  <a href="#" class="align-self-center">
+    <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
+  </a>
+  <span class="nav-bar-icons-divider"></span>
+  <a href="#" class="header-cart-icon align-self-center">
+    <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
+    <span>0</span>
+  </a>
+</ng-template>
+
+<ng-template #mainLogo>
+  <img src="../../assets/img/logo.jpg" alt="main logo">
+</ng-template>

@@ -3,10 +3,10 @@
 @import '~bootstrap-4-grid/scss/grid.scss';
 
 .nav-bar {
-  width: 100%;
-  position: fixed;
+  position: relative;
   top: 0;
   z-index: 10;
+  width: 100%;
   overflow: hidden;
   background-color: #fff;
   transition: max-height 1s;
@@ -119,11 +119,11 @@
     }
   }
   .nav-bar-main-menu {
-    &.shrink-main-logo {
-      overflow: hidden;
-      img {
-        width: 100px;
-      }
+    width: 100%;
+    background-color: #fff;
+    &.isShrinkedHeader {
+      position: fixed;
+      top: 0;
     }
     a {
       padding: 10px;
@@ -250,12 +250,4 @@
       transform-origin: bottom right;
     }
   }
-}
-
-.testBorderRed {
-  border: 1px solid red;
-}
-
-.testColorRed {
-  color: red;
 }

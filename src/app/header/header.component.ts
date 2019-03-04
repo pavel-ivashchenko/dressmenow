@@ -26,12 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @HostListener("window:scroll")
   onScroll() {
-    if (window.pageYOffset >= 100) {
-      this.isShrinkedHeader = true;
-    }
-    if (window.pageYOffset < 100) {
-      this.isShrinkedHeader = false;
-    }
+    this.isShrinkedHeader = window.scrollY >= 156 ? true : false;
   }
 
   constructor(

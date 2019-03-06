@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @HostListener("window:scroll")
   onScroll() {
-    this.isShrinkedHeader = window.scrollY >= 156 ? true : false;
+    this.isShrinkedHeader = window.scrollY >= 200 ? true : false;
   }
 
   constructor(

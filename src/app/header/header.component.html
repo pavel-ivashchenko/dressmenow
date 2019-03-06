@@ -68,25 +68,12 @@
       </div>
     </div>
   
-    <div class="nav-bar-main-menu row no-gutters" [ngClass]="{'isShrinkedHeader':isShrinkedHeader}">
-      <!-- <div class="shrink-main-logo d-none d-lg-flex col-lg-2" *ngIf="isShrinkedHeader">
-        <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
-      </div> -->
-      <a href="#" class="col-12 col-lg-2">
-        <span>Головна сторінка</span>
-      </a>
-      <a href="#" class="col-12 col-lg-2">
-        <span>Акції</span>
-      </a>
-      <a href="#" class="col-12 col-lg-2">
-        <span>Про нас</span>
-      </a>
-      <a href="#" class="col-12 col-lg-2">
-        <span>Контакти</span>
-      </a>
-      <div class="d-none d-lg-flex col-2" *ngIf="isShrinkedHeader">
-        <ng-container *ngTemplateOutlet="userMenu"></ng-container>
-      </div>
+    <div class="nav-bar-main-menu row no-gutters justify-content-center">
+      <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
+    </div>
+
+    <div class="shrinked-menu row no-gutters justify-content-between" [ngClass]="{'shrinked-menu-visible': isShrinkedHeader}">
+      <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
     </div>
 
   </div>
@@ -106,4 +93,31 @@
 
 <ng-template #mainLogo>
   <img src="../../assets/img/logo.jpg" alt="main logo">
+</ng-template>
+
+<ng-template #mainMenu>
+  <div class="shrinked-logo d-none d-lg-flex col-2 justify-content-center">
+    <div>
+      <a href="#">
+        <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
+      </a>
+    </div>
+  </div>
+  <a href="#" class="menu-link col-12 col-lg-2 align-items-center">
+    <span>Головна сторінка</span>
+  </a>
+  <a href="#" class="menu-link col-12 col-lg-2 align-items-center">
+    <span>Акції</span>
+  </a>
+  <a href="#" class="menu-link col-12 col-lg-2 align-items-center">
+    <span>Про нас</span>
+  </a>
+  <a href="#" class="menu-link col-12 col-lg-2 align-items-center">
+    <span>Контакти</span>
+  </a>
+  <div class="shrinked-user-menu d-none d-lg-flex col-2 align-items-center justify-content-center">
+    <div>
+      <ng-container *ngTemplateOutlet="userMenu"></ng-container>
+    </div>
+  </div>
 </ng-template>

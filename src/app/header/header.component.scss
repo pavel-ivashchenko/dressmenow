@@ -3,13 +3,7 @@
 @import '~bootstrap-4-grid/scss/grid.scss';
 
 .nav-bar {
-  position: relative;
-  top: 0;
-  z-index: 10;
   width: 100%;
-  overflow: hidden;
-  background-color: #fff;
-  transition: max-height 1s;
   img {
     display: block;
   }
@@ -121,9 +115,10 @@
   .nav-bar-main-menu {
     width: 100%;
     background-color: #fff;
-    &.isShrinkedHeader {
-      position: fixed;
-      top: 0;
+    .shrinked-user-menu, .shrinked-logo {
+      & > div {
+        display: none;
+      }
     }
     a {
       padding: 10px;
@@ -171,6 +166,44 @@
       }
     }
   }
+  .shrinked-menu {
+    max-height: 0;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+    z-index: 10;
+    background-color: #fff;
+    transition: max-height 0.3s;
+    .shrinked-user-menu, .shrinked-logo {
+      & > div {
+        display: flex;
+      }
+    }
+    &.shrinked-menu-visible {
+      max-height: 70px;
+    }
+    a.menu-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid red;
+      color: #333;
+      font-size: 14px;
+      background-color: transparent;
+      padding: 10px;
+      text-align: center;
+      span {
+        border: 1px solid transparent;
+      }
+      &:hover {
+        span {
+          color: $main-orange;
+          border-bottom-color: #000;
+        }
+      }
+    }
+  }
   .mobile-menu-wrapper {
     max-height: 320px;
     overflow: hidden;
@@ -184,6 +217,13 @@
         max-height: 500px;
       }
     }
+  }
+}
+
+.shrinked-logo {
+  margin: 10px 0;
+  img {
+    height: 50px;
   }
 }
 

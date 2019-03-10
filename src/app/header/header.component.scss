@@ -19,6 +19,27 @@
   img {
     display: block;
   }
+  // All media breakpoints style changes of header
+  @include media-breakpoint-up(lg) {
+    .mobile-menu-wrapper {
+      max-height: 500px;
+      &.mobile-menu-hidden  {
+        max-height: 500px;
+      }
+    }
+    .nav-bar-fullscreen {
+      .nav-bar-social {
+        border-top: 0;
+      }
+    }
+    .fullscreen-main-menu {
+      a.menu-link {
+        color: $font-grey;
+        background-color: transparent;
+        @include menu-link-span;
+      }
+    }
+  }
 }
 
 .top-add {
@@ -118,18 +139,13 @@
   }
 }
 
+// Wrapper over all main menus in order to enable hamburger switch
 .mobile-menu-wrapper {
   max-height: 320px;
   overflow: hidden;
   transition: max-height 0.3s;
   &.mobile-menu-hidden  {
     max-height: 0;
-  }
-  @include media-breakpoint-up(lg) {
-    max-height: 500px;
-    &.mobile-menu-hidden  {
-      max-height: 500px;
-    }
   }
 }
 
@@ -155,7 +171,7 @@
         margin: 0 10px;
       }
     }
-    .cart-and-user-icons {
+    .cart-and-user-full {
       a {
         display: inline-block;
         cursor: pointer;
@@ -179,9 +195,6 @@
 
   .nav-bar-social {
     border-top: 1px solid $main-border-grey;
-    @include media-breakpoint-up(lg) {
-      border-top: 0;
-    }
     div {
       display: inline-block;
       a {
@@ -195,7 +208,7 @@
       }
     }
   }
-  .nav-bar-logo-main {
+  .logo-fullscreen {
     img {
       height: 100px;
       margin: 10px 0;
@@ -203,10 +216,10 @@
   }
 }
 
-.nav-bar-main-menu {
+.fullscreen-main-menu {
   width: 100%;
   background-color: #fff;
-  .shrinked-user-menu, .shrinked-logo {
+  .cart-and-user-shrinked, .logo-shrinked {
     & > div, a {
       display: none;
     }
@@ -223,15 +236,10 @@
     &:hover {
       border-color: #fff;
     }
-    @include media-breakpoint-up(lg) {
-      color: $font-grey;
-      background-color: transparent;
-      @include menu-link-span;
-    }
   }
 }
 
-.shrinked-menu {
+.shrinked-main-menu {
   max-height: 0;
   width: 100%;
   position: fixed;
@@ -240,7 +248,8 @@
   z-index: 10;
   background-color: #fff;
   transition: max-height 0.3s;
-  .shrinked-user-menu, .shrinked-logo {
+  box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
+  .cart-and-user-shrinked, .shrinked-logo {
     & > div, a {
       display: flex;
     }
@@ -260,14 +269,14 @@
   }
 }
 
-.shrinked-logo {
+.logo-shrinked {
   margin: 10px 0;
   img {
     height: 72px;
   }
 }
 
-.header-cart-icon {
+.nav-bar-cart-icon {
   position: relative;
   span {
     position: absolute;

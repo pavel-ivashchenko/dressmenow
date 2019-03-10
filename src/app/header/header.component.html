@@ -13,7 +13,8 @@
     </a>
     <div class="nav-bar-mobile-right col-auto row no-gutters justify-content-end align-items-center">
       <ng-container *ngTemplateOutlet="userMenu"></ng-container>
-      <div class="hamburger" [ngClass]="{'hamburger-active':isHamburgerActive}" (click)="this.isHamburgerActive=!this.isHamburgerActive">
+      <div class="hamburger" [ngClass]="{'hamburger-active':isHamburgerActive}"
+        (click)="this.isHamburgerActive=!this.isHamburgerActive">
         <span class="line"></span>
         <span class="line"></span>
         <span class="line"></span>
@@ -44,7 +45,7 @@
           <a href="#" class="fa fa-vk"></a>
         </div>
       </div>
-      <a href="#" class="nav-bar-logo-main col-2 justify-content-center row d-none d-lg-flex">
+      <a href="#" class="logo-fullscreen col-2 justify-content-center row d-none d-lg-flex">
         <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
       </a>
       <div class="nav-bar-fullscreen-right col-12 col-lg-5 order-first order-lg-2">
@@ -61,18 +62,19 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="cart-and-user-icons d-none d-lg-flex col-auto row no-gutters justify-content-center align-items-center">
+          <div class="cart-and-user-full d-none d-lg-flex col-auto row no-gutters justify-content-center align-items-center">
             <ng-container *ngTemplateOutlet="userMenu"></ng-container>
           </div>
         </div>
       </div>
     </div>
   
-    <div class="nav-bar-main-menu row no-gutters justify-content-center">
+    <div class="fullscreen-main-menu row no-gutters justify-content-center">
       <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
     </div>
 
-    <div class="shrinked-menu row no-gutters justify-content-between" [ngClass]="{'shrinked-menu-visible': isShrinkedHeader}">
+    <div class="shrinked-main-menu row no-gutters justify-content-between"
+      [ngClass]="{'shrinked-menu-visible':isShrinkedHeader && !isMobileMode}">
       <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
     </div>
 
@@ -85,18 +87,18 @@
     <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
   </a>
   <span class="nav-bar-icons-divider"></span>
-  <a href="#" class="header-cart-icon align-self-center">
+  <a href="#" class="nav-bar-cart-icon align-self-center">
     <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
     <span>0</span>
   </a>
 </ng-template>
 
 <ng-template #mainLogo>
-  <img src="../../assets/img/logo.jpg" alt="main logo">
+  <img src="../../assets/img/logo.jpg" alt="Main logo">
 </ng-template>
 
 <ng-template #mainMenu>
-  <div class="shrinked-logo d-none d-lg-flex col-2 justify-content-center">
+  <div class="logo-shrinked d-none d-lg-flex col-2 justify-content-center">
     <a href="#">
       <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
     </a>
@@ -113,7 +115,7 @@
   <a href="#" class="menu-link col-12 col-lg-2 align-items-center">
     <span>Контакти</span>
   </a>
-  <div class="shrinked-user-menu d-none d-lg-flex col-2 align-items-center justify-content-center">
+  <div class="cart-and-user-shrinked d-none d-lg-flex col-2 align-items-center justify-content-center">
     <div class="justify-content-center align-items-center">
       <ng-container *ngTemplateOutlet="userMenu"></ng-container>
     </div>

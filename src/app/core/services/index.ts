@@ -1,10 +1,13 @@
 
-import { ViewSizeService } from './view-size.service';
+import { IsShrinkedService } from './is-shrinked.service';
+import { IsMobileService } from './is-mobile.service';
 
 export const APP_SERVICE_PROVIDERS = [
-  ViewSizeService
+  IsShrinkedService,
+  IsMobileService
 ]
 
 export {
-  ViewSizeService
+  IsShrinkedService,
+  IsMobileService
 }

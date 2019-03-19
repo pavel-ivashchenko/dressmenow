@@ -9,8 +9,15 @@ import {
 import { Currency } from './interfaces';
 import { currencyArr } from './models';
 import { IsMobileService, IsShrinkedService } from '@app/core/services';
+import { DialogComponent } from '@app/shared/dialog/dialog.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-header',
@@ -27,10 +34,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isTopAddHidden: boolean = false;
   public isMobileMode: boolean;
 
+  animal: string;
+  name: string;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private isMobileService: IsMobileService,
-    public isShrinkedService: IsShrinkedService
+    public isShrinkedService: IsShrinkedService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -45,6 +56,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.cdr.detectChanges();
         }
       });
+  }
+
+  public openDialog(): void {
+    debugger;
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '250px',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
   }
 
   ngOnDestroy(): void {

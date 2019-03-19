@@ -9,7 +9,8 @@ import { SharedModule } from '@app/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { MatSelectModule } from '@angular/material';
+
+import { MatSelectModule, MatDialogModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MatSelectModule } from '@angular/material';
     FormsModule,
     MatSelectModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

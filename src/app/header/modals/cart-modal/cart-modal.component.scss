@@ -1,0 +1,15 @@
+
+@import 'global-colors';
+
+button {
+  color: #fff;
+  background-color: $button-grey;
+  transition: background-color 0.3s;
+  &:hover {
+    background-color: $main-orange;
+  }
+}
+
+.cart-item {
+  
+}

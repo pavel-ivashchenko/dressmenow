@@ -1,0 +1,16 @@
+
+<div class="row justify-content-center">
+
+  <div class="col-12 my-1" style="border: 1px solid red">
+    <div class="cart-item row my-1" style="border: 1px solid green" *ngFor="let item of cartData">
+      <img class="col-4" src="item.img" alt="{{item.name}}" style="border: 1px solid blue">
+      <div class="col-8">
+        <p>{{ item.name }}</p>
+        <p>{{ item.price }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <button mat-flat-button>CHECK OUT</button>
+
+</div>

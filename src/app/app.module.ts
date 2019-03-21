@@ -3,19 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatSelectModule, MatDialogModule, MatButtonModule } from '@angular/material';
 
 import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-
-import { MatSelectModule, MatDialogModule } from '@angular/material';
+import { CartModalComponent } from './header/modals/cart-modal/cart-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    CartModalComponent
   ],
   imports: [
     BrowserModule,
@@ -24,9 +25,13 @@ import { MatSelectModule, MatDialogModule } from '@angular/material';
     MatSelectModule,
     CoreModule,
     SharedModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [],
+  entryComponents: [
+    CartModalComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

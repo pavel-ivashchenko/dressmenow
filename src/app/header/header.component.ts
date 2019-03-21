@@ -9,7 +9,7 @@ import {
 import { Currency } from './interfaces';
 import { currencyArr } from './models';
 import { IsMobileService, IsShrinkedService } from '@app/core/services';
-import { DialogComponent } from '@app/shared/dialog/dialog.component';
+import { CartModalComponent } from './modals/cart-modal/cart-modal.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
@@ -33,9 +33,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isHamburgerActive: boolean = false;
   public isTopAddHidden: boolean = false;
   public isMobileMode: boolean;
-
-  animal: string;
-  name: string;
+  public cartDialogMockData = [
+    {
+      img: 'href',
+      name: 'name_1',
+      qty: 1,
+      currency: 'USD',
+      price: 1900
+    },
+    {
+      img: 'href',
+      name: 'name_2',
+      qty: 2,
+      currency: 'USD',
+      price: 2000
+    },
+    {
+      img: 'href',
+      name: 'name_3',
+      qty: 3,
+      currency: 'USD',
+      price: 2100
+    }
+  ];
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -59,15 +79,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public openDialog(): void {
-    debugger;
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '250px',
-      data: {name: this.name, animal: this.animal}
+    const dialogRef = this.dialog.open(CartModalComponent, {
+      width: '400px',
+      data: this.cartDialogMockData
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 

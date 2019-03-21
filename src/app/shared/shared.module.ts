@@ -4,24 +4,20 @@ import { CommonModule } from '@angular/common';
 
 import { SliderComponent } from './slider/slider.component';
 import { BackToTopComponent } from './back-to-top/back-to-top.component';
-import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
     SliderComponent,
-    BackToTopComponent,
-    DialogComponent
+    BackToTopComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
     SliderComponent,
-    BackToTopComponent,
-    DialogComponent
+    BackToTopComponent
   ],
   entryComponents: [
-    DialogComponent
   ]
 })
 export class SharedModule { }

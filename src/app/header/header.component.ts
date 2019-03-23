@@ -35,25 +35,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isMobileMode: boolean;
   public cartDialogMockData = [
     {
-      img: 'href',
-      name: 'name_1',
+      img: '../../../../assets/img/test.jpg',
+      name: 'Some Cart Item Test Name Is Here',
       qty: 1,
       currency: 'USD',
       price: 1900
     },
     {
-      img: 'href',
-      name: 'name_2',
+      img: '../../../../assets/img/test.jpg',
+      name: 'Some Cart Item Test Name Is Here',
       qty: 2,
       currency: 'USD',
       price: 2000
     },
     {
-      img: 'href',
-      name: 'name_3',
+      img: '../../../../assets/img/test.jpg',
+      name: 'Some Cart Item Test Name Is Here',
       qty: 3,
       currency: 'USD',
       price: 2100
+    },
+    {
+      img: '../../../../assets/img/test.jpg',
+      name: 'Some Cart Item Test Name Is Here',
+      qty: 4,
+      currency: 'USD',
+      price: 2200
+    },
+    {
+      img: '../../../../assets/img/test.jpg',
+      name: 'Some Cart Item Test Name Is Here',
+      qty: 5,
+      currency: 'USD',
+      price: 2300
     }
   ];
 

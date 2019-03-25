@@ -6,11 +6,11 @@
       <img class="d-flex" src="{{item.img}}" alt="{{item.name}}" style="border: 1px solid blue">
       <div class="d-flex flex-column">
         <p class="p-2">{{ item.name }}</p>
-        <p class="d-flex flex-grow-1 justify-content-end align-items-end p-2">
+        <div class="d-flex flex-grow-1 justify-content-end align-items-end p-2">
           <span>{{ item.qty }}</span>
-          <i>x</i>
-          <span>{{ (item.price / 100) | number:'1.2-2' }}</span>
-        </p>
+          <pre> x </pre>
+          <span>{{ (item.price | divideByNum:100) | currency:item.currency.name:'symbol-narrow':'1.2-2' }}</span>
+        </div>
       </div>
     </div>
   </div>

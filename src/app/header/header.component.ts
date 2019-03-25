@@ -38,35 +38,50 @@ export class HeaderComponent implements OnInit, OnDestroy {
       img: '../../../../assets/img/test.jpg',
       name: 'Some Cart Item Test Name Is Here',
       qty: 1,
-      currency: 'USD',
+      currency: {
+        name: 'UAH',
+        symbol: '$'
+      },
       price: 1900
     },
     {
       img: '../../../../assets/img/test.jpg',
       name: 'Some Cart Item Test Name Is Here',
       qty: 2,
-      currency: 'USD',
+      currency: {
+        name: 'USD',
+        symbol: '$'
+      },
       price: 2000
     },
     {
       img: '../../../../assets/img/test.jpg',
       name: 'Some Cart Item Test Name Is Here',
       qty: 3,
-      currency: 'USD',
+      currency: {
+        name: 'USD',
+        symbol: '$'
+      },
       price: 2100
     },
     {
       img: '../../../../assets/img/test.jpg',
       name: 'Some Cart Item Test Name Is Here',
       qty: 4,
-      currency: 'USD',
+      currency: {
+        name: 'USD',
+        symbol: '$'
+      },
       price: 2200
     },
     {
       img: '../../../../assets/img/test.jpg',
       name: 'Some Cart Item Test Name Is Here',
       qty: 5,
-      currency: 'USD',
+      currency: {
+        name: 'USD',
+        symbol: '$'
+      },
       price: 2300
     }
   ];

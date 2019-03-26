@@ -7,8 +7,8 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { Currency } from './interfaces';
-import { currencyArr } from './models';
-import { IsMobileService, IsShrinkedService } from '@app/core/services';
+import { currencyArr, cartDialogMockData } from './models';
+import { IsMobileService, IsShrinkedService, SwitchCurrencyService } from '@app/core/services';
 import { CartModalComponent } from './modals/cart-modal/cart-modal.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -33,67 +33,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isHamburgerActive: boolean = false;
   public isTopAddHidden: boolean = false;
   public isMobileMode: boolean;
-  public cartDialogMockData = [
-    {
-      img: '../../../../assets/img/test.jpg',
-      name: 'Some Cart Item Test Name Is Here',
-      qty: 1,
-      currency: {
-        name: 'UAH',
-        symbol: '$'
-      },
-      price: 1900
-    },
-    {
-      img: '../../../../assets/img/test.jpg',
-      name: 'Some Cart Item Test Name Is Here',
-      qty: 2,
-      currency: {
-        name: 'USD',
-        symbol: '$'
-      },
-      price: 2000
-    },
-    {
-      img: '../../../../assets/img/test.jpg',
-      name: 'Some Cart Item Test Name Is Here',
-      qty: 3,
-      currency: {
-        name: 'USD',
-        symbol: '$'
-      },
-      price: 2100
-    },
-    {
-      img: '../../../../assets/img/test.jpg',
-      name: 'Some Cart Item Test Name Is Here',
-      qty: 4,
-      currency: {
-        name: 'USD',
-        symbol: '$'
-      },
-      price: 2200
-    },
-    {
-      img: '../../../../assets/img/test.jpg',
-      name: 'Some Cart Item Test Name Is Here',
-      qty: 5,
-      currency: {
-        name: 'USD',
-        symbol: '$'
-      },
-      price: 2300
-    }
-  ];
+  public cartDialogMockData = cartDialogMockData;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private isMobileService: IsMobileService,
     public isShrinkedService: IsShrinkedService,
+    private switchCurrencyService: SwitchCurrencyService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
+
+    this.switchCurrencyService.getCurrencyIdx('UAH')
+      .subscribe(res => {
+        debugger;
+      });
+    
     this.isMobileService.check()
       .pipe(
         takeUntil(this._componentDestroyed)

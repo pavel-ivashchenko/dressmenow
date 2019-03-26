@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatSelectModule, MatDialogModule, MatButtonModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSelectModule, MatDialogModule, MatButtonModule, MatSnackBarModule } from '@angular/material';
 
 import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
@@ -22,11 +23,13 @@ import { CartModalComponent } from './header/modals/cart-modal/cart-modal.compon
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
     MatSelectModule,
     CoreModule,
     SharedModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers: [],
   entryComponents: [

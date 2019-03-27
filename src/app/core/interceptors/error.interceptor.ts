@@ -13,17 +13,17 @@ import { MatSnackBar } from '@angular/material';
 
 @Injectable() export class ErrorInterceptor implements HttpInterceptor {
 
-  public MAT_SNACKBAR_DURATION: number = 5000;
+  private MAT_SNACKBAR_DURATION: number = 5000;
 
   constructor(private snackBar: MatSnackBar) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> { // START FROM HERE
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           const errRespText = error && error.error.reason ?
             `Помилка: ${error.error.reason}` :
-            `Помилочка.. Спробуйте обновити сторiнку`;
+            `Помилочка.. Спробуйте оновити сторiнку`;
           this.snackBar.open(errRespText, 'Зрозумiло', { duration: this.MAT_SNACKBAR_DURATION });
           return throwError(error);
         })

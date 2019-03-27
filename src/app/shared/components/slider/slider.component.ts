@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { SliderConf } from '@app/core/interfaces';
+import { SliderConf } from '@app/shared/interfaces';
 
 @Component({
   selector: 'app-slider',

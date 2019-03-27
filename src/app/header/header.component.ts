@@ -28,6 +28,7 @@ export interface DialogData {
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private _componentDestroyed: Subject<void> = new Subject();
+  private _currencyIdx: number;
   public currencyArr: Currency[] = currencyArr;
   public selectedCurrency: string = currencyArr[1].uiValue;
   public isHamburgerActive: boolean = false;
@@ -45,10 +46,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.switchCurrencyService.getCurrencyIdx('UAH')
-      .subscribe(res => {
-        debugger;
-      });
+    this._currencyIdx = this.switchCurrencyService.getCurrencyIdx('USD');
+    debugger;
     
     this.isMobileService.check()
       .pipe(

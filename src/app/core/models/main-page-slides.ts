@@ -1,5 +1,5 @@
 
-import { SliderConf } from '@app/core/interfaces';
+import { SliderConf } from '@app/shared/interfaces';
 
 export const mainPageSlides: SliderConf[] = [
   {

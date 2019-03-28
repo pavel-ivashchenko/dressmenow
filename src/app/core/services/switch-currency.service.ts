@@ -1,44 +1,48 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { PrivatBankCurrencyApiObj } from '@app/shared/interfaces';
+import { Observable, of, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { PrivatBankCurrencyApiObj, Currency } from '@app/shared/interfaces';
+import { currencyArr } from '@app/shared/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SwitchCurrencyService {
 
-  private _componentDestroyed: Subject<void> = new Subject();
   private currencyApi = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5';
   private riskSurcharge = 10;
-  private _currencyIndexes: PrivatBankCurrencyApiObj[];
+  private currencyArr = currencyArr;
+  private currency: string = this.currencyArr[0].uiValue;
+  private defaultCurrencyIdx = 1;
+  public currencyIdx$ = new BehaviorSubject<number>(this.defaultCurrencyIdx);
 
-  constructor(private http: HttpClient) {
-    this.http.get<PrivatBankCurrencyApiObj[]>(this.currencyApi)
-      .pipe(
-        takeUntil(this._componentDestroyed)
-      )
-      .subscribe((res: PrivatBankCurrencyApiObj[])=> {
-        debugger;
-        this._currencyIndexes = res;
-      });
+  constructor(private http: HttpClient) { }
+
+  public getCurrencyIdx(): Observable<number> {
+    return this.currencyIdx$.asObservable();
   }
 
-  public getCurrencyIdx(currency: string): number {
+  public setCurrency(value: string): void {
     debugger;
-    const requestedCurrIdxObj = this._currencyIndexes.find(currIdxObj => currIdxObj.ccy === currency);
-    return this.calcCurrencyIdx(requestedCurrIdxObj);
+    this.currency = value;
+    if (this.currency === this.currencyArr[0].uiValue) {
+      this.currencyIdx$.next(this.defaultCurrencyIdx);
+    } else {
+      this.http.get<PrivatBankCurrencyApiObj[]>(this.currencyApi)
+        .pipe(
+          map((res: PrivatBankCurrencyApiObj[]) => {
+            debugger;
+            const requestedCurrIdxObj = res.find(currIdxObj => currIdxObj.ccy === this.currency);
+            this.currencyIdx$.next(this.calcCurrencyIdx(requestedCurrIdxObj));
+          })
+        )
+    }
   }
 
   private calcCurrencyIdx(currIdxObj: PrivatBankCurrencyApiObj): number {
     return +currIdxObj.sale + (+currIdxObj.sale / 100) * this.riskSurcharge;
-  }
-
-  ngOnDestroy(): void {
-    this._componentDestroyed.next();
-    this._componentDestroyed.unsubscribe();
   }
 
 }

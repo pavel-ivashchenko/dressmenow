@@ -32,9 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public cartDialogMockData = cartDialogMockData;
   public currencyIdx$: Observable<number>;
   public set selectedCurrency(value: string) {
-    debugger;
     this._selectedCurrency = value;
-    this.switchCurrencyService.setCurrency(value);
+    this.currencyIdx$ = this.switchCurrencyService.getCurrencyIdx(value);
   }
   public get selectedCurrency(): string {
     return this._selectedCurrency;
@@ -60,13 +59,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.cdr.detectChanges();
         }
       });
-    this.currencyIdx$ = this.switchCurrencyService.getCurrencyIdx();
+    this.currencyIdx$ = this.switchCurrencyService.getCurrencyIdx(this.selectedCurrency);
   }
 
   public openDialog(): void {
     const dialogRef = this.dialog.open(CartModalComponent, {
       width: '400px',
-      data: this.cartDialogMockData
+      data: {
+        items: this.cartDialogMockData,
+        currencyIdx: this.currencyIdx$
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => { // TODO remove if not needed

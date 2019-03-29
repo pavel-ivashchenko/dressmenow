@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSelectModule, MatDialogModule, MatButtonModule, MatSnackBarModule } from '@angular/material';
 
+import { AppRoutingModule } from '@app/app-routing.module';
 import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
 
@@ -25,6 +26,7 @@ import { CartModalComponent } from './header/modals/cart-modal/cart-modal.compon
     FormsModule,
     HttpClientModule,
     MatSelectModule,
+    AppRoutingModule,
     CoreModule,
     SharedModule,
     MatDialogModule,

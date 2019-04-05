@@ -1,26 +1,39 @@
 
 <div class="row justify-content-center no-gutters">
 
-  <div class="cart-items-container col-12" style="border: 1px solid red">
-    <div class="cart-item row no-gutters align-items-center d-flex mb-2" style="border: 1px solid green" *ngFor="let item of cartData">
-      <img class="d-flex" src="{{item.img}}" alt="{{item.name}}" style="border: 1px solid blue">
+  <div class="cart-items-container col-12">
+    <div
+      class="cart-item row no-gutters align-items-center d-flex mb-2 mx-2"
+      *ngFor="let item of cartData; let first = first"
+      [ngClass]="{ 'mt-2': first }">
+      <i class="cart-item-close fa fa-times-circle"></i>
+      <img class="cart-item-image d-flex my-2" src="{{item.img}}" alt="{{item.name}}">
       <div class="d-flex flex-column">
-        <p class="p-2">{{ item.name }}</p>
-        <div class="d-flex flex-grow-1 justify-content-end align-items-end p-2">
+        <a href="#" class="cart-item-name p-3">{{ item.name }}</a>
+        <div class="cart-item-price d-flex flex-grow-1 justify-content-end align-items-end p-2">
           <span>{{ item.qty }}</span>
           <pre> x </pre>
-          <span>{{ (item.price | divideByNum:100) | currency:item.currency.name:'symbol-narrow':'1.2-2' }}</span>
+          <span>
+            {{
+              (item.price / 100 / currencyIndex)
+              | currency:currency:'symbol-narrow':'1.2-2'
+            }}
+          </span>
         </div>
       </div>
     </div>
   </div>
 
-  <p class="col-12 mt-1">
-    Total:
-    <span>$</span>
-    <span>75.00</span>
+  <p class="cart-items-total col-12 mt-3">
+    Загальна сума:
+    <span>
+      {{
+        (totalAmount / 100 / currencyIndex)
+        | currency:currency:'symbol-narrow':'1.2-2'
+      }}
+    </span>
   </p>
 
-  <button mat-flat-button class="mt-4">CHECK OUT</button>
+  <button mat-flat-button class="mt-4">ДО СПЛАТИ</button>
 
 </div>

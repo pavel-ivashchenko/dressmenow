@@ -1,6 +1,11 @@
 
 @import 'global-colors';
 
+a {
+  color: #000;
+  text-decoration: none; 
+}
+
 button {
   color: #fff;
   background-color: $button-grey;
@@ -13,15 +18,43 @@ button {
 .cart-items-container {
   max-height: 200px;
   overflow-y: auto;
+  border: 1px solid $main-border-grey;
 }
 
 .cart-item {
-  img {
-    flex: 0 0 80px;
-    height: 80px;
-    width: 80px;
-  }
+  border: 1px solid $main-border-grey;
+  position: relative;
   div {
     flex: 1 0 40%;
   }
+}
+
+.cart-item-close {
+  position: absolute;
+  color: $main-border-grey;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  &:hover {
+    color: $main-orange;
+  }
+}
+
+.cart-item-image {
+  flex: 0 0 80px;
+  height: 80px;
+  width: 80px;
+  border-right: 1px solid $main-border-grey;
+}
+
+.cart-item-price {
+  font-size: 12px;
+}
+
+.cart-item-name, .cart-items-total {
+  font-weight: 500;
+}
+
+.cart-items-total {
+  text-align: right;
 }

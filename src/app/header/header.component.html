@@ -55,7 +55,10 @@
           </p>
           <div class="nav-bar-currency col-1">
             <mat-form-field>
-              <mat-select [(ngModel)]="selectedCurrency">
+              <mat-select
+                [disabled]="!(isCurrencySwitchAvailable$ | async)"
+                [value]="globalCurrencyObj.currency"
+                (selectionChange)="onCurrencyChange($event.value)">
                 <mat-option *ngFor="let currency of currencyArr" [value]="currency.uiValue">
                   {{currency.uiValue}}
                 </mat-option>

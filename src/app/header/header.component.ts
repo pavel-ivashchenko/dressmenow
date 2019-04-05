@@ -6,14 +6,15 @@ import {
   OnDestroy,
   ChangeDetectorRef
 } from '@angular/core';
-import { cartDialogMockData } from './models';
-import { Currency } from '@app/shared/interfaces';
-import { currencyArr } from '@app/shared/models';
-import { IsMobileService, IsShrinkedService, SwitchCurrencyService } from '@app/core/services';
-import { CartModalComponent } from './modals/cart-modal/cart-modal.component';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Currency, GlobalCurrencyObject } from '@app/shared/interfaces';
+import { currencyArr } from '@app/shared/models';
+import { IsMobileService, IsShrinkedService, CurrencyService } from '@app/core/services';
+import { cartDialogMockData } from './models';
+import { CartModalComponent } from './modals/cart-modal/cart-modal.component';
+
 
 @Component({
   selector: 'app-header',
@@ -24,25 +25,18 @@ import { MatDialog } from '@angular/material';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private _componentDestroyed$: Subject<void> = new Subject();
-  private _selectedCurrency: string = currencyArr[0].uiValue;
+  private _cartDialogMockData = cartDialogMockData;
+  public isCurrencySwitchAvailable$: Observable<boolean>;
+  public globalCurrencyObj: GlobalCurrencyObject;
   public currencyArr: Currency[] = currencyArr;
   public isHamburgerActive: boolean = false;
   public isTopAddHidden: boolean = false;
   public isMobileMode: boolean;
-  public cartDialogMockData = cartDialogMockData;
-  public currencyIdx$: Observable<number>;
-  public set selectedCurrency(value: string) {
-    this._selectedCurrency = value;
-    this.currencyIdx$ = this.switchCurrencyService.getCurrencyIdx(value);
-  }
-  public get selectedCurrency(): string {
-    return this._selectedCurrency;
-  }
 
   constructor(
     private cdr: ChangeDetectorRef,
     private isMobileService: IsMobileService,
-    private switchCurrencyService: SwitchCurrencyService,
+    private currencyService: CurrencyService,
     private dialog: MatDialog,
     public isShrinkedService: IsShrinkedService
   ) { }
@@ -59,22 +53,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.cdr.detectChanges();
         }
       });
-    this.currencyIdx$ = this.switchCurrencyService.getCurrencyIdx(this.selectedCurrency);
+    this.currencyService.getGlobalCurrencyObj()
+      .pipe(
+        takeUntil(this._componentDestroyed$)
+      )
+      .subscribe((res: GlobalCurrencyObject) => {
+        this.globalCurrencyObj = res;
+      });
+    this.isCurrencySwitchAvailable$ = this.currencyService.isCurrencySwitchAvailable();
   }
 
   public openDialog(): void {
     const dialogRef = this.dialog.open(CartModalComponent, {
       width: '400px',
       data: {
-        items: this.cartDialogMockData,
-        currencyIdx: this.currencyIdx$
+        items: this._cartDialogMockData,
+        currencyObj: this.globalCurrencyObj
       }
     });
-
     dialogRef.afterClosed().subscribe(result => { // TODO remove if not needed
       console.log('The dialog was closed');
     });
+  }
 
+  public onCurrencyChange(newCurrency: string):void {
+    this.currencyService.setGlobalCurrency(newCurrency);
   }
 
   ngOnDestroy(): void {

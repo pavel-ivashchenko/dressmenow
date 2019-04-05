@@ -16,6 +16,24 @@
 
 .nav-bar {
   width: 100%;
+  position: relative;
+  background-color: #f7f7f7;
+  &::after {
+    content: '';
+    z-index: -1;
+    border: 0 solid transparent;
+    position: absolute;
+    right: 0;
+    bottom: -5rem;
+    -webkit-transform: rotate(360deg);
+    border: {
+      bottom-width: 5rem;
+      right: {
+        width: 100vw;
+        color: #f7f7f7;
+      }
+    }
+  }
   img {
     display: block;
   }
@@ -218,7 +236,7 @@
 
 .fullscreen-main-menu {
   width: 100%;
-  background-color: #fff;
+  background-color: #f7f7f7;
   .cart-and-user-shrinked, .logo-shrinked {
     & > div, a {
       display: none;

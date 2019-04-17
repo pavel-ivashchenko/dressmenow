@@ -1,92 +1,43 @@
 
 @import 'global-colors';
+@import 'mixins';
 @import '~bootstrap-4-grid/scss/grid.scss';
 
-@mixin menu-link-span {
-  span {
-    border: 1px solid transparent;
-  }
-  &:hover {
-    span {
-      color: $main-orange;
-      border-bottom-color: #000;
-    }
-  }
+@mixin logo-line {
+  font-family: 'Homemade Apple';
+  transform: rotate(-5deg);
+  color: #000;
 }
 
-.nav-bar {
-  width: 100%;
-  position: relative;
-  background-color: #f7f7f7;
-  &::after {
-    content: '';
-    z-index: -1;
-    border: 0 solid transparent;
-    position: absolute;
-    right: 0;
-    bottom: -5rem;
-    -webkit-transform: rotate(360deg);
-    border: {
-      bottom-width: 5rem;
-      right: {
-        width: 100vw;
-        color: #f7f7f7;
-      }
-    }
-  }
-  img {
-    display: block;
-  }
-  // All media breakpoints style changes of header
-  @include media-breakpoint-up(lg) {
-    .mobile-menu-wrapper {
-      max-height: 500px;
-      &.mobile-menu-hidden  {
-        max-height: 500px;
-      }
-    }
-    .nav-bar-fullscreen {
-      .nav-bar-social {
-        border-top: 0;
-      }
-    }
-    .fullscreen-main-menu {
-      a.menu-link {
-        color: $font-grey;
-        background-color: transparent;
-        @include menu-link-span;
-      }
-    }
-  }
+@mixin logo-line-last {
+  transform: rotate(-15deg);
+  text-align: right;
 }
 
-.top-add {
-  max-height: 50px;
+.top-ad {
+  height: 50px;
   display: flex;
-  background-color: $main-orange;
   justify-content: center;
   position: relative;
-  padding: 15px 0;
+  align-items: center;
+  background-color: $main-orange;
   transition: 0.3s;
   overflow: hidden;
-  &.top-add-hidden {
+  @include m('hidden') {
     max-height: 0;
     padding: 0;
   }
-  * {
-    color: #fff;
-    align-self: center;
-  }
-  p, a {
+  @include e('text') {
     font-family: Montserrat, Arial;
     color: #fff;
     font-size: 13px;
-  }
-  a {
     text-decoration: underline;
+    align-self: center;
   }
-  i {
+  @include e('close') {
+    color: #fff;
     position: absolute;
+    top: 0;
     right: 0;
     font-size: 12px;
     opacity: 0.7;
@@ -98,166 +49,155 @@
   }
 }
 
-.nav-bar-mobile {
+.nav {
+  width: 100%;
+  position: relative;
+  padding: 10px 0 0;
+  border-top: 2px dashed $main-orange;
+}
+
+.nav-mobile {
   display: flex;
   align-items: center;
   padding: 10px 20px;
-  .nav-bar-logo-mobile {
+  @include e('logo') {
     display: inline-block;
     position: relative;
-    img {
-      height: 100px;
-    }
-  }
-  .nav-bar-mobile-right {
-    a {
-      img {
-        display: block;
-      }
-    }
+    height: 100px;
   }
 }
 
 .hamburger {
   display: inline-block;
   margin-left: 30px;
-  .line {
+  cursor: pointer;
+  @include e('line') {
     display: block;
     width: 35px;
     height: 4px;
-    background-color: grey;
+    background-color: #000;
     border-radius: 50px;
-    margin: 6px 0;
     transition: all 0.3s ease-in-out;
-    &:nth-child(1) {
+    margin: 6px 0;
+    @include m('first') {
       background-color: $main-orange;
+      @include m('active') {
+        transform: translate(3px, 2px) rotate(45deg);
+        width: 15px;
+      }
     }
-  }
-  &:hover {
-    cursor: pointer;
-    .line:nth-child(1) {
-      transform: translateX(10px);
-      width: 30px;
+    @include m('second') {
+      @include m('active') {
+        transform: rotate(-45deg);
+        width: 35px;
+      }
     }
-  }
-  &.hamburger-active {
-    .line:nth-child(1) {
-      transform: translate(3px, 2px) rotate(45deg);
-      width: 15px;
-    }
-    .line:nth-child(2) {
-      transform: rotate(-45deg);
-      width: 35px;
-    }
-    .line:nth-child(3) {
-      transform: translate(10px, 2px) rotate(45deg);
-      width: 19px;
-      transform-origin: bottom right;
+    @include m('third') {
+      @include m('active') {
+        transform: translate(10px, 2px) rotate(45deg);
+        width: 19px;
+        transform-origin: bottom right;
+      }
     }
   }
 }
 
-// Wrapper over all main menus in order to enable hamburger switch
-.mobile-menu-wrapper {
+// Wrapper of main nav panel in order to enable hamburger switch
+.mobile-view {
   max-height: 320px;
   overflow: hidden;
   transition: max-height 0.3s;
-  &.mobile-menu-hidden  {
+  @include m('hidden') {
     max-height: 0;
+    @include media-breakpoint-up(lg) {
+      max-height: 500px;
+    }
   }
 }
 
-.nav-bar-fullscreen {
+.nav-main {
   & > div {
     display: inline-block;
   }
-  .nav-bar-add {
-    padding: 10px;
+  @include e('logo') {
+    height: 100px;
+    margin: 10px 0;
+  }
+}
+
+.nav-user-info {
+  padding: 10px;
+  @include e('email') {
     font-size: 13px;
+    display: flex;
+    align-items: center;
     color: $main-grey;
-    border-color: $main-border-grey;
-    border-width: 1px;
-    border-style: solid none;
-    a {
+  }
+  @include e('currency') {
+    display: flex;
+    align-items: center;
+    max-width: 60px;
+    margin: 0 10px;
+    color: $main-grey;
+  }
+}
+
+.nav-main-ad {
+  padding: 10px;
+  font-size: 13px;
+  color: $main-grey;
+  border-color: $main-border-grey;
+  border-width: 1px;
+  border-style: solid none;
+  @include e('link') {
+    color: $main-orange;
+  }
+}
+
+.nav-social {
+  border-top: 1px solid $main-border-grey;
+  @include media-breakpoint-up(lg) {
+    border-top: 0;
+  }
+  li {
+    display: inline-block;
+  }
+  a {
+    padding: 10px;
+    display: block;
+    font-size: 20px;
+    color: $main-grey;
+    &:hover {
       color: $main-orange;
     }
   }
-  .nav-bar-fullscreen-right {
-    & > div {
-      padding: 10px 0;
-      & > * {
-        margin: 0 10px;
-      }
-    }
-    .cart-and-user-full {
-      a {
-        display: inline-block;
-        cursor: pointer;
-      }
-    }
-    .nav-bar-email {
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      margin: 0 10px;
-      color: $main-grey;
-    }
-    .nav-bar-currency {
-      display: flex;
-      align-items: center;
-      max-width: 60px;
-      margin: 0 10px;
-      color: $main-grey;
-    }
-  }
-
-  .nav-bar-social {
-    border-top: 1px solid $main-border-grey;
-    div {
-      display: inline-block;
-      a {
-        padding: 10px;
-        display: block;
-        font-size: 20px;
-        color: $main-grey;
-        &:hover {
-          color: $main-orange;
-        }
-      }
-    }
-  }
-  .logo-fullscreen {
-    img {
-      height: 100px;
-      margin: 10px 0;
-    }
-  }
 }
 
-.fullscreen-main-menu {
+.nav-main-menu {
   width: 100%;
-  background-color: #f7f7f7;
-  .cart-and-user-shrinked, .logo-shrinked {
-    & > div, a {
-      display: none;
-    }
-  }
-  a.menu-link {
-    padding: 10px;
-    text-align: center;
-    color: #fff;
-    background-color: $main-orange;
-    border: 1px solid transparent;
-    * {
-      transition: 0.3s;
-    }
-    &:hover {
-      border-color: #fff;
-    }
+  color: #fff;
+  background-color: $main-orange;
+  @include media-breakpoint-up(lg) {
+    width: 100%;
+    background-color: #fff;
+    color: $font-grey;
   }
 }
 
-.shrinked-main-menu {
+.main-menu-link {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  color: inherit;
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.nav-fixed {
   max-height: 0;
   width: 100%;
   position: fixed;
@@ -267,36 +207,16 @@
   background-color: #fff;
   transition: max-height 0.3s;
   box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
-  .cart-and-user-shrinked, .shrinked-logo {
-    & > div, a {
-      display: flex;
+  @include m('visible') {
+    @include media-breakpoint-up(lg) {
+      max-height: 50px;
     }
   }
-  &.shrinked-menu-visible {
-    max-height: 70px;
-  }
-  a.menu-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $font-grey;
-    font-size: 16px;
-    background-color: transparent;
-    padding: 10px;
-    @include menu-link-span;
-  }
 }
 
-.logo-shrinked {
-  margin: 10px 0;
-  img {
-    height: 72px;
-  }
-}
-
-.nav-bar-cart-icon {
+.nav-cart {
   position: relative;
-  span {
+  @include e('qty') {
     position: absolute;
     top: 0px;
     left: 15px;
@@ -313,9 +233,39 @@
   }
 }
 
-.nav-bar-icons-divider {
+.nav-icons-divider {
   width: 1px;
   height: 20px;
   margin: 0 15px;
   background-color: $main-grey;
+}
+
+.logo {
+  min-width: 100px;
+  @include e('line') {
+    @include logo-line;
+    font-size: 25px;
+    line-height: 40px;
+    @include m('last') {
+      @include logo-line-last;
+      font-size: 35px;
+      margin-top: 5px;
+    }
+  }
+}
+
+.logo-small {
+  @include e('line') {
+    @include logo-line;
+    line-height: 40px;
+    margin-top: -5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: $main-orange;
+    @include m('last') {
+      @include logo-line-last;
+      font-size: 18px;
+      margin-top: -17px;
+    }
+  }
 }

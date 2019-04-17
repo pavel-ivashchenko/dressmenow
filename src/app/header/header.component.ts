@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public globalCurrencyObj: GlobalCurrencyObject;
   public currencyArr: Currency[] = currencyArr;
   public isHamburgerActive: boolean = false;
-  public isTopAddHidden: boolean = false;
+  public isTopAdHidden: boolean = false;
   public isMobileMode: boolean;
 
   constructor(

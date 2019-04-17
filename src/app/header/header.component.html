@@ -1,129 +1,152 @@
 
-<div class="nav-bar">
+<section class="top-ad" [ngClass]="{ 'top-ad--hidden': isTopAdHidden }">
+  <p class="top-ad__text">Знижка 20% на все!&nbsp;</p>
+  <a class="top-ad__text" href="#">Переглянути</a>
+  <i class="top-ad__close fa fa-times" (click)="isTopAdHidden = !isTopAdHidden"></i>
+</section>
+
+<main>
+
+  <section class="nav">
   
-  <div class="top-add" [ngClass]="{'top-add-hidden':isTopAddHidden}">
-    <p>Знижка 20% на все!&nbsp;</p>
-    <a href="#">Переглянути</a>
-    <i class="fa fa-times" (click)="isTopAddHidden=!isTopAddHidden"></i>
-  </div>
+    <div class="nav-mobile row justify-content-between d-lg-none no-gutters">
 
-  <div class="nav-bar-mobile row justify-content-between d-lg-none no-gutters">
-    <a href="#" class="nav-bar-logo-mobile col-auto">
-      <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
-    </a>
-    <div class="nav-bar-mobile-right col-auto row no-gutters justify-content-end align-items-center">
-      <ng-container *ngTemplateOutlet="userMenu"></ng-container>
-      <div class="hamburger" [ngClass]="{'hamburger-active':isHamburgerActive}"
-        (click)="this.isHamburgerActive=!this.isHamburgerActive">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </div>
-    </div>
-  </div>
-
-  <div class="mobile-menu-wrapper" [ngClass]="{'mobile-menu-hidden':!isHamburgerActive}">
-
-    <div class="nav-bar-fullscreen row no-gutters justify-content-between align-items-center px-lg-4">
-      <div class="nav-bar-add d-lg-none col-12 order-first">
-        <span>Безкоштовна доставка на сумму понад 2 тисяч гривень, </span>
-        <a href="#">дізнатись деталі
-          <i class="fa fa-external-link"></i>
-        </a>
-      </div>
-      <div class="nav-bar-social col-12 col-lg-4 pl-3 pl-lg-5 order-2 order-lg-first">
-        <div>
-          <a href="#" class="fa fa-facebook"></a>
-        </div>
-        <div>
-          <a href="#" class="fa fa-youtube"></a>
-        </div>
-        <div>
-          <a href="#" class="fa fa-twitter"></a>
-        </div>
-        <div>
-          <a href="#" class="fa fa-vk"></a>
-        </div>
-      </div>
-      <a href="#" class="logo-fullscreen col-2 justify-content-center row d-none d-lg-flex">
+      <a href="#" class="nav-mobile__logo col-auto">
         <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
       </a>
-      <div class="nav-bar-fullscreen-right col-12 col-lg-5 order-first order-lg-2">
-        <div class="row no-gutters justify-content-start justify-content-lg-end">
-          <p class="nav-bar-email col-auto align-items-center">
-            plito4ka@gmail.com
-          </p>
-          <div class="nav-bar-currency col-1">
-            <mat-form-field>
-              <mat-select
-                [disabled]="!(isCurrencySwitchAvailable$ | async)"
-                [value]="globalCurrencyObj.currency"
-                (selectionChange)="onCurrencyChange($event.value)">
-                <mat-option *ngFor="let currency of currencyArr" [value]="currency.uiValue">
-                  {{currency.uiValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="cart-and-user-full d-none d-lg-flex col-auto row no-gutters justify-content-center align-items-center">
-            <ng-container *ngTemplateOutlet="userMenu"></ng-container>
-          </div>
+
+      <aside class="col-auto row no-gutters justify-content-end align-items-center">
+        <ng-container *ngTemplateOutlet="userMenu"></ng-container>
+        <div class="hamburger" (click)="this.isHamburgerActive = !this.isHamburgerActive">
+          <span class="hamburger__line hamburger__line--first" 
+            [ngClass]="{ 'hamburger__line--first--active': isHamburgerActive }"></span>
+          <span class="hamburger__line hamburger__line--second"
+            [ngClass]="{ 'hamburger__line--second--active': isHamburgerActive }"></span>
+          <span class="hamburger__line hamburger__line--third"
+            [ngClass]="{ 'hamburger__line--third--active': isHamburgerActive }"></span>
         </div>
-      </div>
+      </aside>
+
     </div>
   
-    <div class="fullscreen-main-menu row no-gutters justify-content-center">
-      <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
+    <div class="mobile-view" [ngClass]="{ 'mobile-view--hidden': !isHamburgerActive }">
+  
+      <div class="nav-main row justify-content-between align-items-center px-lg-4">
+
+        <div class="d-lg-none col-12 order-first">
+          <div class="nav-main-ad">
+            <span>Безкоштовна доставка на сумму понад 2 тисяч гривень, </span>
+            <a class="nav-main-ad__link" href="#">дізнатись деталі
+              <i class="fa fa-external-link"></i>
+            </a>
+          </div>
+        </div>
+
+        <ul class="nav-social col-12 col-lg-4 pl-3 pl-lg-5 order-2 order-lg-first">
+          <li>
+            <a href="#" class="fa fa-facebook"></a>
+          </li>
+          <li>
+            <a href="#" class="fa fa-youtube"></a>
+          </li>
+          <li>
+            <a href="#" class="fa fa-twitter"></a>
+          </li>
+          <li>
+            <a href="#" class="fa fa-vk"></a>
+          </li>
+        </ul>
+
+        <a href="#" class="nav-main__logo col-2 justify-content-center row d-none d-lg-flex">
+          <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
+        </a>
+
+        <div class="col-12 col-lg-5 order-first order-lg-2">
+
+          <div class="nav-user-info row no-gutters justify-content-start justify-content-lg-end">
+
+            <p class="nav-user-info__email col-auto align-items-center">
+              support@dressmenow.com
+            </p>
+
+            <div class="nav-user-info__currency col-1">
+              <mat-form-field>
+                <mat-select
+                  [disabled]="!(isCurrencySwitchAvailable$ | async)"
+                  [value]="globalCurrencyObj.currency"
+                  (selectionChange)="onCurrencyChange($event.value)">
+                  <mat-option *ngFor="let currency of currencyArr" [value]="currency.uiValue">
+                    {{currency.uiValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="d-none d-lg-flex col-auto row no-gutters justify-content-center align-items-center">
+              <ng-container *ngTemplateOutlet="userMenu"></ng-container>
+            </div>
+            
+          </div>
+
+        </div>
+
+      </div>
+    
+      <div class="nav-main-menu row no-gutters justify-content-center">
+        <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
+      </div>
+  
+      <div class="nav-fixed row no-gutters justify-content-between"
+        [ngClass]="{ 'nav-fixed--visible': (isShrinkedService.check() | async) }">
+        <div class="d-none d-lg-flex col-2 justify-content-center">
+          <a href="#">
+            <div class="logo-small">
+              <p class="logo-small__line">Dress me</p>
+              <p class="logo-small__line logo-small__line--last">now!</p>
+            </div>
+          </a>
+        </div>
+        <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
+        <div class="d-none d-lg-flex col-2 align-items-center justify-content-center">
+          <ng-container *ngTemplateOutlet="userMenu"></ng-container>
+        </div>
+      </div>
+  
     </div>
+  
+  </section>
 
-    <div class="shrinked-main-menu row no-gutters justify-content-between"
-      [ngClass]="{'shrinked-menu-visible':(isShrinkedService.check() | async) && !isMobileMode}">
-      <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
-    </div>
-
-  </div>
-
-</div>
+</main>
 
 <ng-template #userMenu>
   <a href="#" class="align-self-center">
     <img src="../../assets/img/nav-bar-icon-user.png" alt="User profile">
   </a>
-  <span class="nav-bar-icons-divider"></span>
-  <a class="nav-bar-cart-icon align-self-center" (click)="openDialog()">
+  <span class="nav-icons-divider"></span>
+  <a class="nav-cart align-self-center" (click)="openDialog()">
     <img src="../../assets/img/nav-bar-icon-bag.png" alt="Shopping cart">
-    <span>0</span>
+    <span class="nav-cart__qty">0</span>
   </a>
 </ng-template>
 
 <ng-template #mainLogo>
-  <p style="font-family: 'Homemade Apple'; font-size: 35px; transform: rotate(-5deg);">
-    Dress me <span style="font-family: 'Homemade Apple'; font-size: 40px; transform: rotate(-5deg);">now</span>
-  </p>
-  <!-- <img src="../../assets/img/logo.svg" alt="Main logo"> -->
+  <div class="logo">
+    <p class="logo__line">Dress me</p>
+    <p class="logo__line logo__line--last">now!</p>
+  </div>
 </ng-template>
 
 <ng-template #mainMenu>
-  <div class="logo-shrinked d-none d-lg-flex col-2 justify-content-center">
-    <a href="#">
-      <ng-container *ngTemplateOutlet="mainLogo"></ng-container>
-    </a>
-  </div>
-  <a href="#" class="menu-link col-12 col-lg-2 align-items-center">
-    <span>Головна сторінка</span>
+  <a href="#" class="main-menu-link col-12 col-lg-2 align-items-center">
+    <span>ГОЛОВНА СТОРІНКА</span>
   </a>
-  <a href="#" class="menu-link col-12 col-lg-2 align-items-center">
-    <span>Акції</span>
+  <a href="#" class="main-menu-link col-12 col-lg-2 align-items-center">
+    <span>АКЦІЇ</span>
   </a>
-  <a href="#" class="menu-link col-12 col-lg-2 align-items-center">
-    <span>Про нас</span>
+  <a href="#" class="main-menu-link col-12 col-lg-2 align-items-center">
+    <span>ПРО НАС</span>
   </a>
-  <a href="#" class="menu-link col-12 col-lg-2 align-items-center">
-    <span>Контакти</span>
+  <a href="#" class="main-menu-link col-12 col-lg-2 align-items-center">
+    <span>КОНТАКТИ</span>
   </a>
-  <div class="cart-and-user-shrinked d-none d-lg-flex col-2 align-items-center justify-content-center">
-    <div class="justify-content-center align-items-center">
-      <ng-container *ngTemplateOutlet="userMenu"></ng-container>
-    </div>
-  </div>
 </ng-template>

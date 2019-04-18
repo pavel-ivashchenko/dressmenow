@@ -15,7 +15,8 @@
 }
 
 .top-ad {
-  height: 50px;
+  max-height: 50px;
+  padding: 20px 0;
   display: flex;
   justify-content: center;
   position: relative;
@@ -52,8 +53,6 @@
 .nav {
   width: 100%;
   position: relative;
-  padding: 10px 0 0;
-  border-top: 2px dashed $main-orange;
 }
 
 .nav-mobile {
@@ -120,8 +119,7 @@
     display: inline-block;
   }
   @include e('logo') {
-    height: 100px;
-    margin: 10px 0;
+    margin: 10px 0 10px;
   }
 }
 
@@ -165,7 +163,7 @@
   a {
     padding: 10px;
     display: block;
-    font-size: 20px;
+    font-size: 16px;
     color: $main-grey;
     &:hover {
       color: $main-orange;
@@ -181,6 +179,9 @@
     width: 100%;
     background-color: #fff;
     color: $font-grey;
+    border-style: solid;
+    border-width: 1px 0;
+    border-color: $main-orange;
   }
 }
 
@@ -241,7 +242,6 @@
 }
 
 .logo {
-  min-width: 100px;
   @include e('line') {
     @include logo-line;
     font-size: 25px;

@@ -1,14 +1,17 @@
 
 @import '~font-awesome/css/font-awesome.min.css';
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
-@import url('https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700');
-@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700');
-@import url('https://fonts.googleapis.com/css?family=Meddon');
-@import url('https://fonts.googleapis.com/css?family=Homemade+Apple');
-@import url('https://fonts.googleapis.com/css?family=Clicker+Script');
 @import '~bootstrap-4-grid/scss/grid.scss';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import 'global-colors';
+@import 'normalize';
+@import 'colors';
+@import 'z-index';
+@import 'fonts';
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+// Background video
 
 video#bgvid { 
   position: fixed;
@@ -18,28 +21,17 @@ video#bgvid {
   min-height: 100%;
   width: auto;
   height: auto;
-  z-index: -100;
+  z-index: $bgvid;
   -ms-transform: translateX(-50%) translateY(-50%);
   -moz-transform: translateX(-50%) translateY(-50%);
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg) no-repeat;
-  background-size: cover; 
+  background: url('./assets/img/main-background.jpg') no-repeat;
+  background-size: cover;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Montserrat, Arial;
-  text-decoration: none;
-  list-style-type: none;
-  scroll-behavior: smooth;
-}
+// Customizing angular material styles in components
 
-/**
-  Customizing material select options
-*/
 div.cdk-overlay-pane {
   div.ng-trigger-transformPanel {
     mat-option.mat-option {
@@ -49,16 +41,13 @@ div.cdk-overlay-pane {
       &[aria-selected="true"] {
         span.mat-option-text {
           color: $main-orange;
-        }   
+        }
       }
     }
   }
 }
 
 app-header {
-  /**
-    Customizing material select style
-  */
   mat-form-field.mat-form-field-appearance-legacy {
     width: 100%;
     .mat-form-field-wrapper {
@@ -68,8 +57,11 @@ app-header {
       padding: 0;
       border-top: 0;
       .mat-select-trigger {
-        span {
+        span, .mat-select-arrow {
           color: $main-grey;
+          @include media-breakpoint-up(lg) {
+            color: #fff;
+          }
         }
       }
     }

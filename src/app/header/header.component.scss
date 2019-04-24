@@ -1,12 +1,13 @@
 
-@import 'global-colors';
-@import 'mixins';
 @import '~bootstrap-4-grid/scss/grid.scss';
+@import 'colors';
+@import 'mixins';
+@import 'z-index';
 
 @mixin logo-line {
   font-family: 'Homemade Apple';
   transform: rotate(-5deg);
-  color: #000;
+  color: $main-orange;
 }
 
 @mixin logo-line-last {
@@ -74,7 +75,7 @@
     display: block;
     width: 35px;
     height: 4px;
-    background-color: #000;
+    background-color: $main-grey;
     border-radius: 50px;
     transition: all 0.3s ease-in-out;
     margin: 6px 0;
@@ -102,6 +103,7 @@
 }
 
 // Wrapper of main nav panel in order to enable hamburger switch
+
 .mobile-view {
   max-height: 320px;
   overflow: hidden;
@@ -130,6 +132,9 @@
     display: flex;
     align-items: center;
     color: $main-grey;
+    @include media-breakpoint-up(lg) {
+      color: #fff;
+    }
   }
   @include e('currency') {
     display: flex;
@@ -165,8 +170,12 @@
     display: block;
     font-size: 16px;
     color: $main-grey;
+    transition: color .3s;
     &:hover {
       color: $main-orange;
+    }
+    @include media-breakpoint-up(lg) {
+      color: #fff;
     }
   }
 }
@@ -177,8 +186,7 @@
   background-color: $main-orange;
   @include media-breakpoint-up(lg) {
     width: 100%;
-    background-color: #fff;
-    color: $font-grey;
+    background-color: transparent;
     border-style: solid;
     border-width: 1px 0;
     border-color: $main-orange;
@@ -195,7 +203,15 @@
   border: 1px solid transparent;
   color: inherit;
   background-color: transparent;
-  transition: 0.3s;
+  transition: color .3s;
+  &:hover {
+    color: inherit;
+  }
+  @include media-breakpoint-up(lg) {
+    &:hover {
+      color: $main-orange;
+    }
+  }
 }
 
 .nav-fixed {
@@ -204,7 +220,7 @@
   position: fixed;
   top: 0;
   overflow: hidden;
-  z-index: 10;
+  z-index: $nav-fixed;
   background-color: #fff;
   transition: max-height 0.3s;
   box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
@@ -215,22 +231,14 @@
   }
 }
 
-.nav-cart {
-  position: relative;
-  @include e('qty') {
-    position: absolute;
-    top: 0px;
-    left: 15px;
-    height: 16px;
-    width: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
-    background-color: #000;
-    font-size: 12px;
-    font-weight: 400;
-    border-radius: 50%;
+.user-profile, .user-cart {
+  font-size: 28px;
+  color: $main-orange;
+  margin: 0;
+  cursor: pointer;
+  @include media-breakpoint-up(lg) {
+    color: #fff;
+    font-size: 20px;
   }
 }
 
@@ -239,13 +247,44 @@
   height: 20px;
   margin: 0 15px;
   background-color: $main-grey;
+  @include media-breakpoint-up(lg) {
+    color: #fff;
+  }
+}
+
+.nav-cart {
+  position: relative;
+  @include e('qty') {
+    position: absolute;
+    top: -7px;
+    left: 27px;
+    height: 16px;
+    width: 16px;
+    font-size: 16px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $main-orange;
+    border-radius: 50%;
+    @include media-breakpoint-up(lg) {
+      font-size: 12px;
+      color: #fff;
+      top: -10px;
+      left: 17px;
+    }
+  }
 }
 
 .logo {
   @include e('line') {
-    @include logo-line;
     font-size: 25px;
     line-height: 40px;
+    margin-top: 10px;
+    @include media-breakpoint-up(lg) {
+      margin-top: 0;
+    }
+    @include logo-line;
     @include m('last') {
       @include logo-line-last;
       font-size: 35px;

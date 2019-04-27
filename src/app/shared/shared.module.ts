@@ -1,6 +1,19 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  MatSelectModule,
+  MatDialogModule,
+  MatButtonModule,
+  MatSnackBarModule
+} from '@angular/material';
+
+const MATERIAL_MODULES = [
+  MatSelectModule,
+  MatDialogModule,
+  MatButtonModule,
+  MatSnackBarModule
+]
 
 import { COMPONENTS } from './components';
 import { PIPES } from './pipes';
@@ -11,9 +24,11 @@ import { PIPES } from './pipes';
     ...PIPES
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ...MATERIAL_MODULES
   ],
   exports: [
+    ...MATERIAL_MODULES,
     ...COMPONENTS,
     ...PIPES
   ],

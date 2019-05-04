@@ -6,7 +6,6 @@ import { map, take, retry } from 'rxjs/operators';
 import { PrivatBankCurrencyApiObj, GlobalCurrencyObject } from '@app/shared/interfaces';
 import { CURRENCY_CONSTANTS } from '@app/shared/constants';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +21,6 @@ export class CurrencyService {
   private _isCurrencySwitchAvailable: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private _currencies: {[key:string]:string} | null = null;
   
-
   constructor(private http: HttpClient) {
     this.http.get<PrivatBankCurrencyApiObj[]>(this._currencyApi)
       .pipe(
@@ -44,11 +42,7 @@ export class CurrencyService {
       });
   }
 
-  private calcCurrencyIdx(currIdxObj: PrivatBankCurrencyApiObj): string {
-    return `${ +currIdxObj.sale + (+currIdxObj.sale / 100) * this._riskSurcharge }`;
-  }
-
-  public setGlobalCurrency(newCurrencyVal: string) {
+  public setGlobalCurrency(newCurrencyVal: string): void {
     if (!this._currencies || newCurrencyVal === this._defaultCurrencyObj.currency) {
       this._currencyObj$.next(this._defaultCurrencyObj);
     } else {
@@ -59,11 +53,15 @@ export class CurrencyService {
     }
   }
 
-  public getGlobalCurrencyObj(): Observable<GlobalCurrencyObject> {
+  private calcCurrencyIdx(currIdxObj: PrivatBankCurrencyApiObj): string {
+    return `${ +currIdxObj.sale + (+currIdxObj.sale / 100) * this._riskSurcharge }`;
+  }
+
+  public getGlobalCurrencyObj(): Observable<GlobalCurrencyObject> { // TODO remove when store is implemented
     return this._currencyObj$.asObservable();
   }
 
-  public isCurrencySwitchAvailable(): Observable<boolean> {
+  public isCurrencySwitchAvailable(): Observable<boolean> { // TODO remove when store is implemented
     return this._isCurrencySwitchAvailable.asObservable();
   }
 

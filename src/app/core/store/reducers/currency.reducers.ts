@@ -14,9 +14,6 @@ export const currencyReducers = (
         currency: action.payload
       }
     }
-    case ECurrencyActions.GetCurrency: {
-      return state
-    }
     default:
       return state
   }

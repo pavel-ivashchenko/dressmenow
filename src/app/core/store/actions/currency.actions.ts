@@ -2,12 +2,10 @@
 import { Action } from '@ngrx/store';
 import { GlobalCurrencyObject } from '@app/shared/interfaces';
 
-
 export enum ECurrencyActions {
   SetCurrency = '[Currency] Set Currency',
   SetCurrencySuccess = '[Currency] Set Currency Success',
-  GetCurrency = '[Currency] Get Currency',
-  GetCurrencySuccess = '[Currency] Get Currency Success'
+  GetCurrency = '[Currency] Get Currency'
 }
 
 export class SetCurrency implements Action {
@@ -15,13 +13,13 @@ export class SetCurrency implements Action {
   constructor(public payload: string) { }
 }
 
+export class SetCurrencySuccess implements Action {
+  public readonly type = ECurrencyActions.SetCurrencySuccess;
+  constructor(public payload: GlobalCurrencyObject) { }
+}
+
 export class GetCurrency implements Action {
   public readonly type = ECurrencyActions.GetCurrency;
 }
 
-export class GetCurrencySuccess implements Action {
-  public readonly type = ECurrencyActions.GetCurrencySuccess;
-  constructor(public payload: GlobalCurrencyObject) { }
-}
-
-export type CurrencyActions = SetCurrency | GetCurrency;
+export type CurrencyActions = SetCurrency | SetCurrencySuccess | GetCurrency ;

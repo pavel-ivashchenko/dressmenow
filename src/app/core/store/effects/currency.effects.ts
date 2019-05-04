@@ -1,23 +1,27 @@
 
-
 import { Injectable } from '@angular/core';
 import { Effect, ofType, Actions } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
 import { of } from 'rxjs';
-import { switchMap, map, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { CurrencyService } from '@app/core/services';
-import { getCurrencySymbol } from '@angular/common';
 
-import { ECurrencyActions, GetCurrency } from './../actions/currency.actions';
+import {
+  ECurrencyActions,
+  SetCurrency,
+  SetCurrencySuccess
+} from '../actions/currency.actions';
+import { GlobalCurrencyObject } from '@app/shared/interfaces';
 
 @Injectable()
 export class CurrencyEffects {
+
   @Effect()
-  getCurrency$ = this._actions$.pipe(
-    ofType<GetCurrency>(ECurrencyActions.GetCurrency),
+  setCurrency$ = this._actions$.pipe(
+    ofType<SetCurrency>(ECurrencyActions.SetCurrency),
+    map(action => this.currencyService.setGlobalCurrency(action.payload)),
     switchMap(() => this.currencyService.getGlobalCurrencyObj()),
-    
-  );
+    switchMap((res: GlobalCurrencyObject) => of(new SetCurrencySuccess(res)))
+  )
 
   constructor(
     private currencyService: CurrencyService,

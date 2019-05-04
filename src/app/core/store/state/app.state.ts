@@ -4,7 +4,7 @@ import { initialCurrencyState } from './currency.state';
 import { GlobalCurrencyObject } from '@app/shared/interfaces';
 
 export interface IAppState {
-  router?: RouterReducerState;
+  router?: RouterReducerState; // TODO investigate
   currency: GlobalCurrencyObject;
 }
 

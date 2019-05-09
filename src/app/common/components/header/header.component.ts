@@ -9,12 +9,15 @@ import {
 import { MatDialog } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Currency, GlobalCurrencyObject } from '@app/shared/interfaces';
+
+import { Currency, GlobalCurrency } from '@app/shared/interfaces';
 import { currencyArr } from '@app/shared/models';
-import { IsMobileService, IsShrinkedService, CurrencyService } from '@app/core/services';
-import { cartDialogMockData } from './models';
+import { IsMobileService, IsShrinkedService } from '@app/core/services';
 import { CartModalComponent } from './modals/cart-modal/cart-modal.component';
 
+import { Store } from '@ngrx/store';
+import { SetCurrency } from '@app/core/store/actions';
+import { IAppState } from '@app/core/store/state';
 
 @Component({
   selector: 'app-header',
@@ -25,24 +28,22 @@ import { CartModalComponent } from './modals/cart-modal/cart-modal.component';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private _componentDestroyed$: Subject<void> = new Subject();
-  private _cartDialogMockData = cartDialogMockData;
-  public isCurrencySwitchAvailable$: Observable<boolean>;
-  public globalCurrencyObj: GlobalCurrencyObject;
-  public currencyArr: Currency[] = currencyArr;
   public isHamburgerActive: boolean = false;
   public isTopAdHidden: boolean = false;
   public isMobileMode: boolean;
+  public currencyArr: Currency[] = currencyArr;
+  public currency$: Observable<GlobalCurrency> = this._store.select(state => state.currency);
 
   constructor(
-    private cdr: ChangeDetectorRef,
-    private isMobileService: IsMobileService,
-    private currencyService: CurrencyService,
-    private dialog: MatDialog,
-    public isShrinkedService: IsShrinkedService
+    private _cdr: ChangeDetectorRef,
+    private _isMobileService: IsMobileService,
+    private _store: Store<IAppState>,
+    private _dialog: MatDialog,
+    public isShrinkedService: IsShrinkedService,
   ) { }
 
   ngOnInit() {
-    this.isMobileService.check()
+    this._isMobileService.check()
       .pipe(
         takeUntil(this._componentDestroyed$)
       )
@@ -50,34 +51,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isMobileMode = res;
         if (this.isHamburgerActive && !this.isMobileMode) {
           this.isHamburgerActive = false;
-          this.cdr.detectChanges();
+          this._cdr.detectChanges();
         }
       });
-    this.currencyService.getGlobalCurrencyObj()
-      .pipe(
-        takeUntil(this._componentDestroyed$)
-      )
-      .subscribe((res: GlobalCurrencyObject) => {
-        this.globalCurrencyObj = res;
-      });
-    this.isCurrencySwitchAvailable$ = this.currencyService.isCurrencySwitchAvailable();
   }
 
   public openDialog(): void {
-    const dialogRef = this.dialog.open(CartModalComponent, {
+    this._dialog.open(CartModalComponent, {
       width: '400px',
-      data: {
-        items: this._cartDialogMockData,
-        currencyObj: this.globalCurrencyObj
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => { // TODO remove if not needed
-      console.log('The dialog was closed');
+      data: {}
     });
   }
 
   public onCurrencyChange(newCurrency: string):void {
-    this.currencyService.setGlobalCurrency(newCurrency);
+    this._store.dispatch(new SetCurrency(newCurrency));
   }
 
   ngOnDestroy(): void {

@@ -15,8 +15,7 @@
           <pre> x </pre>
           <span>
             {{
-              (item.price / 100 / currencyIndex)
-              | currency:currency:'symbol-narrow':'1.2-2'
+              (item.price / 100 / (currency$ | async)?.index) | currency:(currency$ | async)?.name:'symbol-narrow':'1.2-2'
             }}
           </span>
         </div>
@@ -28,8 +27,7 @@
     Загальна сума:
     <span>
       {{
-        (totalAmount / 100 / currencyIndex)
-        | currency:currency:'symbol-narrow':'1.2-2'
+        (totalAmount / 100 / (currency$ | async)?.index) | currency:(currency$ | async)?.name:'symbol-narrow':'1.2-2'
       }}
     </span>
   </p>

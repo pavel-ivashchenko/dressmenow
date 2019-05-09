@@ -28,7 +28,7 @@
       </aside>
 
     </div>
-  
+
     <div class="mobile-view" [ngClass]="{ 'mobile-view--hidden': !isHamburgerActive }">
   
       <div class="nav-main row justify-content-between align-items-center px-lg-4">
@@ -71,11 +71,10 @@
             <div class="nav-user-info__currency col-1">
               <mat-form-field>
                 <mat-select
-                  [attr.disabled]="!(isCurrencySwitchAvailable$ | async)"
-                  [value]="globalCurrencyObj.currency"
+                  [value]="(currency$ | async)?.name"
                   (selectionChange)="onCurrencyChange($event.value)">
                   <mat-option *ngFor="let currency of currencyArr" [value]="currency.uiValue">
-                    {{currency.uiValue}}
+                    {{ currency.uiValue }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

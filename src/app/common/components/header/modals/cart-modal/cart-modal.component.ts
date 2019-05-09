@@ -1,7 +1,13 @@
 
 import { Component, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CartDialogData, CartModalItem } from '../../interfaces';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import { GlobalCurrency } from '@app/shared/interfaces';
+import { IAppState } from '@app/core/store/state';
+import { CartModalItem } from './interfaces';
+import { cartDialogMockData } from './models';
 
 @Component({
   selector: 'app-cart-modal',
@@ -11,26 +17,21 @@ import { CartDialogData, CartModalItem } from '../../interfaces';
 })
 export class CartModalComponent implements OnInit {
 
-  public cartData: CartModalItem[];
-  public currencyIndex: number;
-  public currency: string;
+  public cartData: CartModalItem[] = cartDialogMockData;
   public totalAmount: number = 0;
+  public currency$: Observable<GlobalCurrency> = this._store.select(state => state.currency);
 
   constructor(
-    private dialogRef: MatDialogRef<CartModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: CartDialogData) { }
+    private _store: Store<IAppState>,
+    private _dialogRef: MatDialogRef<CartModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public _dialogData: {}) { }
 
   ngOnInit() {
-    if (this.dialogData && this.dialogData.items && this.dialogData.currencyObj ) {
-      this.cartData = this.dialogData.items;
-      this.currencyIndex = this.dialogData.currencyObj.currencyIndex;
-      this.currency = this.dialogData.currencyObj.currency;
-      this.totalAmount = this.cartData.reduce((acc, item) => { return acc + item.price * item.qty }, 0);
-    }
+    this.totalAmount = this.cartData.reduce((acc, item) => { return acc + item.price * item.qty }, 0);
   }
   
   onNoClick(): void {
-    this.dialogRef.close();
+    this._dialogRef.close();
   }
 
 }

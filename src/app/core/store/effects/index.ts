@@ -1,2 +1,2 @@
 
-export * from './currency.effects.ts';
+export * from './currency.effects';

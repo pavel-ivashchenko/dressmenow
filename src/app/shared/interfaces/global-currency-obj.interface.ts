@@ -1,5 +1,5 @@
 
-export interface GlobalCurrencyObject {
-  currency: string;
-  currencyIndex: number;
+export interface GlobalCurrency {
+  name: string;
+  index: number;
 }

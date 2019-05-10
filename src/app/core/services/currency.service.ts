@@ -14,28 +14,21 @@ export class CurrencyService {
 
   private _currencyApi: string = CURRENCY_CONSTANTS.CURRENCY_API;
   private _riskSurcharge: number = CURRENCY_CONSTANTS.RISK_SURCHARGE;
-  private _currencies: {[key:string]:string} | null = null;
   
-  constructor(private http: HttpClient) {
-    this._getGlobalCurrency();
-  }
+  constructor(private http: HttpClient) {}
 
-  private _getGlobalCurrency(newCurrencyVal: string = ''): Observable<GlobalCurrency | null> {
+  private _getCurrencies(): Observable<{[key:string]:string} | null> {
     return this.http.get<PrivatBankCurrencyApiObj[]>(this._currencyApi)
       .pipe(
         retry(2),
         take(1),
         map((res: PrivatBankCurrencyApiObj[]) => {
-          if (!res) {
-            return null;
-          }
-          this._currencies = res.reduce((acc, currIdxObj) => {
-            acc[currIdxObj.ccy] = this._calcCurrencyIdx(currIdxObj)
-            return acc;
-          }, {});
-          return newCurrencyVal ?
-            { name: newCurrencyVal, index: +this._currencies[newCurrencyVal] } :
-            null;
+          return !res ?
+            null :
+            res.reduce((acc, currIdxObj) => {
+              acc[currIdxObj.ccy] = this._calcCurrencyIdx(currIdxObj)
+              return acc;
+            }, {});
         })
       )
   }
@@ -44,10 +37,15 @@ export class CurrencyService {
     return `${ +currIdxObj.sale + (+currIdxObj.sale / 100) * this._riskSurcharge }`;
   }
 
-  public setGlobalCurrency(newCurrencyVal: string): Observable<GlobalCurrency> {
-    return this._currencies ?
-      of({ name: newCurrencyVal, index: +this._currencies[newCurrencyVal] }) :
-      this._getGlobalCurrency(newCurrencyVal);
+  private _getGlobalCurrency(newCurrencyVal: string): Observable<GlobalCurrency | null> {
+    return this._getCurrencies()
+      .pipe(
+        map(currencies => currencies ? { name: newCurrencyVal, index: +currencies[newCurrencyVal] } : null)
+      )
+  }
+
+  public setGlobalCurrency(newCurrencyVal: string): Observable<GlobalCurrency | null> {
+    return this._getGlobalCurrency(newCurrencyVal);
   }
 
 }

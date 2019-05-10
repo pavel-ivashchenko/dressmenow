@@ -1,7 +1,8 @@
 
 import { Injectable } from '@angular/core';
 import { Effect, ofType, Actions } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { Action } from '@ngrx/store';
+import { of, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 import { CurrencyService } from '@app/core/services';
@@ -17,10 +18,10 @@ import { GlobalCurrency } from '@app/shared/interfaces';
 export class CurrencyEffects {
 
   @Effect()
-  setCurrency$ = this._actions$.pipe(
+  setCurrency$: Observable<Action> = this._actions$.pipe(
     ofType<SetCurrency>(ECurrencyActions.SetCurrency),
     switchMap(action => this.currencyService.setGlobalCurrency(action.payload)),
-    map((res: GlobalCurrency | null) => res ? of(new SetCurrencySuccess(res)) : of(new SetCurrencyFailure(res)))
+    map((res: GlobalCurrency | null) => res ? new SetCurrencySuccess(res) : new SetCurrencyFailure())
   );
 
   constructor(

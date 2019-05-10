@@ -21,7 +21,6 @@ export class SetCurrencySuccess implements Action {
 
 export class SetCurrencyFailure implements Action {
   public readonly type = ECurrencyActions.SetCurrencyFailure;
-  constructor(public payload: GlobalCurrency) { }
 }
 
 export class GetCurrency implements Action {

@@ -15,7 +15,6 @@ export const currencyReducers = (
         index: action.payload.index
       };
     }
-    case ECurrencyActions.SetCurrencyFailure:
     case ECurrencyActions.GetCurrency:
     default:
       return state;

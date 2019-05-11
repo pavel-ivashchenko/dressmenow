@@ -3,16 +3,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  OnDestroy,
-  ChangeDetectorRef
+  OnDestroy
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { Currency, GlobalCurrency } from '@app/shared/interfaces';
 import { currencyArr } from '@app/shared/models';
-import { IsMobileService, IsShrinkedService } from '@app/core/services';
+import { IsShrinkedService } from '@app/core/services';
 import { CartModalComponent } from './modals/cart-modal/cart-modal.component';
 
 import { Store } from '@ngrx/store';
@@ -35,26 +33,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public currency$: Observable<GlobalCurrency> = this._store.select(state => state.currency);
 
   constructor(
-    private _cdr: ChangeDetectorRef,
-    private _isMobileService: IsMobileService,
     private _store: Store<IAppState>,
     private _dialog: MatDialog,
     public isShrinkedService: IsShrinkedService,
   ) { }
 
-  ngOnInit() {
-    this._isMobileService.check()
-      .pipe(
-        takeUntil(this._componentDestroyed$)
-      )
-      .subscribe(res => {
-        this.isMobileMode = res;
-        if (this.isHamburgerActive && !this.isMobileMode) {
-          this.isHamburgerActive = false;
-          this._cdr.detectChanges();
-        }
-      });
-  }
+  ngOnInit() {}
 
   public openDialog(): void {
     this._dialog.open(CartModalComponent, {

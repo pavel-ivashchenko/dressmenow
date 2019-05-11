@@ -14,6 +14,9 @@ export class CurrencyService {
 
   private _currencyApi: string = CURRENCY_CONSTANTS.CURRENCY_API;
   private _riskSurcharge: number = CURRENCY_CONSTANTS.RISK_SURCHARGE;
+  private _defaultCurrency: string = CURRENCY_CONSTANTS.DEFAULT_CURRENCY;
+  private _defaultCurrencyIdx: number = CURRENCY_CONSTANTS.DEFAULT_CURRENCY_INDEX;
+  private _customGlobalCurrencies: { [key: string]: number } = {};
   
   constructor(private http: HttpClient) {}
 
@@ -45,7 +48,32 @@ export class CurrencyService {
   }
 
   public setGlobalCurrency(newCurrencyVal: string): Observable<GlobalCurrency | null> {
-    return this._getGlobalCurrency(newCurrencyVal);
+    switch(true) {
+      case newCurrencyVal === this._defaultCurrency: {
+        return of({ name: this._defaultCurrency, index: this._defaultCurrencyIdx });
+      };
+      case newCurrencyVal in this._customGlobalCurrencies: {
+        return of({ name: newCurrencyVal, index: this._customGlobalCurrencies[newCurrencyVal] })
+      };
+      default: {
+        return this._getGlobalCurrency(newCurrencyVal);
+      }
+    }
+  }
+
+  public setCustomGlobalCurrency(newCurrency: GlobalCurrency): Observable<GlobalCurrency> {
+    switch(newCurrency.name) {
+      case this._defaultCurrency: {
+
+      };
+      case '': {
+        
+      };
+      default: {
+        this._customGlobalCurrencies[newCurrency.name] = newCurrency.index;
+      }
+    };
+    return of(newCurrency);
   }
 
 }

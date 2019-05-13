@@ -1,21 +1,25 @@
 
-import { GlobalCurrency } from '@app/shared/interfaces';
 import { ECurrencyActions, CurrencyActions } from '@app/core/store/actions/currency.actions';
-import { initialCurrencyState } from '@app/core/store/state/currency.state';
+import { initialCurrencyState, ICurrencyState } from '@app/core/store/state/currency.state';
 
 export const currencyReducers = (
   state = initialCurrencyState,
   action: CurrencyActions
-): GlobalCurrency => {
+): ICurrencyState => {
   switch (action.type) {
     case ECurrencyActions.SetCurrencySuccess: {
       return {
-        ...state,
         name: action.payload.name,
-        index: action.payload.index
+        index: action.payload.index,
+        isSwitchAvailable: true
       };
     }
-    case ECurrencyActions.GetCurrency:
+    case ECurrencyActions.SetCurrencyFailure: {
+      return {
+        ...state,
+        isSwitchAvailable: false
+      };
+    }
     default:
       return state;
   }

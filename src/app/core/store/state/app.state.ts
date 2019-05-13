@@ -1,11 +1,10 @@
 
 import { RouterReducerState } from '@ngrx/router-store';
-import { initialCurrencyState } from './currency.state';
-import { GlobalCurrency } from '@app/shared/interfaces';
+import { initialCurrencyState, ICurrencyState } from './currency.state';
 
 export interface IAppState {
   router?: RouterReducerState; // TODO investigate
-  currency: GlobalCurrency;
+  currency: ICurrencyState;
 }
 
 export const initialAppState: IAppState = {

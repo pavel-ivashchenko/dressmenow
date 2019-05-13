@@ -1,0 +1,5 @@
+
+export const MAT_SNACKBAR_CONSTANTS = {
+  MAT_SNACKBAR_DURATION: 5000,
+  MAT_SNACKBAR_OK_PHRASE: 'Зрозуміло'
+};

@@ -10,8 +10,8 @@ import {
   ECurrencyActions,
   SetCurrency,
   SetCurrencySuccess,
-  SetCustomCurrency,
-  GetCurrency
+  SetCurrencyFailure,
+  SetCustomCurrency
 } from '@app/core/store/actions/currency.actions';
 import { GlobalCurrency } from '@app/shared/interfaces';
 
@@ -22,20 +22,22 @@ export class CurrencyEffects {
   setCurrency$: Observable<Action> = this._actions$
     .pipe(
       ofType<SetCurrency>(ECurrencyActions.SetCurrency),
-      switchMap(action => this.currencyService.setGlobalCurrency(action.payload)),
-      map((res: GlobalCurrency | null) => res ? new SetCurrencySuccess(res) : new GetCurrency())
+      switchMap(action => this._currencyService.setGlobalCurrency(action.payload)),
+      map((res: GlobalCurrency | null) => res ?
+        new SetCurrencySuccess(res) :
+        new SetCurrencyFailure())
     );
 
   @Effect()
   setCustomCurrency$: Observable<Action> = this._actions$
     .pipe(
       ofType<SetCustomCurrency>(ECurrencyActions.SetCustomCurrency),
-      switchMap(action => this.currencyService.setCustomGlobalCurrency(action.payload)),
-      map((res: GlobalCurrency | null) => res ? new SetCurrencySuccess(res) : new GetCurrency())
-    )
+      switchMap(action => this._currencyService.setCustomGlobalCurrency(action.payload)),
+      map((res: GlobalCurrency | null) => new SetCurrencySuccess(res))
+    );
 
   constructor(
-    private currencyService: CurrencyService,
+    private _currencyService: CurrencyService,
     private _actions$: Actions
   ) {}
 

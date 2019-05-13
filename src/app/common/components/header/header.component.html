@@ -71,6 +71,7 @@
             <div class="nav-user-info__currency col-1">
               <mat-form-field>
                 <mat-select
+                  [disabled]="!((currency$ | async)?.isSwitchAvailable)"
                   [value]="(currency$ | async)?.name"
                   (selectionChange)="onCurrencyChange($event.value)">
                   <mat-option *ngFor="let currency of currencyArr" [value]="currency.uiValue">

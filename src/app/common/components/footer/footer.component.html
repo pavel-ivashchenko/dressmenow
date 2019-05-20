@@ -1,0 +1,66 @@
+
+<header>
+  <h5>Дізнайтесь першим</h5>
+</header>
+
+<main class="container">
+  
+  <div class="email row">
+    <mat-form-field class="col-8">
+      <input matInput placeholder="Email" email required [(ngModel)]="email" #emailCtrl="ngModel" (focus)="emailCtrl.focused=true" (blur)="emailCtrl.focused=false">
+    </mat-form-field>
+    <mat-error class="col-12" *ngIf="emailCtrl.dirty && emailCtrl.touched && emailCtrl.hasError('email') && !emailCtrl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error class="col-12" *ngIf="emailCtrl.dirty && emailCtrl.touched && emailCtrl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+    <p *ngIf="emailCtrl.focused">
+      By subscribing you accept the
+      <ng-container *ngTemplateOutlet="privacy"></ng-container>
+    </p>
+  </div>
+  
+  <ul class="menu row">
+    <li class="col-2">
+      <a href="#">Допомога</a>
+    </li>
+    <li class="col-2">
+      <a href="#">Зв'язатись</a>
+    </li>
+    <li class="col-2">
+      <a href="#">Регістрація</a>
+    </li>
+    <li class="col-2">
+      <a href="#">Компанія</a>
+    </li>
+    <li class="col-2">
+      <a href="#">Про нас пишуть</a>
+    </li>
+  </ul>
+
+  <ul class="social">
+    <li>
+      <a href="#" class="social__link fa fa-facebook"></a>
+    </li>
+    <li>
+      <a href="#" class="social__link fa fa-youtube"></a>
+    </li>
+    <li>
+      <a href="#" class="social__link fa fa-twitter"></a>
+    </li>
+    <li>
+      <a href="#" class="social__link fa fa-vk"></a>
+    </li>
+  </ul>
+
+</main>
+
+<footer>
+  2019 DRESSMENOW All rights reserved
+  <ng-container *ngTemplateOutlet="privacy"></ng-container>
+</footer>
+
+<ng-template #privacy>
+  <a href="#">Privacy Policy</a>
+</ng-template>

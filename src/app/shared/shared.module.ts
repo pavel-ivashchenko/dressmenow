@@ -1,18 +1,22 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import {
   MatSelectModule,
   MatDialogModule,
   MatButtonModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatInputModule
 } from '@angular/material';
 
 const MATERIAL_MODULES = [
   MatSelectModule,
   MatDialogModule,
   MatButtonModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatInputModule
 ]
 
 import { COMPONENTS } from './components';
@@ -24,10 +28,14 @@ import { PIPES } from './pipes';
     ...PIPES
   ],
   imports: [
-    CommonModule,
+    CommonModule, // TODO investigate
+    FormsModule,
+    ReactiveFormsModule,
     ...MATERIAL_MODULES
   ],
   exports: [
+    FormsModule,
+    ReactiveFormsModule,
     ...MATERIAL_MODULES,
     ...COMPONENTS,
     ...PIPES

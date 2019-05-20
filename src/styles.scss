@@ -70,3 +70,15 @@ app-header {
     }
   }
 }
+
+app-footer {
+  .mat-form-field {
+    label.mat-form-field-label {
+      top: 50%;
+      font-size: 12px;
+      span {
+        display: none;
+      }
+    }
+  } 
+}

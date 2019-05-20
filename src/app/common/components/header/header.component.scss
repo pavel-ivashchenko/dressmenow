@@ -3,6 +3,7 @@
 @import 'colors';
 @import 'mixins';
 @import 'z-index';
+@import 'elements/social';
 
 @mixin logo-line {
   font-family: 'Homemade Apple';
@@ -162,15 +163,9 @@
   @include media-breakpoint-up(lg) {
     border-top: 0;
   }
-  li {
-    display: inline-block;
-  }
-  a {
-    padding: 10px;
-    display: block;
-    font-size: 16px;
+  @include social;
+  @include e('link') {
     color: $main-grey;
-    transition: color .3s;
     &:hover {
       color: $main-orange;
     }

@@ -6,11 +6,13 @@ import { SharedModule } from '@app/shared/shared.module';
 
 import { HeaderComponent } from './components/header/header.component';
 import { CartModalComponent } from './components/header/modals/cart-modal/cart-modal.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    CartModalComponent
+    CartModalComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { CartModalComponent } from './components/header/modals/cart-modal/cart-m
   ],
   exports: [
     HeaderComponent,
-    CartModalComponent
+    CartModalComponent,
+    FooterComponent
   ]
 })
 export class CoreCommonModule { }

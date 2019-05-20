@@ -1,0 +1,28 @@
+
+@import 'colors';
+@import 'mixins';
+@import 'elements/social';
+
+:host {
+  border-top: 1px solid $main-grey;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  
+  text-align: center;
+}
+
+.menu {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.social {
+  @include social;
+  @include e('link') {
+    color: $main-grey;
+  }
+}

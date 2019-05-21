@@ -75,10 +75,14 @@ app-footer {
   .mat-form-field {
     label.mat-form-field-label {
       top: 50%;
-      font-size: 12px;
+      font-size: 14px;
       span {
         display: none;
       }
     }
-  } 
+  }
+  input.mat-input-element {
+    font-size: 12px;
+    color: $main-grey;
+  }
 }

@@ -1,27 +1,24 @@
 
-<header>
-  <h5>Дізнайтесь першим</h5>
+<header class="d-flex justify-content-center">
+  <h5 class="header-text">Дізнатись першим</h5>
 </header>
 
 <main class="container">
   
-  <div class="email row">
-    <mat-form-field class="col-8">
+  <div class="email row d-flex align-items-center flex-column">
+    <mat-form-field class="col-5">
       <input matInput placeholder="Email" email required [(ngModel)]="email" #emailCtrl="ngModel" (focus)="emailCtrl.focused=true" (blur)="emailCtrl.focused=false">
     </mat-form-field>
-    <mat-error class="col-12" *ngIf="emailCtrl.dirty && emailCtrl.touched && emailCtrl.hasError('email') && !emailCtrl.hasError('required')">
-      Please enter a valid email address
+    <mat-error class="email__error col-5" [ngClass]="{'email__error--show': emailCtrl.dirty && emailCtrl.touched && emailCtrl.hasError('email')}">
+      Необхідно ввести коректну адресу електронної пошти, наприклад: <strong>name@mail.com</strong>
     </mat-error>
-    <mat-error class="col-12" *ngIf="emailCtrl.dirty && emailCtrl.touched && emailCtrl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-    <p *ngIf="emailCtrl.focused">
-      By subscribing you accept the
+    <p class="email__privacy-note col-5" [ngClass]="{'email__privacy-note--show': emailCtrl.focused}">
+      Ви приймаєте політику
       <ng-container *ngTemplateOutlet="privacy"></ng-container>
     </p>
   </div>
   
-  <ul class="menu row">
+  <ul class="menu row d-flex justify-content-center">
     <li class="col-2">
       <a href="#">Допомога</a>
     </li>
@@ -39,7 +36,7 @@
     </li>
   </ul>
 
-  <ul class="social">
+  <ul class="social row d-flex justify-content-center">
     <li>
       <a href="#" class="social__link fa fa-facebook"></a>
     </li>
@@ -56,11 +53,13 @@
 
 </main>
 
-<footer>
-  2019 DRESSMENOW All rights reserved
-  <ng-container *ngTemplateOutlet="privacy"></ng-container>
+<footer class="d-flex justify-content-center">
+  <p class="footer-text">
+    &copy; 2019 DressMeNow Всі права захищені
+    <ng-container *ngTemplateOutlet="privacy"></ng-container>
+  </p>
 </footer>
 
 <ng-template #privacy>
-  <a href="#">Privacy Policy</a>
+  <a class="policy" href="#">Приватності</a>
 </ng-template>

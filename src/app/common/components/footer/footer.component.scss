@@ -4,7 +4,7 @@
 @import 'elements/social';
 
 :host {
-  padding: 45px 45px 0;
+  padding: 45px 15px 0;
   border-top: 2px solid $main-orange;
   background-color: #fff;
   display: flex;
@@ -13,12 +13,12 @@
 
 .header-text {
   font-size: 14px;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   color: #000;
 }
 
 .email {
-  margin: 20px 0;
+  margin: 10px 0 0;
   @include e('error') {
     position: relative;
     bottom: 15px;
@@ -30,6 +30,10 @@
     transition: opacity 0.3;
     @include m('show') {
       opacity: 1;
+    }
+    @include m('example') {
+      font-weight: bolder;
+      text-decoration: underline;
     }
   }
   @include e('privacy-note') {
@@ -46,6 +50,7 @@
 }
 
 .social {
+  margin: 35px 0;
   @include social;
   @include e('link') {
     color: $main-grey;
@@ -53,19 +58,48 @@
 }
 
 .footer-text {
+  padding: 5px;
   font-size: 10px;
   color: #adafb2;
+  text-align: center;
 }
 
 .policy {
   font-size: 10px;
   color: #adafb2;
-  text-decoration: underline;
+  padding: 1px;
+  &:hover {
+    border-bottom: 1px solid #adafb2;
+  }
 }
 
 .menu {
-  font-size: 12px;
-  font-weight: bold;
+  @include e('link') {
+    padding: 2px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: bolder;
+    color: #000;
+    &:hover {
+      border-bottom: 1px solid #000;
+    }
+  }
 }
 
-
+.language-bar {
+  position: absolute;
+  right: 15px;
+  @include e('link') {
+    font-size: 10px;
+    color: #adafb2;
+    padding: 1px 5px;
+    border-right: 1px solid #adafb2;
+    &:hover {
+      color: $main-orange;
+      font-weight: bolder;
+    }
+    @include m('last') {
+      border-right: 0;
+    }
+  }
+}

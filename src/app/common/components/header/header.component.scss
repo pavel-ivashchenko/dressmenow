@@ -16,6 +16,13 @@
   text-align: right;
 }
 
+main {
+  height: auto;
+  @include media-breakpoint-up(lg) {
+    min-height: 100vh;
+  }
+}
+
 .top-ad {
   max-height: 50px;
   padding: 20px 0;
@@ -232,7 +239,7 @@
   margin: 0;
   cursor: pointer;
   @include media-breakpoint-up(lg) {
-    color: #fff;
+    color: $main-orange;
     font-size: 20px;
   }
 }
@@ -264,7 +271,7 @@
     border-radius: 50%;
     @include media-breakpoint-up(lg) {
       font-size: 12px;
-      color: #fff;
+      color: $main-orange;
       top: -10px;
       left: 17px;
     }

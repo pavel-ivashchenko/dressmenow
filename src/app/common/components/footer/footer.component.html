@@ -5,20 +5,20 @@
 
 <main class="container-fluid">
   
-  <div class="email row no-gutters d-flex align-items-center flex-column">
-    <mat-form-field class="col-12 col-sm-8 col-lg-5">
+  <div class="email row no-gutters">
+    <mat-form-field class="col-6 col-sm-4 col-lg-3">
       <input matInput placeholder="Email" email required [(ngModel)]="email" #emailCtrl="ngModel" (focus)="emailCtrl.focused=true" (blur)="emailCtrl.focused=false">
     </mat-form-field>
-    <mat-error class="email__error col-12 col-sm-8 col-lg-5" [ngClass]="{'email__error--show': emailCtrl.dirty && emailCtrl.touched && emailCtrl.hasError('email')}">
+    <mat-error class="email__error col-6 col-sm-4 col-lg-3" [ngClass]="{'email__error--show': emailCtrl.dirty && emailCtrl.touched && emailCtrl.hasError('email')}">
       Необхідно ввести коректну адресу електронної пошти, наприклад: <span class="email__error--example">name@mail.com</span>
     </mat-error>
-    <p class="email__privacy-note col-12 col-sm-8 col-lg-5" [ngClass]="{'email__privacy-note--show': emailCtrl.focused}">
+    <p class="email__privacy-note col-6 col-sm-4 col-lg-3" [ngClass]="{'email__privacy-note--show': emailCtrl.focused}">
       Ви приймаєте
       <a class="policy" href="#">Політику конфіденційності</a>
     </p>
   </div>
   
-  <ul class="menu row d-flex justify-content-center">
+  <ul class="menu row">
     <li class="d-flex col-12 col-md-2 justify-content-center">
       <a href="#" class="menu__link">Допомога</a>
     </li>
@@ -55,10 +55,11 @@
 
 <footer class="row d-flex justify-content-center position-relative">
   <p class="footer-text col-4 col-lg-6">
-    &copy; 2019 DressMeNow Всі права захищені
+    <span>&copy; 2019 DressMeNow Всі права захищені</span>
     <a class="policy" href="#">Політика конфіденційності</a>
   </p>
   <div class="language-bar" (click)="onLanguageClick($event.target.value)">
+    <i class="language-bar__icon icon-globe d-none d-sm-block"></i>
     <a class="language-bar__link" href="#">UA</a>
     <a class="language-bar__link" href="#">RU</a>
     <a class="language-bar__link language-bar__link--last" href="#">EN</a>

@@ -83,7 +83,7 @@ main {
     display: block;
     width: 35px;
     height: 4px;
-    background-color: $main-grey;
+    background-color: $grey-regular;
     border-radius: 50px;
     transition: all 0.3s ease-in-out;
     margin: 6px 0;
@@ -139,7 +139,7 @@ main {
     font-size: 13px;
     display: flex;
     align-items: center;
-    color: $main-grey;
+    color: $grey-regular;
     @include media-breakpoint-up(lg) {
       color: #fff;
     }
@@ -149,15 +149,15 @@ main {
     align-items: center;
     max-width: 60px;
     margin: 0 10px;
-    color: $main-grey;
+    color: $grey-regular;
   }
 }
 
 .nav-main-ad {
   padding: 10px;
   font-size: 13px;
-  color: $main-grey;
-  border-color: $main-border-grey;
+  color: $grey-regular;
+  border-color: $grey-lighter;
   border-width: 1px;
   border-style: solid none;
   @include e('link') {
@@ -166,13 +166,13 @@ main {
 }
 
 .nav-social {
-  border-top: 1px solid $main-border-grey;
+  border-top: 1px solid $grey-lighter;
   @include media-breakpoint-up(lg) {
     border-top: 0;
   }
   @include social;
   @include e('link') {
-    color: $main-grey;
+    color: $grey-regular;
     &:hover {
       color: $main-orange;
     }
@@ -248,7 +248,7 @@ main {
   width: 1px;
   height: 20px;
   margin: 0 15px;
-  background-color: $main-grey;
+  background-color: $grey-regular;
   @include media-breakpoint-up(lg) {
     color: #fff;
   }

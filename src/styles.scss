@@ -36,7 +36,7 @@ div.cdk-overlay-pane {
   div.ng-trigger-transformPanel {
     mat-option.mat-option {
       span.mat-option-text {
-        color: $main-grey;
+        color: $grey-regular;
       }
       &[aria-selected="true"] {
         span.mat-option-text {
@@ -48,7 +48,7 @@ div.cdk-overlay-pane {
 }
 
 app-header {
-  mat-form-field.mat-form-field-appearance-legacy {
+  mat-form-field.mat-form-field-appearance-legacy { // TODO simplyfy
     width: 100%;
     .mat-form-field-wrapper {
       padding-bottom: 0;
@@ -58,7 +58,7 @@ app-header {
       border-top: 0;
       .mat-select-trigger {
         span, .mat-select-arrow {
-          color: $main-grey;
+          color: $grey-regular;
           @include media-breakpoint-up(lg) {
             color: #fff;
           }
@@ -73,16 +73,35 @@ app-header {
 
 app-footer {
   .mat-form-field {
-    label.mat-form-field-label {
+    .mat-input-element {
+      font-size: 12px;
+      color: $grey-regular;
+    }
+    .mat-form-field-label {
       top: 50%;
       font-size: 14px;
       span {
         display: none;
       }
     }
-  }
-  input.mat-input-element {
-    font-size: 12px;
-    color: $main-grey;
+    &.mat-form-field-invalid {
+      .mat-input-element {
+        caret-color: $grey-light;
+      }
+      .mat-form-field-label {
+        color: $main-orange;
+      }
+      .mat-form-field-ripple {
+        background-color: $main-orange;
+      }
+    }
+    &.mat-focused {
+      .mat-form-field-label {
+        color: $grey-light;
+      }
+      .mat-form-field-ripple {
+        background-color: $grey-light;
+      }
+    }
   }
 }

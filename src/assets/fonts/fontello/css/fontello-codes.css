@@ -1,5 +1,7 @@
 
 .icon-basket-circled:before { content: '\e800'; } /* '' */
 .icon-basket:before { content: '\e801'; } /* '' */
+.icon-globe:before { content: '\e802'; } /* '' */
+.icon-back:before { content: '\e803'; } /* '' */
 .icon-shopping-bag:before { content: '\f290'; } /* '' */
 .icon-user-circle-o:before { content: '\f2be'; } /* '' */

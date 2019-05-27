@@ -2,10 +2,10 @@
 import { ECurrencyActions, CurrencyActions } from '@app/core/store/actions/currency.actions';
 import { initialCurrencyState, ICurrencyState } from '@app/core/store/state/currency.state';
 
-export const currencyReducers = (
+export function currencyReducers (
   state = initialCurrencyState,
   action: CurrencyActions
-): ICurrencyState => {
+): ICurrencyState {
   switch (action.type) {
     case ECurrencyActions.SetCurrencySuccess: {
       return {

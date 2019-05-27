@@ -7,12 +7,18 @@
   
   <div class="email row no-gutters">
     <mat-form-field class="col-6 col-sm-4 col-lg-3">
-      <input matInput placeholder="Email" email required [(ngModel)]="email" #emailCtrl="ngModel" (focus)="emailCtrl.focused=true" (blur)="emailCtrl.focused=false">
+      <input
+        matInput
+        type="email" email
+        ngModel #emailCtrl="ngModel"
+        (focus)="emailCtrl.focused=true"
+        (blur)="emailCtrl.focused=false"
+        placeholder="Email">
     </mat-form-field>
     <mat-error class="email__error col-6 col-sm-4 col-lg-3" [ngClass]="{'email__error--show': emailCtrl.dirty && emailCtrl.touched && emailCtrl.hasError('email')}">
       Необхідно ввести коректну адресу електронної пошти, наприклад: <span class="email__error--example">name@mail.com</span>
     </mat-error>
-    <p class="email__privacy-note col-6 col-sm-4 col-lg-3" [ngClass]="{'email__privacy-note--show': emailCtrl.focused}">
+    <p i18n="@@acceptText" class="email__privacy-note col-6 col-sm-4 col-lg-3" [ngClass]="{'email__privacy-note--show': emailCtrl.focused}">
       Ви приймаєте
       <a class="policy" href="#">Політику конфіденційності</a>
     </p>

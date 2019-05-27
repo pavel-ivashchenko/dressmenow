@@ -11,7 +11,7 @@ import { IsShrinkedService } from '@app/core/services';
 export class BackToTopComponent {
 
   constructor(
-    private isShrinkedService: IsShrinkedService
+    public isShrinkedService: IsShrinkedService
   ) { }
 
   ngOnInit() { }

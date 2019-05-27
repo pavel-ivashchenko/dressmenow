@@ -56,6 +56,13 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "en": {
+              "aot": true,
+              "i18nFile": "src/translate/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
+              "i18nMissingTranslation": "error"
             }
           }
         },
@@ -67,6 +74,9 @@
           "configurations": {
             "production": {
               "browserTarget": "mean2019:build:production"
+            },
+            "en": {
+              "browserTarget": "mean2019:build:en"
             }
           }
         },

@@ -1,11 +1,11 @@
 
-<header class="d-flex justify-content-center">
+<header i18n="@@footerTitle" class="d-flex justify-content-center">
   <h5 class="header-text">Дізнатись першим</h5>
 </header>
 
 <main class="container-fluid">
   
-  <div class="email row no-gutters">
+  <div i18n="@@footerEmaiInput" class="email row no-gutters">
     <mat-form-field class="col-6 col-sm-4 col-lg-3">
       <input
         matInput
@@ -18,13 +18,13 @@
     <mat-error class="email__error col-6 col-sm-4 col-lg-3" [ngClass]="{'email__error--show': emailCtrl.dirty && emailCtrl.touched && emailCtrl.hasError('email')}">
       Необхідно ввести коректну адресу електронної пошти, наприклад: <span class="email__error--example">name@mail.com</span>
     </mat-error>
-    <p i18n="@@acceptText" class="email__privacy-note col-6 col-sm-4 col-lg-3" [ngClass]="{'email__privacy-note--show': emailCtrl.focused}">
+    <p class="email__privacy-note col-6 col-sm-4 col-lg-3" [ngClass]="{'email__privacy-note--show': emailCtrl.focused}">
       Ви приймаєте
       <a class="policy" href="#">Політику конфіденційності</a>
     </p>
   </div>
   
-  <ul class="menu row">
+  <ul i18n="@@footerMenu" class="menu row">
     <li class="d-flex col-12 col-md-2 justify-content-center">
       <a href="#" class="menu__link">Допомога</a>
     </li>
@@ -60,7 +60,7 @@
 </main>
 
 <footer class="row d-flex justify-content-center position-relative">
-  <p class="footer-text col-4 col-lg-6">
+  <p i18n="@@footerRights" class="footer-text col-4 col-lg-6">
     <span>&copy; 2019 DressMeNow Всі права захищені</span>
     <a class="policy" href="#">Політика конфіденційності</a>
   </p>

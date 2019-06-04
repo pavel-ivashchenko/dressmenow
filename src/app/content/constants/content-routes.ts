@@ -4,7 +4,8 @@ import { Routes } from '@angular/router';
 import { ContentPageComponent } from '../pages/content-page/content-page.component';
 
 export enum CONTENT_ROUTE_NAMES {
-  CLOTHING = 'clothing'
+  DRESSES = 'dresses',
+  ACCESSORIES = 'accessories'
 }
 
 export const CONTENT_ROUTES: Routes = [{
@@ -12,10 +13,10 @@ export const CONTENT_ROUTES: Routes = [{
   component: ContentPageComponent,
   children: [{
     path: '',
-    redirectTo: CONTENT_ROUTE_NAMES.CLOTHING, // INVESTIGATE
+    redirectTo: CONTENT_ROUTE_NAMES.DRESSES,
     pathMatch: 'full'
   }, {
-    path: CONTENT_ROUTE_NAMES.CLOTHING,
-    // loadChildren: './../content-detail/content-detail.module#ContentDetailModule',
+    path: CONTENT_ROUTE_NAMES.DRESSES,
+    loadChildren: '../../content-dresses/content-dresses.module#ContentDressesModule'
   }]
 }];

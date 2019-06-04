@@ -6,7 +6,10 @@ import { CORE_ROUTES } from './constants/core-routes';
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(CORE_ROUTES, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(
+      CORE_ROUTES,
+      { preloadingStrategy: PreloadAllModules }
+    )
   ],
   providers: [],
   exports: [RouterModule]

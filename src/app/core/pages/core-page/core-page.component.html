@@ -1,13 +1,24 @@
 
 <app-back-to-top></app-back-to-top>
 
+<app-scroll-down></app-scroll-down>
+
 <header>
+
   <app-header></app-header>
+
 </header>
 
 <main>
+
   <app-slider class="d-none d-sm-block d-lg-none" [sliderConf]="mainPageSlides"></app-slider>
+  
   <router-outlet></router-outlet>
+
 </main>
 
-<app-footer></app-footer>
+<footer>
+
+  <app-footer></app-footer>
+  
+</footer>

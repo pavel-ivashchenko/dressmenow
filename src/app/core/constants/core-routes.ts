@@ -5,24 +5,27 @@ import { NotFoundPageComponent } from '@app/core/pages/not-found-page/not-found-
 
 export enum CORE_ROUTE_NAMES {
   OTHER = '**',
-  NOT_FOUND = '404'
+  NOT_FOUND = '404',
+  SHOP = 'shop'
 }
 
 export const CORE_ROUTES: Routes = [
   {
     path: '',
+    component: CorePageComponent,
     children: [
       {
         path: '',
-        component: CorePageComponent,
+        redirectTo: CORE_ROUTE_NAMES.SHOP,
         pathMatch: 'full'
-      },
-      {
+      }, {
+        path: CORE_ROUTE_NAMES.SHOP,
+        loadChildren: '@app/shop/shop.module#ShopModule'
+      }, {
         path: CORE_ROUTE_NAMES.OTHER,
         redirectTo: CORE_ROUTE_NAMES.NOT_FOUND,
         pathMatch: 'full'
-      },
-      {
+      }, {
         path: CORE_ROUTE_NAMES.NOT_FOUND,
         component: NotFoundPageComponent
       }

@@ -24,10 +24,10 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
   ],
   imports: [
     CommonModule,
-    SharedModule,
-    CoreCommonModule,
     CoreRoutingModule,
-    CoreStoreModule
+    CoreStoreModule,
+    SharedModule,
+    CoreCommonModule
   ],
   exports: [
     CoreRoutingModule

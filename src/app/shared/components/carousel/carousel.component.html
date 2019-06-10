@@ -1,43 +1,54 @@
 
-<div class="carousel slide" data-ride="carousel" data-type="multi" data-interval="3000" id="myCarousel">
-  
-  <div class="carousel-inner row">
+<body>
+    
+  <div #slider id="slider" class="slider">
 
-    <div class="item active col-md-2 col-sm-6 col-xs-12">
-      <a href="#">
-        <img src="https://maxcdn.icons8.com/Color/PNG/96/Plants/pineapple-96.png" class="img-responsive">
-      </a>
-    </div>
-    <div class="item col-md-2 col-sm-6 col-xs-12">
-      <a href="#">
-        <img src="https://maxcdn.icons8.com/Color/PNG/96/Plants/paprika-96.png" class="img-responsive">
-      </a>
-    </div>
-    <div class="item col-md-2 col-sm-6 col-xs-12">
-      <a href="#">
-        <img src="https://maxcdn.icons8.com/Color/PNG/96/Plants/avocado-96.png" class="img-responsive">
-      </a>
+    <div class="wrapper">
+      <ul
+          #sliderItems
+          id="items"
+          class="items"
+          (mousedown)="dragStart($event)"
+          (touchstart)="dragStart()"
+          (touchend)="dragEnd()"
+          (touchmove)="dragAction($event)"
+          (transitionend)="checkIndex()">
+
+        <li class="slide" *ngFor="let product of products">
+          <a href="#">
+            <img src="{{ product.src }}" class="img-fluid img-thumbnail">
+          </a>
+        </li>
+
+      </ul>
     </div>
 
-    <!-- <div class="item">
-      <div class="col-md-2 col-sm-6 col-xs-12"><a href="#"><img src="https://maxcdn.icons8.com/Color/PNG/96/Food/banana-96.png" class="img-responsive"></a></div>
-    </div>
-    <div class="item">
-      <div class="col-md-2 col-sm-6 col-xs-12"><a href="#"><img src="https://maxcdn.icons8.com/Color/PNG/96/Plants/onion-96.png" class="img-responsive"></a></div>
-    </div>
-    <div class="item">
-      <div class="col-md-2 col-sm-6 col-xs-12"><a href="#"><img src="https://maxcdn.icons8.com/Color/PNG/96/Food/asparagus-96.png" class="img-responsive"></a></div>
-    </div>
-    <div class="item">
-      <div class="col-md-2 col-sm-6 col-xs-12"><a href="#"><img src="https://maxcdn.icons8.com/Color/PNG/96/Plants/watermelon-96.png" class="img-responsive"></a></div>
-    </div>
-    <div class="item">
-      <div class="col-md-2 col-sm-6 col-xs-12"><a href="#"><img src="https://maxcdn.icons8.com/Color/PNG/96/Food/eggplant-96.png" class="img-responsive"></a></div>
-    </div> -->
+    <a (click)="shiftSlide(-1)" class="control prev"></a>
+    <a (click)="shiftSlide(1)" class="control next"></a>
 
   </div>
+  
+</body>
 
-  <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-  <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
 
-</div>
+<!-- <section class="container-fluid d-none d-sm-block">
+
+  <ul class="carousel row" #carousel data-target="carousel">
+
+    <li class="card col-2" data-target="card" *ngFor="let card of cards">
+      <a href="#">
+        <img src="{{ card.src }}" class="img-fluid img-thumbnail">
+      </a>
+    </li>
+    
+  </ul>
+
+  <a class="btn btn__left" (click)="onLeftClick()">
+    <i class="fa fa-chevron-left"></i>
+  </a>
+  
+  <a class="btn btn__right" (click)="onRightClick()">
+    <i class="fa fa-chevron-right"></i>
+  </a>
+
+</section> -->

@@ -21,12 +21,12 @@ export class CarouselComponent implements OnInit, AfterViewInit {
   private documentMousemoveListener$: Observable<any>;
   private documentMouseuplListener$: Observable<any>;
 
-  private posInitial: number;
+  private posInitial = -20;
   private posFinal: number;
   private posX1 = 0;
   private posX2 = 0;
   private threshold = 100;
-  private index = 0;
+  private index = 3;
   private allowShift = true;
 
   private slides: any;
@@ -36,7 +36,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
   private lastSlide: any;
 
   public products = [
-    { 
+    {
       src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/pineapple-96.png'
     }, {
       src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/paprika-96.png'
@@ -72,15 +72,15 @@ export class CarouselComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.slides = this.sliderItemsElem.querySelectorAll('li');
-    this.slideSize = this.slides[0].offsetWidth;
+    this.slideSize = 20;
     this.firstSlide = this.slides[0];
     this.lastSlide = this.slides[this.slidesLength - 1];
 
     this.slide();
   }
-  
+
   public slide(): void {
-    
+
     this.sliderItemsElem.appendChild(this.firstSlide.cloneNode(true));
     this.sliderItemsElem.insertBefore(this.lastSlide.cloneNode(true), this.firstSlide);
     this.slider.nativeElement.classList.add('loaded');
@@ -88,8 +88,6 @@ export class CarouselComponent implements OnInit, AfterViewInit {
   }
 
   public dragStart (event): void {
-
-    debugger;
 
     event.preventDefault();
     this.posInitial = this.sliderItemsElem.offsetLeft;
@@ -113,7 +111,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
           .subscribe(_ => this.dragEnd());
       }
     }
-    
+
   }
 
   public dragAction (event) {
@@ -124,7 +122,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
       case 'touchmove': {
         this.posX2 = this.posX1 - event.touches[0].clientX;
         this.posX1 = event.touches[0].clientX;
-      };
+      }
         break;
       default: {
         this.posX2 = this.posX1 - event.clientX;
@@ -136,7 +134,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
       (this.sliderItemsElem.offsetLeft - this.posX2) + "px";
 
   }
-  
+
   public dragEnd () {
     this.posFinal = this.sliderItemsElem.offsetLeft;
     if (this.posFinal - this.posInitial < -this.threshold) {
@@ -147,40 +145,50 @@ export class CarouselComponent implements OnInit, AfterViewInit {
       this.sliderItemsElem.style.left = (this.posInitial) + "px";
     }
   }
-  
+
   public shiftSlide(dir, action) {
 
-    this.sliderItemsElem.classList.add('shifting');
-    
-    if (this.allowShift) {
-      if (!action) { this.posInitial = this.sliderItemsElem.offsetLeft; }
+    debugger;
 
-      if (dir == 1) {
-        this.sliderItemsElem.style.left = (this.posInitial - this.slideSize) + "px";
-        this.index++;      
-      } else if (dir == -1) {
-        this.sliderItemsElem.style.left = (this.posInitial + this.slideSize) + "px";
-        this.index--;      
+    this.renderer.addClass(this.sliderItemsElem, 'items__shifting');
+
+    if (true) {
+      // if (!action) { this.posInitial = this.sliderItemsElem.offsetLeft; }
+
+      if (dir === 1) {
+        this.posInitial = this.posInitial - this.slideSize;
+        this.sliderItemsElem.style.left = `${this.posInitial}vw`;
+        this.index++;
+      } else if (dir === -1) {
+        this.posInitial = this.posInitial + this.slideSize;
+        this.sliderItemsElem.style.left = `${this.posInitial}vw`;
+        this.index--;
       }
-    };
-    
+
+    }
+
     this.allowShift = false;
   }
-    
+
   public checkIndex (): void {
-    this.sliderItemsElem.classList.remove('shifting');
 
-    if (this.index == -1) {
-      this.sliderItemsElem.style.left = -(this.slidesLength * this.slideSize) + "px";
-      this.index = this.slidesLength - 1;
+    debugger;
+
+    this.renderer.removeClass(this.sliderItemsElem, 'items__shifting');
+
+    switch (this.index) {
+      case -1: {
+        this.sliderItemsElem.style.left = `${-(this.slidesLength * this.slideSize)}vw`;
+        this.index = this.slidesLength - 1;
+      } break;
+      case this.slidesLength: {
+        this.sliderItemsElem.style.left = `${-(1 * this.slideSize)}vw`;
+        this.index = 0;
+      } break;
     }
 
-    if (this.index == this.slidesLength) {
-      this.sliderItemsElem.style.left = -(1 * this.slideSize) + "px";
-      this.index = 0;
-    }
-    
     this.allowShift = true;
+
   }
-  
+
 }

@@ -1,54 +1,25 @@
 
-<body>
-    
-  <div #slider id="slider" class="slider">
+<div #slider class="slider">
 
-    <div class="wrapper">
-      <ul
-          #sliderItems
-          id="items"
-          class="items"
-          (mousedown)="dragStart($event)"
-          (touchstart)="dragStart()"
-          (touchend)="dragEnd()"
-          (touchmove)="dragAction($event)"
-          (transitionend)="checkIndex()">
+  <!-- (mousedown)="dragStart($event)"
+  (touchstart)="dragStart()"
+  (touchend)="dragEnd()"
+  (touchmove)="dragAction($event)" -->
 
-        <li class="slide" *ngFor="let product of products">
-          <a href="#">
-            <img src="{{ product.src }}" class="img-fluid img-thumbnail">
-          </a>
-        </li>
+  <ul
+      #sliderItems
+      class="items"
+      (transitionend)="checkIndex()">
 
-      </ul>
-    </div>
-
-    <a (click)="shiftSlide(-1)" class="control prev"></a>
-    <a (click)="shiftSlide(1)" class="control next"></a>
-
-  </div>
-  
-</body>
-
-
-<!-- <section class="container-fluid d-none d-sm-block">
-
-  <ul class="carousel row" #carousel data-target="carousel">
-
-    <li class="card col-2" data-target="card" *ngFor="let card of cards">
-      <a href="#">
-        <img src="{{ card.src }}" class="img-fluid img-thumbnail">
+    <li class="slide" *ngFor="let product of products">
+      <a>
+        <img src="{{ product.src }}" class="img-fluid img-thumbnail">
       </a>
     </li>
-    
+
   </ul>
 
-  <a class="btn btn__left" (click)="onLeftClick()">
-    <i class="fa fa-chevron-left"></i>
-  </a>
-  
-  <a class="btn btn__right" (click)="onRightClick()">
-    <i class="fa fa-chevron-right"></i>
-  </a>
+  <a class="control control__prev fa fa-chevron-left" (click)="shiftSlide(-1)"></a>
+  <a class="control control__next fa fa-chevron-right" (click)="shiftSlide(1)"></a>
 
-</section> -->
+</div>

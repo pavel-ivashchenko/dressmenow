@@ -1,9 +1,19 @@
 
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef, Inject, Renderer2, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ViewChild,
+  ElementRef,
+  Inject,
+  Renderer2,
+  AfterViewInit
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 
-import { Observable, fromEvent } from 'rxjs';
-import { takeUntil, take, tap } from 'rxjs/operators';
+import { Observable, fromEvent, Subject, merge } from 'rxjs';
+import { takeUntil, take, map, switchMap, tap, startWith, scan, filter, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-carousel',
@@ -11,184 +21,316 @@ import { takeUntil, take, tap } from 'rxjs/operators';
   styleUrls: ['./carousel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CarouselComponent implements OnInit, AfterViewInit {
+export class CarouselComponent implements AfterViewInit, OnDestroy {
 
-  @ViewChild('slider') slider: ElementRef;
   @ViewChild('sliderItems') sliderItems: ElementRef;
 
+  private VISIBLE_SLIDES_MAX_QTY = 5;
   private sliderItemsElem: HTMLElement;
-
-  private documentMousemoveListener$: Observable<any>;
-  private documentMouseuplListener$: Observable<any>;
-
-  private posInitial = -20;
-  private posFinal: number;
-  private posX1 = 0;
-  private posX2 = 0;
-  private threshold = 100;
-  private index = 3;
-  private allowShift = true;
-
   private slides: any;
-  private slidesLength: number;
-  private slideSize: number;
-  private firstSlide: any;
-  private lastSlide: any;
+
+  private sliderState$: Observable<any>;
+  private sliderSubscribtions$: any;
+
+  private mousedownListener$: Observable<any>;
+  private mouseupListener$: Observable<any>;
+  private mousemoveListener$: Observable<any>;
+  private transitionendListener$: Observable<any>;
+
+  private dragStart$: any = this.getDragStartHandler();
+  private dragAction$: any = this.getDragActionHandler();
+  private dragEnd$: any = this.getDragEndHandler();
+  private shiftSlide$: any = this.getShiftSlideHandler();
+  private checkIndex$: any = this.getCheckIndexHandler();
 
   public products = [
     {
-      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/pineapple-96.png'
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/pineapple-96.png',
+      number: 1
     }, {
-      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/paprika-96.png'
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/paprika-96.png',
+      number: 2
     }, {
-      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/avocado-96.png'
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/avocado-96.png',
+      number: 3
     }, {
-      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/banana-96.png'
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/banana-96.png',
+      number: 4
     }, {
-      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/onion-96.png'
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/onion-96.png',
+      number: 5
     }, {
-      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/asparagus-96.png'
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/asparagus-96.png',
+      number: 6
     }, {
-      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/watermelon-96.png'
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/watermelon-96.png',
+      number: 7
     }, {
-      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/eggplant-96.png'
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/eggplant-96.png',
+      number: 8
+    }, {
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/eggplant-96.png',
+      number: 9
+    }, {
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/eggplant-96.png',
+      number: 10
+    }, {
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/eggplant-96.png',
+      number: 11
+    }, {
+      src: 'https://maxcdn.icons8.com/Color/PNG/96/Food/eggplant-96.png',
+      number: 12
     }
   ];
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router
   ) { }
 
-  ngOnInit() {
-
-    this.documentMousemoveListener$ = fromEvent(this.document, 'mousemove');
-    this.documentMouseuplListener$ = fromEvent(this.document, 'mouseup');
+  ngAfterViewInit() {
 
     this.sliderItemsElem = this.sliderItems.nativeElement;
-    this.slidesLength = this.products.length;
-
-  }
-
-  ngAfterViewInit() {
     this.slides = this.sliderItemsElem.querySelectorAll('li');
-    this.slideSize = 20;
-    this.firstSlide = this.slides[0];
-    this.lastSlide = this.slides[this.slidesLength - 1];
 
-    this.slide();
+    this.mouseupListener$ =
+      fromEvent(this.sliderItemsElem, 'mouseup')
+        .pipe(
+          take(1),
+          tap(event => {
+            this.dragEnd$.next(event);
+            this.shiftSlide$.next();
+          })
+        );
+
+    this.mousemoveListener$ =
+      fromEvent(this.sliderItemsElem, 'mousemove')
+        .pipe(
+          takeUntil(this.mouseupListener$),
+          tap(event => this.dragAction$.next(event.clientX))
+        );
+
+    this.mousedownListener$ =
+      fromEvent(this.sliderItemsElem, 'mousedown')
+        .pipe(
+          switchMap((event: any) => {
+            event.preventDefault();
+            event.stopPropagation();
+            this.dragStart$.next(event.clientX);
+            return this.mousemoveListener$;
+          })
+        );
+
+    this.transitionendListener$ =
+      fromEvent(this.sliderItemsElem, 'transitionend')
+        .pipe(
+          tap(_ => this.checkIndex$.next())
+        );
+
+    this.sliderState$ = this.getSliderState();
+
+    this.sliderSubscribtions$ =
+      merge(
+        this.sliderState$,
+        this.mousedownListener$,
+        this.transitionendListener$
+      )
+      .subscribe();
+
+    this.initSlider();
+
   }
 
-  public slide(): void {
+  private getSingleSlideWidthVW(): number {
+    const qtyPerView = Math.round(this.document.documentElement.clientWidth / this.slides[0].offsetWidth);
+    return 100 / qtyPerView;
+  }
 
-    this.sliderItemsElem.appendChild(this.firstSlide.cloneNode(true));
-    this.sliderItemsElem.insertBefore(this.lastSlide.cloneNode(true), this.firstSlide);
-    this.slider.nativeElement.classList.add('loaded');
+  private getSingleSlideWidthPX(): number {
+    return +this.slides[0].offsetWidth;
+  }
+
+  private initSlider(): void {
+
+    this.sliderState$
+      .pipe(
+        take(1),
+        map(({ currIdx }) => {
+
+          Array.from(this.slides).slice(0, 1).forEach((slide: HTMLElement) => {
+            const clone = slide.cloneNode(true);
+            this.renderer.setStyle(clone, 'background', 'red');
+            this.sliderItemsElem.appendChild(clone);
+          });
+
+          Array.from(this.slides).slice(this.slides.length - this.VISIBLE_SLIDES_MAX_QTY, this.slides.length)
+            .forEach((slide: HTMLElement) => {
+              const clone = slide.cloneNode(true);
+              this.renderer.setStyle(clone, 'background', 'green');
+              this.sliderItemsElem.insertBefore(clone, this.slides[0]);
+            });
+
+          this.renderer.setStyle(this.sliderItemsElem, 'left', `${ -(currIdx * this.getSingleSlideWidthVW()) }vw`);
+
+        })
+      ).subscribe();
 
   }
 
-  public dragStart (event): void {
+  private getDragStartHandler(): Observable<any> {
+    return new Subject()
+      .pipe(
+        map((clientX: number) => ({
+          initPositionPX: this.sliderItemsElem.offsetLeft,
+          initClickX: +clientX,
+          singleSlideWidthPX: this.getSingleSlideWidthPX(),
+          singleSlideWidthVW: this.getSingleSlideWidthVW(),
+          allSlidesWidthPX: this.getSingleSlideWidthPX() * this.products.length,
+          currDiffPX: 0
+        }))
+      );
+  }
 
-    event.preventDefault();
-    this.posInitial = this.sliderItemsElem.offsetLeft;
-
-    switch(event.type) {
-      case 'touchstart': {
-        this.posX1 = event.touches[0].clientX;
-      };
-        break;
-      default: {
-        this.posX1 = event.clientX;
-        this.documentMousemoveListener$
+  private getDragActionHandler(): Observable<any> {
+    return new Subject()
+      .pipe(
+        switchMap((currClickX: number) => this.sliderState$
           .pipe(
-            takeUntil(this.documentMouseuplListener$)
-          )
-          .subscribe(event => this.dragAction(event));
-        this.documentMouseuplListener$
+            take(1),
+            map(({ allSlidesWidthPX, singleSlideWidthPX, initClickX }) => {
+
+              const dragDistance = initClickX - currClickX;
+              let newPosition = this.sliderItemsElem.offsetLeft - dragDistance;
+
+              newPosition = newPosition > 0 ?
+                -(allSlidesWidthPX) : newPosition < -(allSlidesWidthPX + singleSlideWidthPX) ?
+                  -(singleSlideWidthPX) : newPosition;
+
+              this.renderer.setStyle(this.sliderItemsElem, 'left', `${ newPosition }px`);
+
+              return {
+                initClickX: currClickX
+              };
+
+            })
+          ))
+      );
+  }
+
+  private getCurrIdx(singleSlideWidthPX, dragDirection, shiftTresholdPX, maxIdx) {
+
+    const currShift = Math.abs(this.sliderItemsElem.offsetLeft);
+    const idx =
+      +(currShift / singleSlideWidthPX).toFixed(0) +
+      ((currShift % singleSlideWidthPX) > shiftTresholdPX ? dragDirection : 0);
+
+    return idx >= maxIdx ?
+      maxIdx : idx <= 0 ?
+        0 : idx;
+  }
+
+  private getDragEndHandler(): Observable<any> {
+    return new Subject()
+      .pipe(
+        switchMap((event: any) => this.sliderState$
           .pipe(
-            take(1)
+            take(1),
+            filter(({ initPositionPX }) => {
+              if (this.sliderItemsElem.offsetLeft - initPositionPX) { return true; }
+              this.router.navigate(['dresses', `${ event.target.parentNode.id }`]); // TODO ADD INPUT VARIABLE URL FOR ITEMS
+              return false;
+            }),
+            map(({ currIdx, shiftTresholdPX, singleSlideWidthPX, initPositionPX }) => {
+              event.preventDefault();
+              event.stopPropagation();
+
+              const dragDirection = initPositionPX > this.sliderItemsElem.offsetLeft ? 1 : -1;
+
+              currIdx = this.getCurrIdx(singleSlideWidthPX, dragDirection, shiftTresholdPX, this.products.length + 1);
+
+              return { currIdx };
+
+            })
+          ))
+      );
+  }
+
+  private getShiftSlideHandler(): Observable<any> {
+    return new Subject()
+      .pipe(
+        switchMap(_ => this.sliderState$
+          .pipe(
+            take(1),
+            filter(({ allowShift }) => allowShift),
+            map(({ currIdx, shiftClassCSS }) => {
+              this.renderer.addClass(this.sliderItemsElem, shiftClassCSS);
+
+              const test = this.getSingleSlideWidthVW();
+
+              this.renderer.setStyle(this.sliderItemsElem, 'left', `-${ currIdx * this.getSingleSlideWidthVW() }vw`);
+              return { allowShift: false };
+            }))
           )
-          .subscribe(_ => this.dragEnd());
-      }
-    }
-
+      );
   }
 
-  public dragAction (event) {
+  private getCheckIndexHandler(): Observable<any> {
+    return new Subject()
+      .pipe(
+        switchMap(_ => this.sliderState$
+          .pipe(
+            take(1),
+            map(({ currIdx, shiftClassCSS }) => {
 
-    debugger;
+              this.renderer.removeClass(this.sliderItemsElem, shiftClassCSS);
 
-    switch (event.type) {
-      case 'touchmove': {
-        this.posX2 = this.posX1 - event.touches[0].clientX;
-        this.posX1 = event.touches[0].clientX;
-      }
-        break;
-      default: {
-        this.posX2 = this.posX1 - event.clientX;
-        this.posX1 = event.clientX;
-      }
-    }
+              currIdx = currIdx >= this.products.length + 1 ? 1 :
+                currIdx <= 0 ? this.products.length :
+                  currIdx;
 
-    this.sliderItemsElem.style.left =
-      (this.sliderItemsElem.offsetLeft - this.posX2) + "px";
+              this.renderer.setStyle(this.sliderItemsElem, 'left', `-${ currIdx * this.getSingleSlideWidthVW() }vw`);
 
+              return {
+                currIdx,
+                allowShift: true
+              };
+
+            }))
+          )
+      );
   }
 
-  public dragEnd () {
-    this.posFinal = this.sliderItemsElem.offsetLeft;
-    if (this.posFinal - this.posInitial < -this.threshold) {
-      this.shiftSlide(1, 'drag');
-    } else if (this.posFinal - this.posInitial > this.threshold) {
-      this.shiftSlide(-1, 'drag');
-    } else {
-      this.sliderItemsElem.style.left = (this.posInitial) + "px";
-    }
+  private getSliderState(): Observable<any> {
+    return merge(
+      this.dragStart$,
+      this.dragAction$,
+      this.dragEnd$,
+      this.shiftSlide$,
+      this.checkIndex$
+    ).pipe(
+      startWith(
+        {
+          allowShift: true,
+          singleSlideWidthPX: null,
+          allSlidesWidthPX: null,
+          initClickX: 0,
+          initPositionPX: 0,
+          currDiffPX: 0,
+          dragDirection: 0,
+          singleSlideWidthVW: this.getSingleSlideWidthVW(),
+          currIdx: 5,
+          shiftClassCSS: 'items__shifting',
+          shiftTresholdPX: 15
+        }
+      ),
+      scan((state, curr) => ({ ...state, ...curr })),
+      shareReplay(1)
+    );
   }
 
-  public shiftSlide(dir, action) {
-
-    debugger;
-
-    this.renderer.addClass(this.sliderItemsElem, 'items__shifting');
-
-    if (true) {
-      // if (!action) { this.posInitial = this.sliderItemsElem.offsetLeft; }
-
-      if (dir === 1) {
-        this.posInitial = this.posInitial - this.slideSize;
-        this.sliderItemsElem.style.left = `${this.posInitial}vw`;
-        this.index++;
-      } else if (dir === -1) {
-        this.posInitial = this.posInitial + this.slideSize;
-        this.sliderItemsElem.style.left = `${this.posInitial}vw`;
-        this.index--;
-      }
-
-    }
-
-    this.allowShift = false;
-  }
-
-  public checkIndex (): void {
-
-    debugger;
-
-    this.renderer.removeClass(this.sliderItemsElem, 'items__shifting');
-
-    switch (this.index) {
-      case -1: {
-        this.sliderItemsElem.style.left = `${-(this.slidesLength * this.slideSize)}vw`;
-        this.index = this.slidesLength - 1;
-      } break;
-      case this.slidesLength: {
-        this.sliderItemsElem.style.left = `${-(1 * this.slideSize)}vw`;
-        this.index = 0;
-      } break;
-    }
-
-    this.allowShift = true;
-
+  ngOnDestroy(): void {
+    this.sliderSubscribtions$.unsubscribe();
   }
 
 }

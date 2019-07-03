@@ -5,56 +5,59 @@
 @import 'z-index';
 
 .slider {
-  width: 100%; height: 300px;
+  width: 100%;
   position: relative;
   overflow: hidden;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .items {
-  width: 2000vw; height: 100%;
-  position: relative; top: 0; left: -20vw;
+  width: 20000vw; height: 100%;
+  position: relative; top: 0; left: 0;
   display: flex;
   justify-content: left;
   @include e('shifting') {
-    transition: left .2s ease-out;
+    transition: left .3s ease-out;
   }
 }
 
 .slide {
-  width: 20vw;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: all 1s;
-  position: relative;
+  width: 100vw;
+  padding: 10px 10px 0 0;
   background: #FFCF47;
-  cursor: pointer;
+  transition: .3s ease-out;
+  @include media-breakpoint-up(sm) {
+    width: 33.333333333333336vw;
+  }
+  @include media-breakpoint-up(md) {
+    width: 20vw;
+  }
+  @include e('text') {
+    text-align: center;
+  }
 }
 
-.slider.loaded .slide:nth-child(2),
-.slider.loaded .slide:nth-child(7) {
-  background: #FFCF47;
-}
-.slider.loaded .slide:nth-child(1),
-.slider.loaded .slide:nth-child(6) {
-  background: #7ADCEF;
-}
-.slider.loaded .slide:nth-child(3) {
-  background: #F97C68;
-}
-.slider.loaded .slide:nth-child(4) {
-  background: #a78df5;
-}
-.slider.loaded .slide:nth-child(5) {
-  background: #ff8686;
+.card-link {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  @include e('img') {
+    width: 100%;
+    height: auto;
+    display: flex;
+  }
+  @include e('text') {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .control {
   position: absolute; top: 50%;
   z-index: $slider-ctrls;
-  transition: .3s;
+  transition: .4s;
   color: red;
   cursor: pointer;
   &:hover {

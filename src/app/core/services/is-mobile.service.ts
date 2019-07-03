@@ -1,7 +1,10 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
+
 import { bootstrapGrid } from '@app/core/models';
 
 @Injectable({
@@ -12,7 +15,7 @@ export class IsMobileService {
   private $currViewWidth: BehaviorSubject<number>;
   private LG_BREAKPOINT = bootstrapGrid.large;
 
-  constructor() {
+  constructor(@Inject(DOCUMENT) private document: Document) {
     this.$currViewWidth = new BehaviorSubject(window.innerWidth);
     window.addEventListener('resize', this._resizeHandler.bind(this));
   }

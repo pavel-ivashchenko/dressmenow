@@ -1,19 +1,12 @@
 
-<div #slider class="slider">
+<div class="slider">
 
-  <!-- (mousedown)="dragStart($event)"
-  (touchstart)="dragStart()"
-  (touchend)="dragEnd()"
-  (touchmove)="dragAction($event)" -->
+  <ul #sliderItems class="items">
 
-  <ul
-      #sliderItems
-      class="items"
-      (transitionend)="checkIndex()">
-
-    <li class="slide" *ngFor="let product of products">
-      <a>
-        <img src="{{ product.src }}" class="img-fluid img-thumbnail">
+    <li class="slide"  *ngFor="let product of products">
+      <a class="card-link" [id]="product.number">
+        <img class="card-link__img" src="https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1d/dw/image/v2/BBFF_PRD/on/demandware.static/-/Sites-melanie-lyne-master/default/dwe2563f00/images/hi-res/6030103-1670-490_1.jpg?sw=350&yocs=D_&yoloc=eu">
+        <span class="card-link__text">{{ product.number }}</span>
       </a>
     </li>
 

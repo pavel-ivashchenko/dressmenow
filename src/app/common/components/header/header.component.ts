@@ -25,7 +25,7 @@ import { IAppState } from '@app/core/store/state';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  private _componentDestroyed$: Subject<void> = new Subject();
+  private componentDestroyed$: Subject<void> = new Subject();
   public isHamburgerActive: boolean = false;
   public isTopAdHidden: boolean = false;
   public isMobileMode: boolean;
@@ -52,8 +52,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._componentDestroyed$.next();
-    this._componentDestroyed$.unsubscribe();
+    this.componentDestroyed$.next();
+    this.componentDestroyed$.unsubscribe();
   }
 
 }

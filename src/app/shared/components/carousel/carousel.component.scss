@@ -26,10 +26,16 @@
   padding: 10px 10px 0 0;
   background: #FFCF47;
   transition: .3s ease-out;
-  @include media-breakpoint-up(sm) {
+  @include breakpoint-up('xs') {
+    width: 50vw;
+  }
+  @include breakpoint-up('sm') {
     width: 33.333333333333336vw;
   }
-  @include media-breakpoint-up(md) {
+  @include breakpoint-up('md') {
+    width: 25vw;
+  }
+  @include breakpoint-up('lg') {
     width: 20vw;
   }
   @include e('text') {

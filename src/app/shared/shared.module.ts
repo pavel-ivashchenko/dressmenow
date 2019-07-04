@@ -17,7 +17,7 @@ const MATERIAL_MODULES = [
   MatButtonModule,
   MatSnackBarModule,
   MatInputModule
-]
+];
 
 import { COMPONENTS } from './components';
 import { PIPES } from './pipes';

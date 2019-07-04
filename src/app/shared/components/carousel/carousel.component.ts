@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 
 import { Observable, fromEvent, Subject, merge } from 'rxjs';
-import { takeUntil, take, map, switchMap, tap, startWith, scan, filter, shareReplay } from 'rxjs/operators';
+import { takeUntil, take, map, switchMap, tap, startWith, scan, filter, shareReplay, withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-carousel',
@@ -54,7 +54,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       number: 12
     }
   ];
-  @Input() productRedirectBaseURL: string = '#';
+  @Input() productRedirectBaseURL = '#';
 
   private VISIBLE_SLIDES_MAX_QTY = 5;
   private sliderItemsElem: HTMLElement;
@@ -78,6 +78,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private dragEnd$: any = this.getDragEndHandler();
   private shiftSlide$: any = this.getShiftSlideHandler();
   private checkIndex$: any = this.getCheckIndexHandler();
+
+  private preventDefault = (source: Observable<any>) => source.pipe(tap(event => (event.preventDefault(), event.stopPropagation())));
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -107,17 +109,17 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
           tap(event => this.dragAction$.next(event.clientX))
         );
 
-    // this.mousedownListener$ =
-    //   fromEvent(this.sliderItemsElem, 'mousedown')
-    //     .pipe(
-    //       switchMap((event: any) => {
-    //         event.preventDefault();
-    //         event.stopPropagation();
-    //         this.dragStart$.next(event.clientX);
-    //         return this.mousemoveListener$;
-    //       })
-    //     );
-    
+    this.mousedownListener$ =
+      fromEvent(this.sliderItemsElem, 'mousedown')
+        .pipe(
+          switchMap((event: any) => {
+            event.preventDefault();
+            event.stopPropagation();
+            this.dragStart$.next(event.clientX);
+            return this.mousemoveListener$;
+          })
+        );
+
     this.mousedownListener$ = this.getStartEventHandler();
     this.touchstartListener$ = this.getStartEventHandler(true);
 
@@ -225,13 +227,12 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private getStartEventHandler(isTouchEvent: boolean = false): Observable<any> {
     return fromEvent(this.sliderItemsElem, isTouchEvent ? 'touchstart' : 'mousedown')
       .pipe(
+        this.preventDefault,
         switchMap((event: any) => {
-          event.preventDefault();
-          event.stopPropagation();
           this.dragStart$.next(isTouchEvent ? event.touches[0].clientX : event.clientX);
           return isTouchEvent ? this.touchmoveListener$ : this.mousemoveListener$;
         })
-      )
+      );
   }
 
   // init event handlers
@@ -279,26 +280,22 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private getDragEndHandler(): Observable<any> {
     return new Subject()
       .pipe(
-        switchMap((event: any) => this.sliderState$
-          .pipe(
-            take(1),
-            filter(({ initPositionPX }) => {
-              if (this.sliderItemsElem.offsetLeft - initPositionPX) { return true; }
-              this.router.navigate(['dresses', `${ event.target.parentNode.id }`]); // TODO ADD INPUT VARIABLE URL FOR ITEMS
-              return false;
-            }),
-            map(({ currIdx, shiftTresholdPX, singleSlideWidthPX, initPositionPX }) => {
-              event.preventDefault();
-              event.stopPropagation();
+        withLatestFrom(this.sliderState$),
+        filter(([event, { initPositionPX }]: [any, any]) => {
+          if (this.sliderItemsElem.offsetLeft - initPositionPX) { return true; }
+          this.router.navigate(['dresses', `${ event.target.parentNode.id }`]); // TODO ADD INPUT VARIABLE URL FOR ITEMS
+          return false;
+        }),
+        map(([event, { currIdx, shiftTresholdPX, singleSlideWidthPX, initPositionPX }]) => {
+          event.preventDefault();
+          event.stopPropagation();
 
-              const dragDirection = initPositionPX > this.sliderItemsElem.offsetLeft ? 1 : -1;
+          const dragDirection = initPositionPX > this.sliderItemsElem.offsetLeft ? 1 : -1;
 
-              currIdx = this.getCurrIdx(singleSlideWidthPX, dragDirection, shiftTresholdPX, this.products.length + 1);
+          currIdx = this.getCurrIdx(singleSlideWidthPX, dragDirection, shiftTresholdPX, this.products.length + 1);
 
-              return { currIdx };
-
-            })
-          ))
+          return { currIdx };
+        })
       );
   }
 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 
 import { Observable, fromEvent, Subject, merge } from 'rxjs';
-import { takeUntil, take, map, switchMap, tap, startWith, scan, filter, shareReplay, withLatestFrom } from 'rxjs/operators';
+import { takeUntil, take, map, switchMap, tap, startWith, scan, filter, shareReplay, withLatestFrom, distinctUntilChanged, debounceTime, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-carousel',
@@ -14,7 +14,6 @@ import { takeUntil, take, map, switchMap, tap, startWith, scan, filter, shareRep
 })
 export class CarouselComponent implements AfterViewInit, OnDestroy {
 
-  @ViewChild('sliderItems') sliderItems: ElementRef;
   @Input() products: any[] = [
     {
       src: 'https://maxcdn.icons8.com/Color/PNG/96/Plants/pineapple-96.png',
@@ -56,6 +55,9 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   ];
   @Input() productRedirectBaseURL = '#';
 
+  @ViewChild('sliderItems') sliderItems: ElementRef;
+  @ViewChild('ctrlContainer') ctrlContainer: ElementRef;
+
   private VISIBLE_SLIDES_MAX_QTY = 5;
   private sliderItemsElem: HTMLElement;
   private slides: any;
@@ -64,7 +66,10 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private sliderSubscribtions$: any;
 
   // event listeners
-  private transitionendListener$: Observable<any>;
+  private itemsTransitionendListener$: Observable<any>;
+  private slideTransitionendListener$: Observable<any>;
+  private slideTransitionstartListener$: Observable<any>;
+  private btnClickListener$: Observable<any>;
   private mousedownListener$: Observable<any>;
   private mouseupListener$: Observable<any>;
   private mousemoveListener$: Observable<any>;
@@ -82,10 +87,10 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private dragEnd$: any = this.getDragEndHandler();
   private shiftSlide$: any = this.getShiftSlideHandler();
   private checkIndex$: any = this.getCheckIndexHandler();
+  private viewResizeEnd$: any = this.getViewResizeEndHandler();
+  private viewResizeStart$: any = this.getViewResizeStartHandler();
 
   private preventDefault = (source: Observable<any>) => source.pipe(tap(event => (event.preventDefault(), event.stopPropagation())));
-  private withLatestState = (source: Observable<any>) =>
-    source.pipe(switchMap(event => this.sliderState$.pipe(map(state => ({ ...event, ...state })))))
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -98,40 +103,24 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     this.sliderItemsElem = this.sliderItems.nativeElement;
     this.slides = this.sliderItemsElem.querySelectorAll('li');
 
-    this.mouseupListener$ =
-      fromEvent(this.sliderItemsElem, 'mouseup')
-        .pipe(
-          take(1),
-          withLatestFrom(this.sliderState$),
-          tap(([event, currState]) => { this.dragEnd$.next({ event, currState }); }),
-          withLatestFrom(this.sliderState$),
-          tap(([ currState ]) => { this.shiftSlide$.next(currState); })
-        );
-
-    this.mousemoveListener$ =
-      fromEvent(this.sliderItemsElem, 'mousemove')
-        .pipe(
-          takeUntil(this.mouseupListener$),
-          withLatestFrom(this.sliderState$),
-          tap(([event, state]) => this.dragAction$.next({ event: event.clientX, state}))
-        );
-
-    this.mousedownListener$ = this.getStartEventHandler();
-    this.touchstartListener$ = this.getStartEventHandler(true);
-
-    this.transitionendListener$ =
-      fromEvent(this.sliderItemsElem, 'transitionend')
-        .pipe(
-          tap(_ => this.checkIndex$.next())
-        );
-
     this.sliderState$ = this.getSliderState();
+
+    this.btnClickListener$ = this.getBtnClickListener();
+    this.mouseupListener$ = this.getMouseupListener();
+    this.mousemoveListener$ = this.getMousemoveListener();
+    this.mousedownListener$ = this.getStartEventHandler();
+    this.itemsTransitionendListener$ = this.getTransitionendListener();
+    this.slideTransitionendListener$ = this.getSlideTransitionendListener();
+    this.slideTransitionstartListener$ = this.getSlideTransitionstartListener();
 
     this.sliderSubscribtions$ =
       merge(
         this.sliderState$,
         this.mousedownListener$,
-        this.transitionendListener$
+        this.itemsTransitionendListener$,
+        this.slideTransitionstartListener$,
+        this.slideTransitionendListener$,
+        this.btnClickListener$
       )
       .subscribe();
 
@@ -159,7 +148,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
               this.sliderItemsElem.insertBefore(clone, this.slides[0]);
             });
 
-          this.renderer.setStyle(this.sliderItemsElem, 'left', `${ -(currIdx * this.getSingleSlideWidthVW()) }vw`);
+          this.moveSliderItemsElem(-(currIdx * this.getSingleSlideWidthVW()), 'vw');
 
         })
       ).subscribe();
@@ -172,11 +161,15 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       this.dragAction$,
       this.dragEnd$,
       this.shiftSlide$,
-      this.checkIndex$
+      this.checkIndex$,
+      this.viewResizeEnd$,
+      this.viewResizeStart$
     ).pipe(
+      distinctUntilChanged(),
       startWith(
         { // TODO check if all of the vars are used
           allowShift: true,
+          allowDragStart: true,
           singleSlideWidthPX: null,
           allSlidesWidthPX: null,
           initClickX: 0,
@@ -194,7 +187,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     );
   }
 
-  // helper methods
+  // HELPERS
 
   private getSingleSlideWidthVW(): number {
     const qtyPerView = Math.round(this.document.documentElement.clientWidth / this.slides[0].offsetWidth);
@@ -205,7 +198,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     return +this.slides[0].offsetWidth;
   }
 
-  private getCurrIdx(singleSlideWidthPX, dragDirection, shiftTresholdPX, maxIdx) {
+  private getCurrIdx(singleSlideWidthPX, dragDirection, shiftTresholdPX, maxIdx): number {
 
     const currShift = Math.abs(this.sliderItemsElem.offsetLeft);
     const idx =
@@ -218,20 +211,84 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
 
   }
 
-  // init event listeners
+  private moveSliderItemsElem(newPosition: number, units: string): void {
+    this.renderer.setStyle(this.sliderItemsElem, 'left', `${ newPosition + units }`);
+  }
+
+  // LISTENERS
 
   private getStartEventHandler(isTouchEvent: boolean = false): Observable<any> {
     return fromEvent(this.sliderItemsElem, isTouchEvent ? 'touchstart' : 'mousedown')
       .pipe(
         this.preventDefault,
-        switchMap((event: any) => {
+        withLatestFrom(this.sliderState$),
+        filter(([ , sliderState ]) => sliderState.allowDragStart),
+        switchMap(([ event, ]) => {
           this.dragStart$.next(isTouchEvent ? event.touches[0].clientX : event.clientX);
           return isTouchEvent ? this.touchmoveListener$ : this.mousemoveListener$;
         })
       );
   }
 
-  // init event handlers
+  private getMousemoveListener(): Observable<any> {
+    return fromEvent(this.sliderItemsElem, 'mousemove')
+      .pipe(
+        takeUntil(this.mouseupListener$),
+        withLatestFrom(this.sliderState$),
+        tap(([event, sliderState]) =>
+          this.dragAction$.next({ currClickX: event.clientX, sliderState }))
+      );
+  }
+
+  private getMouseupListener(): Observable<any> {
+    return fromEvent(this.sliderItemsElem, 'mouseup')
+      .pipe(
+        take(1),
+        withLatestFrom(this.sliderState$),
+        tap(([event, sliderState]) => { this.dragEnd$.next({ event, sliderState }); }),
+        withLatestFrom(this.sliderState$),
+        tap(([ , sliderState]) => { this.shiftSlide$.next({ sliderState }); })
+      );
+  }
+
+  private getBtnClickListener(): Observable<any> {
+    return fromEvent(this.ctrlContainer.nativeElement, 'mousedown')
+      .pipe(
+        this.preventDefault,
+        map((event: any) => +event.target.id),
+        withLatestFrom(this.sliderState$),
+        tap(([ direction, sliderState]) => { this.shiftSlide$.next({ sliderState, direction }); })
+      );
+  }
+
+  private getSlideTransitionendListener(): Observable<any> {
+    return fromEvent(this.slides[0], 'transitionend')
+      .pipe(
+        this.preventDefault,
+        withLatestFrom(this.sliderState$),
+        tap(([ , sliderState]) => this.viewResizeEnd$.next(sliderState))
+      );
+  }
+
+  private getSlideTransitionstartListener() {
+    return fromEvent(this.slides[0], 'transitionstart')
+      .pipe(
+        this.preventDefault,
+        tap(_ => { this.viewResizeStart$.next(); })
+      );
+  }
+
+  private getTransitionendListener(): Observable<any> {
+    return fromEvent(this.sliderItemsElem, 'transitionend')
+      .pipe(
+        debounceTime(1),
+        filter((event: any) => event.target.nodeName !== 'LI'),
+        withLatestFrom(this.sliderState$),
+        tap(([ , sliderState]) => this.checkIndex$.next(sliderState))
+      );
+  }
+
+  // HANDLERS
 
   private getDragStartHandler(): Observable<any> {
     return new Subject()
@@ -250,47 +307,38 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private getDragActionHandler(): Observable<any> {
     return new Subject()
       .pipe(
-        map((currClickX: number) => this.sliderState$
-          .pipe(
-            take(1),
-            map(({ allSlidesWidthPX, singleSlideWidthPX, initClickX }) => {
+        map(({ currClickX, sliderState: { allSlidesWidthPX, singleSlideWidthPX, initClickX } }) => {
 
-              const dragDistance = initClickX - currClickX;
-              let newPosition = this.sliderItemsElem.offsetLeft - dragDistance;
+          const dragDistance = initClickX - currClickX;
+          let newPosition = this.sliderItemsElem.offsetLeft - dragDistance;
 
-              newPosition = newPosition > 0 ?
-                -(allSlidesWidthPX) : newPosition < -(allSlidesWidthPX + singleSlideWidthPX) ?
-                  -(singleSlideWidthPX) : newPosition;
+          newPosition = newPosition > 0 ?
+            -(allSlidesWidthPX) : newPosition < -(allSlidesWidthPX + singleSlideWidthPX) ?
+              -(singleSlideWidthPX) : newPosition;
 
-              this.renderer.setStyle(this.sliderItemsElem, 'left', `${ newPosition }px`);
+          this.moveSliderItemsElem(newPosition, 'px');
 
-              return {
-                initClickX: currClickX
-              };
-
-            })
-          ))
+          return { initClickX: currClickX };
+        })
       );
   }
 
   private getDragEndHandler(): Observable<any> {
     return new Subject()
       .pipe(
-        this.withLatestState,
-        filter(([event, { initPositionPX }]: [any, any]) => {
+        filter(({ event, sliderState: { initPositionPX } }) => {
           if (this.sliderItemsElem.offsetLeft - initPositionPX) { return true; }
           this.router.navigate(['dresses', `${ event.target.parentNode.id }`]); // TODO ADD INPUT VARIABLE URL FOR ITEMS
           return false;
         }),
-        map(([event, { currIdx, shiftTresholdPX, singleSlideWidthPX, initPositionPX }]) => {
-          event.preventDefault();
-          event.stopPropagation();
+        map(({ sliderState: { currIdx, shiftTresholdPX, singleSlideWidthPX, initPositionPX }}: any) => {
 
           const dragDirection = initPositionPX > this.sliderItemsElem.offsetLeft ? 1 : -1;
 
           currIdx = this.getCurrIdx(singleSlideWidthPX, dragDirection, shiftTresholdPX, this.products.length + 1);
 
           return { currIdx };
+
         })
       );
   }
@@ -298,43 +346,63 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private getShiftSlideHandler(): Observable<any> {
     return new Subject()
       .pipe(
-        switchMap(_ => this.sliderState$
-          .pipe(
-            take(1),
-            filter(({ allowShift }) => allowShift),
-            map(({ currIdx, shiftClassCSS }) => {
-              this.renderer.addClass(this.sliderItemsElem, shiftClassCSS);
+        filter(({ sliderState: { allowShift } }) => allowShift),
+        map(({ sliderState: { currIdx, shiftClassCSS }, direction = 0 }: any) => {
 
-              this.renderer.setStyle(this.sliderItemsElem, 'left', `-${ currIdx * this.getSingleSlideWidthVW() }vw`);
-              return { allowShift: false };
-            }))
-          )
+          this.renderer.addClass(this.sliderItemsElem, shiftClassCSS);
+
+          currIdx += direction;
+
+          this.moveSliderItemsElem(-(currIdx * this.getSingleSlideWidthVW()), 'vw');
+
+          return { allowShift: false, currIdx };
+
+        })
       );
   }
 
   private getCheckIndexHandler(): Observable<any> {
     return new Subject()
       .pipe(
-        switchMap(_ => this.sliderState$
-          .pipe(
-            take(1),
-            map(({ currIdx, shiftClassCSS }) => {
+        map(({ currIdx, shiftClassCSS }) => {
 
-              this.renderer.removeClass(this.sliderItemsElem, shiftClassCSS);
+          this.renderer.removeClass(this.sliderItemsElem, shiftClassCSS);
 
-              currIdx = currIdx >= this.products.length + 1 ? 1 :
-                currIdx <= 0 ? this.products.length :
-                  currIdx;
+          currIdx = currIdx >= this.products.length + 1 ? 1 :
+            currIdx <= 0 ? this.products.length :
+              currIdx;
 
-              this.renderer.setStyle(this.sliderItemsElem, 'left', `-${ currIdx * this.getSingleSlideWidthVW() }vw`);
+          this.moveSliderItemsElem(-(currIdx * this.getSingleSlideWidthVW()), 'vw');
 
-              return {
-                currIdx,
-                allowShift: true
-              };
+          return {
+            currIdx,
+            allowShift: true
+          };
 
-            }))
-          )
+        })
+      );
+  }
+
+  private getViewResizeEndHandler(): Observable<any> {
+    return new Subject()
+      .pipe(
+        map(({ currIdx, shiftClassCSS }) => {
+
+          this.renderer.addClass(this.sliderItemsElem, shiftClassCSS);
+
+          this.moveSliderItemsElem(-(currIdx * this.getSingleSlideWidthVW()), 'vw');
+
+          return { allowDragStart: true };
+
+        }),
+        delay(500)
+      );
+  }
+
+  private getViewResizeStartHandler(): Observable<any> {
+    return new Subject()
+      .pipe(
+        map(_ => ({ allowDragStart: false }))
       );
   }
 

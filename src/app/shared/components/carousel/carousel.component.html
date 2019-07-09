@@ -1,5 +1,5 @@
 
-<div class="slider">
+<div class="slider-wrapper">
 
   <ul #sliderItems class="items">
 
@@ -12,7 +12,9 @@
 
   </ul>
 
-  <a class="control control__prev fa fa-chevron-left" (click)="shiftSlide(-1)"></a>
-  <a class="control control__next fa fa-chevron-right" (click)="shiftSlide(1)"></a>
+  <div #ctrlContainer>
+    <a class="control control__prev fa fa-chevron-left" id="-1"></a>
+    <a class="control control__next fa fa-chevron-right" id="1"></a>
+  </div>
 
 </div>

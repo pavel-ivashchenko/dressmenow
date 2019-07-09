@@ -73,6 +73,10 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private touchmoveListener$: Observable<any>;
 
   // event handlers
+  private handle: any = {
+
+  };
+
   private dragStart$: any = this.getDragStartHandler();
   private dragAction$: any = this.getDragActionHandler();
   private dragEnd$: any = this.getDragEndHandler();
@@ -80,6 +84,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private checkIndex$: any = this.getCheckIndexHandler();
 
   private preventDefault = (source: Observable<any>) => source.pipe(tap(event => (event.preventDefault(), event.stopPropagation())));
+  private withLatestState = (source: Observable<any>) =>
+    source.pipe(switchMap(event => this.sliderState$.pipe(map(state => ({ ...event, ...state })))))
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -96,28 +102,18 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       fromEvent(this.sliderItemsElem, 'mouseup')
         .pipe(
           take(1),
-          tap(event => {
-            this.dragEnd$.next(event);
-            this.shiftSlide$.next();
-          })
+          withLatestFrom(this.sliderState$),
+          tap(([event, currState]) => { this.dragEnd$.next({ event, currState }); }),
+          withLatestFrom(this.sliderState$),
+          tap(([ currState ]) => { this.shiftSlide$.next(currState); })
         );
 
     this.mousemoveListener$ =
       fromEvent(this.sliderItemsElem, 'mousemove')
         .pipe(
           takeUntil(this.mouseupListener$),
-          tap(event => this.dragAction$.next(event.clientX))
-        );
-
-    this.mousedownListener$ =
-      fromEvent(this.sliderItemsElem, 'mousedown')
-        .pipe(
-          switchMap((event: any) => {
-            event.preventDefault();
-            event.stopPropagation();
-            this.dragStart$.next(event.clientX);
-            return this.mousemoveListener$;
-          })
+          withLatestFrom(this.sliderState$),
+          tap(([event, state]) => this.dragAction$.next({ event: event.clientX, state}))
         );
 
     this.mousedownListener$ = this.getStartEventHandler();
@@ -254,7 +250,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private getDragActionHandler(): Observable<any> {
     return new Subject()
       .pipe(
-        switchMap((currClickX: number) => this.sliderState$
+        map((currClickX: number) => this.sliderState$
           .pipe(
             take(1),
             map(({ allSlidesWidthPX, singleSlideWidthPX, initClickX }) => {
@@ -280,7 +276,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private getDragEndHandler(): Observable<any> {
     return new Subject()
       .pipe(
-        withLatestFrom(this.sliderState$),
+        this.withLatestState,
         filter(([event, { initPositionPX }]: [any, any]) => {
           if (this.sliderItemsElem.offsetLeft - initPositionPX) { return true; }
           this.router.navigate(['dresses', `${ event.target.parentNode.id }`]); // TODO ADD INPUT VARIABLE URL FOR ITEMS
@@ -308,8 +304,6 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
             filter(({ allowShift }) => allowShift),
             map(({ currIdx, shiftClassCSS }) => {
               this.renderer.addClass(this.sliderItemsElem, shiftClassCSS);
-
-              const test = this.getSingleSlideWidthVW();
 
               this.renderer.setStyle(this.sliderItemsElem, 'left', `-${ currIdx * this.getSingleSlideWidthVW() }vw`);
               return { allowShift: false };

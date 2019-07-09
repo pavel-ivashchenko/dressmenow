@@ -26,8 +26,8 @@ import { IAppState } from '@app/core/store/state';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private componentDestroyed$: Subject<void> = new Subject();
-  public isHamburgerActive: boolean = false;
-  public isTopAdHidden: boolean = false;
+  public isHamburgerActive = false;
+  public isTopAdHidden = false;
   public isMobileMode: boolean;
   public currencyArr: Currency[] = currencyArr;
   public currency$: Observable<GlobalCurrency> = this._store.select(state => state.currency);

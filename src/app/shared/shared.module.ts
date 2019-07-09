@@ -2,6 +2,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import {
   MatSelectModule,
@@ -29,6 +31,8 @@ import { PIPES } from './pipes';
   ],
   imports: [
     CommonModule, // TODO investigate
+    BrowserAnimationsModule, // TODO investigate the importing order
+    HttpClientModule, // TODO investigate the importing order
     FormsModule,
     ReactiveFormsModule,
     ...MATERIAL_MODULES

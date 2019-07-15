@@ -1,6 +1,8 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -17,9 +19,11 @@ describe('HeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        SharedModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
         StoreModule.forRoot(appReducers),
-        EffectsModule.forRoot([ CurrencyEffects ])
+        EffectsModule.forRoot([ CurrencyEffects ]),
+        SharedModule,
       ],
       declarations: [ HeaderComponent ]
     })

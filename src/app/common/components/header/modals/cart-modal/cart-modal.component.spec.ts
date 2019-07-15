@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { SharedModule } from '@app/shared/shared.module';
 import { CurrencyEffects } from '@app/core/store/effects';
@@ -17,9 +18,10 @@ describe('CartModalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        SharedModule,
+        HttpClientModule,
         StoreModule.forRoot(appReducers),
-        EffectsModule.forRoot([ CurrencyEffects ])
+        EffectsModule.forRoot([ CurrencyEffects ]),
+        SharedModule
       ],
       declarations: [ CartModalComponent ],
       providers: [

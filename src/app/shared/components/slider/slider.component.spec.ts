@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { mainPageSlides } from '@app/core/models/main-page-slides';
+
 import { SliderComponent } from './slider.component';
 
 describe('SliderComponent', () => {
@@ -16,6 +18,7 @@ describe('SliderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SliderComponent);
     component = fixture.componentInstance;
+    component.sliderConf = mainPageSlides;
     fixture.detectChanges();
   });
 

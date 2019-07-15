@@ -65,7 +65,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private sliderState$: Observable<any>;
   private sliderSubscribtions$: any;
 
-  // event listeners
+  // LISTENERS
   private itemsTransitionendListener$: Observable<any>;
   private slideTransitionendListener$: Observable<any>;
   private slideTransitionstartListener$: Observable<any>;
@@ -77,11 +77,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private touchendListener$: Observable<any>;
   private touchmoveListener$: Observable<any>;
 
-  // event handlers
-  private handle: any = {
-
-  };
-
+  // HANDLERS
   private dragStart$: any = this.getDragStartHandler();
   private dragAction$: any = this.getDragActionHandler();
   private dragEnd$: any = this.getDragEndHandler();

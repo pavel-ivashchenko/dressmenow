@@ -1,0 +1,33 @@
+
+<div class="items-wrapper">
+
+  <ul class="items">
+
+    <li
+      *ngFor="let product of products; let i = index"
+      class="items__item"
+      [ngClass]=
+        "{
+          'items__item--active': i === active,
+          'items__item--next': i === next,
+          'items__item--prev': i === prev
+        }">
+
+      <a href="">
+        <img class="item-image" src="{{product.src}}" alt="{{product.name}}">
+        <span class="item-text" [ngClass]="{ 'item-text--active': i === active }">Переглянути</span>
+      </a>
+
+    </li>
+
+  </ul>
+
+  <li class="control control--left" (click)="gotoPrev()">
+    <i class="fa fa-angle-left"></i>
+  </li>
+
+  <li class="control control--right" (click)="gotoNext()">
+    <i class="fa fa-angle-right"></i>
+  </li>
+
+</div>

@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopPageComponent implements OnInit {
 
+  public showCarousel = false;
+
   constructor() { }
 
   ngOnInit() {

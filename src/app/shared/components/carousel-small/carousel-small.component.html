@@ -1,5 +1,5 @@
 
-<div class="items-wrapper">
+<div #carousel class="carousel-wrapper">
 
   <ul class="items">
 
@@ -15,19 +15,23 @@
 
       <a href="">
         <img class="item-image" src="{{product.src}}" alt="{{product.name}}">
-        <span class="item-text" [ngClass]="{ 'item-text--active': i === active }">Переглянути</span>
+        <p class="item-text" [ngClass]="{ 'item-text--active': i === active }">поглянь на мене <span class="item-text--heart">&#10084;</span></p>
       </a>
 
     </li>
 
   </ul>
 
-  <li class="control control--left" (click)="gotoPrev()">
-    <i class="fa fa-angle-left"></i>
-  </li>
+  <ul class="controls">
 
-  <li class="control control--right" (click)="gotoNext()">
-    <i class="fa fa-angle-right"></i>
-  </li>
+    <li class="controls__btn controls__btn--left" (click)="gotoPrev()">
+      <i class="fa fa-angle-left"></i>
+    </li>
+  
+    <li class="controls__btn controls__btn--right" (click)="gotoNext()">
+      <i class="fa fa-angle-right"></i>
+    </li>
+
+  </ul>
 
 </div>

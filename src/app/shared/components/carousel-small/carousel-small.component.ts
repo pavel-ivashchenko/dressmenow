@@ -1,5 +1,11 @@
 
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component, ChangeDetectionStrategy, Input, AfterViewInit,
+  ChangeDetectorRef, ViewChild, ElementRef
+} from '@angular/core';
+
+import { interval, Subject, Observable, merge, fromEvent } from 'rxjs';
+import { takeUntil, switchMap, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-carousel-small',
@@ -7,36 +13,80 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
   styleUrls: ['./carousel-small.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CarouselSmallComponent {
+export class CarouselSmallComponent implements AfterViewInit {
 
   @Input() products = [
     {
-      src: 'https://t3.ftcdn.net/jpg/01/21/39/24/240_F_121392436_TyJ0RrKUxTni7ADl2tEmxhiWB3DQpa99.jpg',
+      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/dw/image/v2/BBFF_PRD/on/demandware.static/-/Sites-melanie-lyne-master/default/dw3f357a26/images/hi-res/6030103-1687-112_1.jpg?sw=560&yocs=D_&yoloc=eu',
       name: 'product_1'
     },
     {
-      src: 'https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/assets/share_new.jpg',
+      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw142d5aa2/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-1.jpg?yocs=D_&yoloc=eu',
       name: 'product_2'
     },
     {
-      src: 'https://tubikstudio.com/wp-content/uploads/2017/12/design_party_graphic_design_tubik-1.png',
+      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw89239cdd/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-4.jpg?yocs=D_&yoloc=eu',
       name: 'product_3'
     },
     {
-      src: 'https://apeonthemoon.com/wp-content/uploads/2018/11/NbIIkGcA.jpeg',
+      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/dw/image/v2/BBFF_PRD/on/demandware.static/-/Sites-melanie-lyne-master/default/dwbf0ae5db/images/hi-res/6030336-0871-453_3.jpg?sw=560&yocs=D_&yoloc=eu',
       name: 'product_4',
     },
     {
-      src: 'https://apeonthemoon.com/wp-content/uploads/2018/11/NbIIkGcA.jpeg',
+      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dwf8ffdd65/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-2.jpg?yocs=D_&yoloc=eu',
       name: 'product_5'
     }
   ];
+  
+  @ViewChild('carousel') carousel: ElementRef;
+
+  private componentDestroyed$: Subject<void> = new Subject();
+  private cancelShiftInterval$: any = new Subject().pipe( takeUntil(this.componentDestroyed$) );
+  private carouselMouseLeave$: Observable<any>;
 
   public active = 0;
   public next = 1;
   public prev = this.products.length - 1;
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
+
+  ngAfterViewInit() {
+    this.carouselMouseLeave$ = this.getCarouselMouseLeaveListener();
+
+    this.startMouseEnterListening();
+    this.startShiftInterval();
+  }
+
+  private startShiftInterval(): void {
+    interval(3000)
+      .pipe(
+        takeUntil(
+          merge(
+            this.componentDestroyed$,
+            this.cancelShiftInterval$
+          )
+        )
+      )
+      .subscribe(_ => { this.gotoNext(); });
+  }
+
+  private startMouseEnterListening(): void {
+    fromEvent(this.carousel.nativeElement, 'mouseenter')
+      .pipe(
+        takeUntil(this.componentDestroyed$),
+        tap(_ => { this.cancelShiftInterval$.next() }),
+        switchMap(_ => this.carouselMouseLeave$)
+      )
+      .subscribe();
+  }
+
+  private getCarouselMouseLeaveListener(): Observable<any> {
+    return fromEvent(this.carousel.nativeElement, 'mouseleave')
+      .pipe(
+        take(1),
+        tap(_ => { this.startShiftInterval() })
+      );
+  }
 
   public gotoPrev(): void {
     this.active > 0 ?
@@ -61,6 +111,13 @@ export class CarouselSmallComponent {
       this.active + 1 === this.products.length ?
         0 : this.active + 1;
 
+    this.cdr.detectChanges();
+
+  }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next();
+    this.componentDestroyed$.unsubscribe();
   }
 
 }

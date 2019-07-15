@@ -21,11 +21,13 @@ const MATERIAL_MODULES = [
 
 import { COMPONENTS } from './components';
 import { PIPES } from './pipes';
+import { DIRECTIVES } from './directives';
 
 @NgModule({
   declarations: [
     ...COMPONENTS,
-    ...PIPES
+    ...PIPES,
+    ...DIRECTIVES
   ],
   imports: [
     CommonModule, // TODO investigate usage and where to import
@@ -38,7 +40,8 @@ import { PIPES } from './pipes';
     ReactiveFormsModule,
     ...MATERIAL_MODULES,
     ...COMPONENTS,
-    ...PIPES
+    ...PIPES,
+    ...DIRECTIVES
   ],
   entryComponents: [
   ]

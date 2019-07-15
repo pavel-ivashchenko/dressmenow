@@ -1,8 +1,28 @@
 
-<p>
+<p class="test">
   shop-page works!
 </p>
 
-<app-carousel-small></app-carousel-small>
+<main>
+
+  <div class="row" appDeferLoad (deferLoad)="showCarousel = true">
+    
+    <div class="col-2">
+
+      <p>SALE</p>
+      <p>ціни вже знижено</p>
+
+    </div>
+
+    <div class="col-8">
+
+      <p>Літній розпродаж</p>
+      <app-carousel-small *ngIf=showCarousel></app-carousel-small>
+
+    </div>
+
+  </div>
+
+</main>
 
 <router-outlet></router-outlet>

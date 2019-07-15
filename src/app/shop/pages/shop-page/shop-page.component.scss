@@ -1,6 +1,21 @@
 
+@import 'mixins';
+@import 'z-index';
+@import 'colors';
+
 .test {
   height: 700px;
   width: 100%;
   background-color: bisque;
+}
+
+.sale {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  @include e('right') {
+    display: flex;
+    justify-content: space-between;
+  }
 }

@@ -3,8 +3,8 @@
 @import 'z-index';
 @import 'colors';
 
-$btn-position-sm: 80px;
-$btn-position-lg: 140px;
+$btn-position-sm: 120px;
+$btn-position-lg: 240px;
 
 :host {
   z-index: $carousel-small;
@@ -15,8 +15,14 @@ $btn-position-lg: 140px;
   overflow: hidden;
   position: relative;
   background-color: #fff;
+  @include breakpoint-up(md) {
+    height: 400px;
+  }
+  @include breakpoint-up(md) {
+    height: 600px;
+  }
   @include breakpoint-up(lg) {
-    height: 500px;
+    height: 800px;
   }
   &:hover {
     .controls__btn {
@@ -91,7 +97,7 @@ $btn-position-lg: 140px;
   position: absolute; top: 0; left: 50%;
   width: 1px; height: 100%;
   @include e('btn') {
-    width: 25px; height: 25px;
+    width: 40px; height: 40px;
     font-size: 19px;
     position: absolute; top: 50%;
     transform: translate(0, -50%);
@@ -121,9 +127,9 @@ $btn-position-lg: 140px;
 }
 
 .fa-angle-left {
-  transform: translate(-1px, 0)
+  transform: translate(-1px, 7px)
 }
 
 .fa-angle-right {
-  transform: translate(1px, 0)
+  transform: translate(1px, 7px)
 }

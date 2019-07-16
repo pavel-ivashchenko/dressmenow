@@ -5,18 +5,19 @@
 
 <main>
 
-  <section class="sale row no-gutters" appDeferLoad (deferLoad)="showCarousel=true">
+  <section class="sale row no-gutters" appDeferLoad (deferLoad)="showCarousel = true">
     
-    <div class="col-2">
+    <div class="sale-left col-2">
 
-      <p>Sale</p>
-
+      <p class="sale-banner"></p>
+      
     </div>
 
-    <div class="sale__right col-10">
+    <div class="sale-right col-10">
 
-      <p>Літній розпродаж</p>
-      <p>вже розпочався!</p>
+      <!-- <p>Літній розпродаж</p>
+      <p>ціни вже знижено</p> -->
+
       <app-carousel-small *ngIf=showCarousel></app-carousel-small>
 
     </div>

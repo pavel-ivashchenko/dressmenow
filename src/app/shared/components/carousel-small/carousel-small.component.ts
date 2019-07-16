@@ -1,7 +1,7 @@
 
 import {
   Component, ChangeDetectionStrategy, Input, AfterViewInit,
-  ChangeDetectorRef, ViewChild, ElementRef
+  ChangeDetectorRef, ViewChild, ElementRef, OnDestroy
 } from '@angular/core';
 
 import { interval, Subject, Observable, merge, fromEvent } from 'rxjs';
@@ -13,31 +13,27 @@ import { takeUntil, switchMap, take, tap } from 'rxjs/operators';
   styleUrls: ['./carousel-small.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CarouselSmallComponent implements AfterViewInit {
+export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
 
   @Input() products = [
     {
-      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/dw/image/v2/BBFF_PRD/on/demandware.static/-/Sites-melanie-lyne-master/default/dw3f357a26/images/hi-res/6030103-1687-112_1.jpg?sw=560&yocs=D_&yoloc=eu',
+      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw142d5aa2/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-1.jpg?yocs=D_&yoloc=eu',
       name: 'product_1'
     },
     {
-      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw142d5aa2/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-1.jpg?yocs=D_&yoloc=eu',
+      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw89239cdd/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-4.jpg?yocs=D_&yoloc=eu',
       name: 'product_2'
     },
     {
-      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw89239cdd/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-4.jpg?yocs=D_&yoloc=eu',
-      name: 'product_3'
-    },
-    {
-      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/dw/image/v2/BBFF_PRD/on/demandware.static/-/Sites-melanie-lyne-master/default/dwbf0ae5db/images/hi-res/6030336-0871-453_3.jpg?sw=560&yocs=D_&yoloc=eu',
-      name: 'product_4',
+      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw4bb4f3cb/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-3.jpg?yocs=D_&yoloc=eu',
+      name: 'product_3',
     },
     {
       src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dwf8ffdd65/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-2.jpg?yocs=D_&yoloc=eu',
-      name: 'product_5'
+      name: 'product_4'
     }
   ];
-  
+
   @ViewChild('carousel') carousel: ElementRef;
 
   private componentDestroyed$: Subject<void> = new Subject();

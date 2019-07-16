@@ -5,18 +5,19 @@
 
 <main>
 
-  <div class="row" appDeferLoad (deferLoad)="showCarousel = true">
+  <div class="sale row no-gutters" appDeferLoad (deferLoad)="showCarousel = true">
     
     <div class="col-2">
 
-      <p>SALE</p>
-      <p>ціни вже знижено</p>
-
+      <img src="assets/img/sale.jpg" class="sale-banner">
+      
     </div>
 
-    <div class="col-8">
+    <div class="sale-right col-10">
 
       <p>Літній розпродаж</p>
+      <p>ціни вже знижено</p>
+
       <app-carousel-small *ngIf=showCarousel></app-carousel-small>
 
     </div>

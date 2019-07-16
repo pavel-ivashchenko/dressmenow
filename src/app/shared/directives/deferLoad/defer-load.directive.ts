@@ -16,8 +16,6 @@ export class DeferLoadDirective implements AfterViewInit {
 
   ngAfterViewInit () {
 
-    debugger;
-
     this.intersectionObserver = new IntersectionObserver(entries => {
       this.checkForIntersection(entries);
     }, {});
@@ -29,9 +27,7 @@ export class DeferLoadDirective implements AfterViewInit {
   private checkForIntersection = (entries: Array<IntersectionObserverEntry>) => {
 
     entries.forEach((entry: IntersectionObserverEntry) => {
-      debugger;
       if (this.checkIfIntersecting(entry)) {
-        debugger;
         this.deferLoad.emit();
         this.intersectionObserver.unobserve(<Element>(this.element.nativeElement));
         this.intersectionObserver.disconnect();

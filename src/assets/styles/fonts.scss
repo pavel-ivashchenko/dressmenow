@@ -26,3 +26,11 @@
        url('./assets/fonts/homemade-apple/homemade-apple-v9-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
        url('./assets/fonts/homemade-apple/homemade-apple-v9-latin-regular.svg#HomemadeApple') format('svg'); /* Legacy iOS */
 }
+
+@font-face {
+  font-family: 'Yesteryear';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yesteryear-Regular'),
+       url('./assets/fonts/yesteryear/yesteryear-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+}

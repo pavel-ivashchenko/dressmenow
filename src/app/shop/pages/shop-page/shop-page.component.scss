@@ -4,3 +4,26 @@
   width: 100%;
   background-color: bisque;
 }
+
+.sale {
+  background-color: #fff;
+}
+
+.sale-banner {
+  width: 100%;
+  height: 100;
+  // width: 100%; height: 100%;
+  // position: relative;
+  // &:before {
+  //   content: '';
+  //   position: absolute;
+  //   width: 100%; height: 100%;
+  //   background-image: url('assets/img/sale_1.jpg');
+  //   background-size: 100% 100%;
+  // }
+}
+
+.sale-right {
+  border: 1px solid red;
+  justify-content: flex-end;
+}

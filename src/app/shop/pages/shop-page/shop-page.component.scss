@@ -11,6 +11,7 @@
 
 .sale {
   background-color: #fff;
+  border-top: 2px solid $main-orange;
 }
 
 .sale-banner {
@@ -22,7 +23,6 @@
 }
 
 .sale-right {
-  border: 1px solid red;
   justify-content: flex-end;
 }
 

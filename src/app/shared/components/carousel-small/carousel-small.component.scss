@@ -85,6 +85,10 @@ $btn-position-lg: 240px;
   color: $grey-lighter;
   opacity: 0;
   transition: 1s;
+  @include breakpoint-up(lg) {
+    padding: 15px 0;
+    font-size: 16px;
+  }
   @include m('active') {
     opacity: 1;
   }
@@ -127,9 +131,9 @@ $btn-position-lg: 240px;
 }
 
 .fa-angle-left {
-  transform: translate(-1px, 7px)
+  transform: translate(-1px, 8px)
 }
 
 .fa-angle-right {
-  transform: translate(1px, 7px)
+  transform: translate(1px, 8px)
 }

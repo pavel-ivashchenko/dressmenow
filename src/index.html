@@ -1,22 +1,32 @@
 
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Mean2019</title>
-  <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <video playsinline autoplay muted loop
-    class="d-none d-lg-block"
-    poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg"
-    id="bgvid">
-    <source src="http://thenewcode.com/assets/videos/polina.webm" type="video/webm">
-    <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
-  </video>
-  <app-root></app-root>
-</body>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Mean2019</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+  </head>
+
+  <body>
+
+    <section class="bg-container">
+
+      <video
+        playsinline autoplay muted loop
+        class="bg-video d-none d-lg-block"
+        poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg">
+          <source src="http://thenewcode.com/assets/videos/polina.webm" type="video/webm">
+          <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
+      </video>
+
+    </section>
+    
+    <app-root></app-root>
+    
+  </body>
+
 </html>

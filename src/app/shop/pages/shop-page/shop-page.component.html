@@ -1,16 +1,22 @@
 
-<p class="test">
-  shop-page works!
-</p>
-
 <main>
+
+  <header class="collection">
+    
+    <img class="collection-cover" src="https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw5763658b/melanie-lyne/2019/homepage/june-17/ml-trend-summer-dressing-1.jpg?yocs=D_&yoloc=eu" alt="New Collection">
+    
+    <div class="collection-info">
+      <p class="collection-info__name">Ocean Breeze</p>
+      <p class="collection-info__ad">Елегантні візерунки та морські відтінки втілюють спокійну вишуканість</p>
+      <a class="collection-info__btn" href="">Побачити колекцію</a>
+    </div>
+
+  </header>
 
   <section class="sale row no-gutters" appDeferLoad (deferLoad)="showCarousel = true">
     
     <div class="sale-left col-2">
-
-      <p class="sale-banner"></p>
-      
+      <p class="sale-left__banner"></p>
     </div>
 
     <div class="sale-right col-10">
@@ -19,7 +25,6 @@
       <p>ціни вже знижено</p> -->
 
       <app-carousel-small *ngIf=showCarousel></app-carousel-small>
-
     </div>
 
   </section>

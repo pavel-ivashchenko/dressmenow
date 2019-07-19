@@ -1,5 +1,6 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject, Observable,  } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
@@ -11,13 +12,13 @@ export class IsShrinkedService {
   private $currScroll: BehaviorSubject<number>;
   private IS_SHRINKED: number = 200;
 
-  constructor() {
-    this.$currScroll = new BehaviorSubject(window.scrollY);
-    window.addEventListener('scroll', this._scrollHandler.bind(this));
+  constructor(@Inject(DOCUMENT) private document: Document) {
+    this.$currScroll = new BehaviorSubject(this.document.documentElement.scrollTop);
+    this.document.addEventListener('scroll', this.scrollHandler.bind(this));
   }
 
-  private _scrollHandler(event: any) {
-    this.$currScroll.next(event.currentTarget.scrollY);
+  private scrollHandler() {
+    this.$currScroll.next(this.document.documentElement.scrollTop);
   }
 
   public check(): Observable<boolean> {

@@ -3,6 +3,7 @@
 @import 'z-index';
 @import 'colors';
 
+$btn-position-xs: 70px;
 $btn-position-sm: 120px;
 $btn-position-lg: 240px;
 
@@ -116,13 +117,19 @@ $btn-position-lg: 240px;
       color: $main-orange;
     }
     @include m('left') {
-      right: $btn-position-sm;
+      right: $btn-position-xs;
+      @include breakpoint-up(sm) {
+        right: $btn-position-sm;
+      }
       @include breakpoint-up(lg) {
         right: $btn-position-lg;
       }
     }
     @include m('right') {
-      left: $btn-position-sm;
+      left: $btn-position-xs;
+      @include breakpoint-up(sm) {
+        left: $btn-position-sm;
+      }
       @include breakpoint-up(lg) {
         left: $btn-position-lg;
       }

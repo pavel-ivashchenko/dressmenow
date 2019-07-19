@@ -38,7 +38,7 @@ main {
     padding: 0;
   }
   @include e('text') {
-    font-family: Montserrat, Arial;
+    font-family: Montserrat, sans-serif;
     color: #fff;
     font-size: 13px;
     text-decoration: underline;

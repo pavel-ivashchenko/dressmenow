@@ -1,0 +1,37 @@
+
+<div class="row justify-content-center no-gutters">
+
+  <div class="cart-items-container col-12">
+    <div
+      class="cart-item row no-gutters align-items-center d-flex mb-2 mx-2"
+      *ngFor="let item of cartData; let first = first"
+      [ngClass]="{ 'mt-2': first }">
+      <i class="cart-item-close fa fa-times-circle"></i>
+      <img class="cart-item-image d-flex my-2" src="{{item.img}}" alt="{{item.name}}">
+      <div class="d-flex flex-column">
+        <a href="#" class="cart-item-name p-3">{{ item.name }}</a>
+        <div class="cart-item-price d-flex flex-grow-1 justify-content-end align-items-end p-2">
+          <span>{{ item.qty }}</span>
+          <pre> x </pre>
+          <span>
+            {{
+              (item.price / 100 / (currency$ | async)?.index) | currency:(currency$ | async)?.name:'symbol-narrow':'1.2-2'
+            }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="cart-items-total col-12 mt-3">
+    Загальна сума:
+    <span>
+      {{
+        (totalAmount / 100 / (currency$ | async)?.index) | currency:(currency$ | async)?.name:'symbol-narrow':'1.2-2'
+      }}
+    </span>
+  </p>
+
+  <button mat-flat-button class="mt-4">ДО СПЛАТИ</button>
+
+</div>

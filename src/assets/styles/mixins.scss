@@ -1,4 +1,19 @@
 
+@mixin social {
+  li {
+    display: inline-block;
+  }
+  a {
+    padding: 10px;
+    display: block;
+    font-size: 16px;
+    transition: color .3s;
+    &:hover {
+      color: $main-orange;
+    }
+  }
+}
+
 // BEM methodology
 
 @mixin e($element) {

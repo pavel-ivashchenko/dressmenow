@@ -1,5 +1,7 @@
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+
 import { IsShrinkedService } from '@app/core/services';
 
 @Component({
@@ -11,13 +13,14 @@ import { IsShrinkedService } from '@app/core/services';
 export class BackToTopComponent {
 
   constructor(
-    public isShrinkedService: IsShrinkedService
+    public isShrinkedService: IsShrinkedService,
+    @Inject(DOCUMENT) private document: Document
   ) { }
 
   ngOnInit() { }
 
   public onBackToTopClick(): void {
-    window.scrollTo(0,0);
+    this.document.documentElement.scrollTo(0,0);
   }
 
 }

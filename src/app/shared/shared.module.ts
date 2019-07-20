@@ -19,7 +19,7 @@ const MATERIAL_MODULES = [
   MatInputModule
 ];
 
-import { COMPONENTS } from './components';
+import { COMPONENTS, ENTRY_COMPONENTS } from './components';
 import { PIPES } from './pipes';
 import { DIRECTIVES } from './directives';
 
@@ -44,6 +44,7 @@ import { DIRECTIVES } from './directives';
     ...DIRECTIVES
   ],
   entryComponents: [
+    ...ENTRY_COMPONENTS
   ]
 })
 export class SharedModule { }

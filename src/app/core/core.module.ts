@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 
 import { CoreRoutingModule } from '@app/core/core-routing.module';
 import { SharedModule } from '@app/shared/shared.module';
-import { CoreCommonModule } from '@app/common/core-common.module';
 import { CoreStoreModule } from './store/core-store.module';
 
 import { APP_SERVICE_PROVIDERS } from './services';
@@ -26,8 +25,7 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
     CommonModule,
     CoreRoutingModule,
     CoreStoreModule,
-    SharedModule,
-    CoreCommonModule
+    SharedModule
   ],
   exports: [
     CoreRoutingModule

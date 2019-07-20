@@ -11,7 +11,7 @@ import { Subject, Observable } from 'rxjs';
 import { Currency, GlobalCurrency } from '@app/shared/interfaces';
 import { currencyArr } from '@app/shared/models';
 import { IsShrinkedService } from '@app/core/services';
-import { CartModalComponent } from './modals/cart-modal/cart-modal.component';
+import { CartModalComponent } from '@app/shared/components/cart-modal/cart-modal.component';
 
 import { Store } from '@ngrx/store';
 import { SetCurrency } from '@app/core/store/actions';

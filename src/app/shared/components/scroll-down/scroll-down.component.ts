@@ -1,5 +1,7 @@
 
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+
 import { IsShrinkedService } from '@app/core/services';
 
 @Component({
@@ -11,14 +13,14 @@ import { IsShrinkedService } from '@app/core/services';
 export class ScrollDownComponent implements OnInit {
 
   constructor(
-    public isShrinkedService: IsShrinkedService
+    public isShrinkedService: IsShrinkedService,
+    @Inject(DOCUMENT) private document: Document
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   public onScrollDown(): void {
-    
+    this.document.documentElement.scrollTo(0, this.document.documentElement.clientHeight);
   }
 
 }

@@ -1,39 +1,40 @@
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { SharedModule } from '@app/shared/shared.module';
 import { CurrencyEffects } from '@app/core/store/effects';
 import { appReducers } from '@app/core/store/reducers';
 
-import { CorePageComponent } from './core-page.component';
+import { CartModalComponent } from './cart-modal.component';
 
-describe('CorePageComponent', () => {
-  let component: CorePageComponent;
-  let fixture: ComponentFixture<CorePageComponent>;
+describe('CartModalComponent', () => {
+  let component: CartModalComponent;
+  let fixture: ComponentFixture<CartModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        BrowserAnimationsModule,
-        RouterTestingModule,
-        SharedModule,
         StoreModule.forRoot(appReducers),
         EffectsModule.forRoot([ CurrencyEffects ]),
+        SharedModule
       ],
-      declarations: [ CorePageComponent ]
+      declarations: [ CartModalComponent ],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} }, // TODO investigate
+        { provide: MatDialogRef, useValue: {} } // TODO investigate
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CorePageComponent);
+    fixture = TestBed.createComponent(CartModalComponent);
+    fixture.debugElement.injector.get(MAT_DIALOG_DATA);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

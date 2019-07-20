@@ -12,6 +12,7 @@ import { Currency, GlobalCurrency } from '@app/shared/interfaces';
 import { currencyArr } from '@app/shared/models';
 import { IsShrinkedService } from '@app/core/services';
 import { CartModalComponent } from '@app/shared/components/cart-modal/cart-modal.component';
+import { UserModalComponent } from '@app/shared/components/user-modal/user-modal.component';
 
 import { Store } from '@ngrx/store';
 import { SetCurrency } from '@app/core/store/actions';
@@ -30,25 +31,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isTopAdHidden = false;
   public isMobileMode: boolean;
   public currencyArr: Currency[] = currencyArr;
-  public currency$: Observable<GlobalCurrency> = this._store.select(state => state.currency);
+  public currency$: Observable<GlobalCurrency> = this.store.select(state => state.currency);
 
   constructor(
-    private _store: Store<IAppState>,
-    private _dialog: MatDialog,
+    private store: Store<IAppState>,
+    private dialog: MatDialog,
     public isShrinkedService: IsShrinkedService,
   ) { }
 
   ngOnInit() {}
 
-  public openDialog(): void {
-    this._dialog.open(CartModalComponent, {
+  public onUserClick(): void {
+    this.dialog.open(UserModalComponent), {
+      width: '400px',
+      data: {}
+    }
+  }
+
+  public onCartClick(): void {
+    this.dialog.open(CartModalComponent, {
       width: '400px',
       data: {}
     });
   }
 
   public onCurrencyChange(newCurrency: string):void {
-    this._store.dispatch(new SetCurrency(newCurrency));
+    this.store.dispatch(new SetCurrency(newCurrency));
   }
 
   ngOnDestroy(): void {

@@ -117,11 +117,11 @@
 </main>
 
 <ng-template #userMenu>
-  <a href="#" class="align-self-center">
+  <a (click)="onUserClick()" class="align-self-center">
     <i class="user-profile icon-user-circle-o"></i>
   </a>
   <span class="nav-icons-divider"></span>
-  <a class="nav-cart align-self-center" (click)="openDialog()">
+  <a (click)="onCartClick()" class="nav-cart align-self-center">
     <i class="user-cart icon-basket-circled"></i>
     <span class="nav-cart__qty">0</span>
   </a>

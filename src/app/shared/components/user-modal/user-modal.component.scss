@@ -1,0 +1,39 @@
+
+@import 'mixins';
+@import 'colors';
+
+@mixin logo-line {
+  font-family: 'Homemade Apple';
+  transform: rotate(-5deg);
+  color: $main-orange;
+}
+
+@mixin logo-line-last {
+  transform: rotate(-15deg);
+  text-align: right;
+}
+
+.logo {
+  @include e('line') {
+    font-size: 25px;
+    line-height: 40px;
+    margin-top: 10px;
+    @include logo-line;
+    @include m('last') {
+      @include logo-line-last;
+      font-size: 35px;
+      margin-top: 5px;
+    }
+  }
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.sign-in-btn {
+  width: 100%;
+  color: #fff;
+  background-color: #000;
+  text-transform: uppercase;
+}

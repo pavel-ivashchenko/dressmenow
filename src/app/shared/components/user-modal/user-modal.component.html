@@ -1,26 +1,36 @@
 
-<header>
-  <div class="logo">
-    <p class="logo__line">Dress me</p>
-    <p class="logo__line logo__line--last">now!</p>
-  </div>
-</header>
+<div class="user-modal-container">
+  
+  <i (click)="false" class="user-modal-close fa fa-times"></i>
 
-<main class="row">
+  <header class="logo">
+    <img src="./assets/img/logo.jpg" alt="Logo" class="logo__img">
+  </header>
+  
+  <main class="row">
+  
+    <p class="title col-12">увійти</p>
+    
+    <div class="user-modal-input">
+      <mat-form-field appearance="outline">
+        <mat-label>Email*</mat-label>
+        <input matInput placeholder="Введіть email">
+      </mat-form-field>
+    </div>
 
-  <p class="title col-12">увійти</p>
+    <div class="user-modal-input">
+      <mat-form-field appearance="outline">
+        <mat-label>Password*</mat-label>
+        <input matInput placeholder="Введіть пароль">
+      </mat-form-field>
+    </div>
+  
+    <button class="wide-btn">ВХІД</button>
+  
+    <p class="question">ще не зареєстровані?</p>
+  
+    <button class="wide-btn">СТВОРИТИ АКАУНТ</button>
+  
+  </main>
 
-  <mat-form-field class="col-12" appearance="outline">
-    <mat-label>Email*</mat-label>
-    <input matInput placeholder="Placeholder">
-  </mat-form-field>
-
-  <mat-form-field class="col-12" appearance="outline">
-    <mat-label>Password*</mat-label>
-    <input matInput placeholder="Placeholder">
-  </mat-form-field>
-
-  <button class="sign-in-btn">ВХІД</button>
-
-</main>
-
+</div>

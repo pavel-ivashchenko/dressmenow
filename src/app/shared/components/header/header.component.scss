@@ -4,17 +4,6 @@
 @import 'mixins';
 @import 'z-index';
 
-@mixin logo-line {
-  font-family: 'Homemade Apple';
-  transform: rotate(-5deg);
-  color: $main-orange;
-}
-
-@mixin logo-line-last {
-  transform: rotate(-15deg);
-  text-align: right;
-}
-
 main {
   height: auto;
   @include media-breakpoint-up(lg) {
@@ -44,17 +33,10 @@ main {
     align-self: center;
   }
   @include e('close') {
+    @include close-btn;
     color: #fff;
-    position: absolute;
-    top: 0;
-    right: 0;
+    top: 0; right: 0;
     font-size: 12px;
-    opacity: 0.7;
-    padding: 20px;
-    cursor: pointer;
-    &:hover {
-      opacity: 1;
-    }
   }
 }
 

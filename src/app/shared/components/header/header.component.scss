@@ -250,12 +250,11 @@ main {
     justify-content: center;
     align-items: center;
     color: $main-orange;
-    border-radius: 50%;
+    border-radius: 100%;
     @include media-breakpoint-up(lg) {
+      top: -10px; left: 17px;
       font-size: 12px;
       color: $main-orange;
-      top: -10px;
-      left: 17px;
     }
   }
 }

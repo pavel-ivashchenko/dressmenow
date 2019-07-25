@@ -72,3 +72,41 @@ app-footer {
     }
   }
 }
+
+app-user-modal { // START FROM HERE
+  .mat-form-field {
+    width: 100%;
+    .mat-input-element {
+      font-size: 12px;
+      color: $grey-regular;
+    }
+    .mat-form-field-label {
+      top: 50%;
+      font-size: 14px;
+      span {
+        display: none;
+      }
+    }
+    &.mat-focused {
+      .mat-form-field-appearance-outline .mat-form-field-outline {
+        color: $grey-light;
+      }
+    }
+    &.mat-form-field-invalid {
+      .mat-input-element {
+        caret-color: $grey-light;
+      }
+      .mat-form-field-label {
+        color: $main-orange;
+      }
+      .mat-form-field-ripple {
+        background-color: $main-orange;
+      }
+    }
+
+    .mat-form-field-wrapper {
+      margin: 0;
+    }
+
+  }
+}

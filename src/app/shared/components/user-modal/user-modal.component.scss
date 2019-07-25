@@ -2,10 +2,6 @@
 @import 'mixins';
 @import 'colors';
 
-mat-form-field {
-  width: 100%;
-}
-
 .user-modal-container {
   position: relative;
   max-width: 400px;
@@ -27,13 +23,13 @@ mat-form-field {
 }
 
 .title {
+  margin: 15px 0 10px;
+  font-weight: bold;
+  text-align: center;
   text-transform: uppercase;
 }
 
-.question {
-  display: block;
-  width: 100%;
-}
+
 
 .user-modal-input {
   width: 400px;
@@ -43,8 +39,33 @@ mat-form-field {
 .wide-btn {
   width: 400px; height: 50px;
   margin: 0 auto;
-  border: 0;
+  border: 1px solid #000;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  border-radius: 4px;
   color: #fff;
   background-color: #000;
   text-transform: uppercase;
+  cursor: pointer;
+  @include m('transparent') {
+    background-color: transparent;
+    color: #000;
+  }
+}
+
+.question {
+  margin: 20px 0 10px;
+  display: block;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.forgot {
+  margin: -10px 0 15px;
+  font-size: 12px;
+  text-align: right;
+  cursor: pointer;
 }

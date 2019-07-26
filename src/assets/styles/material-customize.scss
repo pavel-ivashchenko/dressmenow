@@ -1,4 +1,39 @@
 
+$dressmenow-palette: (
+  50 : #f1f0f0,
+  100 : #dcdad9,
+  200 : #c5c1c0,
+  300 : #aea8a7,
+  400 : #9c9594,
+  500 : #8b8281,
+  600 : #837a79,
+  700 : #786f6e,
+  800 : #6e6564,
+  900 : #5b5251,
+  A100 : #fbccc7,
+  A200 : #f8a198,
+  A400 : #ff6e5d,
+  A700 : #ff5744,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
+$dressmenow: mat-palette($dressmenow-palette, 100, 50, 200);
+
 div.cdk-overlay-pane {
   div.ng-trigger-transformPanel {
     mat-option.mat-option {
@@ -73,40 +108,37 @@ app-footer {
   }
 }
 
-app-user-modal { // START FROM HERE
+app-user-modal {
   .mat-form-field {
     width: 100%;
     .mat-input-element {
       font-size: 12px;
-      color: $grey-regular;
+      caret-color: #000;
     }
     .mat-form-field-label {
       top: 50%;
+      transform: translateY(40%);
       font-size: 14px;
-      span {
-        display: none;
-      }
     }
-    &.mat-focused {
-      .mat-form-field-appearance-outline .mat-form-field-outline {
-        color: $grey-light;
-      }
-    }
-    &.mat-form-field-invalid {
-      .mat-input-element {
-        caret-color: $grey-light;
-      }
-      .mat-form-field-label {
-        color: $main-orange;
-      }
-      .mat-form-field-ripple {
-        background-color: $main-orange;
-      }
-    }
-
     .mat-form-field-wrapper {
       margin: 0;
     }
-
+    .mat-form-field-infix {
+      padding: 18px 0;
+      border-top: 0;
+    }
+    .mat-form-field-outline-thick  {
+      .mat-form-field-outline-start,
+      .mat-form-field-outline-gap,
+      .mat-form-field-outline-end {
+        border-width: 1px;
+      }
+    }
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      color: red;
+    }
+    .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+      color: green;
+    }
   }
 }

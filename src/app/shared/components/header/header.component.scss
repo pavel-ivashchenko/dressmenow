@@ -34,9 +34,13 @@ main {
   }
   @include e('close') {
     @include close-btn;
-    color: #fff;
-    top: 0; right: 0;
+    top: -4px; right: 0;
     font-size: 12px;
+    color: #fff;
+    &:before {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 

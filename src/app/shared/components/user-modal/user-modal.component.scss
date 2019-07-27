@@ -2,6 +2,7 @@
 @import 'mixins';
 @import 'colors';
 
+
 .user-modal-container {
   position: relative;
   max-width: 400px;
@@ -20,6 +21,10 @@
   top: -30px; right: -20px;
   font-size: 20px;
   color: $main-orange;
+  &:before {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .title {

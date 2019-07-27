@@ -1,0 +1,12 @@
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$dressmenow-theme-primary: mat-palette($mat-grey);
+$dressmenow-theme-accent: mat-palette($mat-deep-orange);
+$dressmenow-theme-warn: mat-palette($mat-red);
+
+$dressmenow-theme: mat-light-theme($dressmenow-theme-primary, $dressmenow-theme-accent, $dressmenow-theme-warn);
+
+@include angular-material-theme($dressmenow-theme);

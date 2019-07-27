@@ -19,19 +19,19 @@ export class CartModalComponent implements OnInit {
 
   public cartData: CartModalItem[] = cartDialogMockData;
   public totalAmount = 0;
-  public currency$: Observable<GlobalCurrency> = this._store.select(state => state.currency);
+  public currency$: Observable<GlobalCurrency> = this.store.select(state => state.currency);
 
   constructor(
-    private _store: Store<IAppState>,
-    private _dialogRef: MatDialogRef<CartModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public _dialogData: {}) { }
+    private store: Store<IAppState>,
+    private dialogRef: MatDialogRef<CartModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public dialogData: {}) { }
 
   ngOnInit() {
     this.totalAmount = this.cartData.reduce((acc, item) => acc + item.price * item.qty, 0);
   }
 
   onNoClick(): void {
-    this._dialogRef.close();
+    this.dialogRef.close();
   }
 
 }

@@ -44,7 +44,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public onUserClick(): void {
     this.dialog.open(UserModalComponent), {
       width: '400px',
-      data: {}
+      data: {},
+      autoFocus: false
     }
   }
 

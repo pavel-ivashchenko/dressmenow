@@ -1,38 +1,50 @@
 
-<div class="user-modal-container">
+<section class="user-modal-container">
   
-  <i (click)="false" class="user-modal-close fa fa-times"></i>
+  <i (click)="dismissModal()" class="close-btn fa fa-times"></i>
 
   <header class="logo">
-    <img src="./assets/img/logo.jpg" alt="Logo" class="logo__img">
+    <img src="./assets/img/logo.jpg" class="logo__img" alt="Logo">
   </header>
   
-  <main class="row">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   
-    <p class="title col-12">увійти до акаунту</p>
+    <p class="title">Увійти до акаунту</p>
     
-    <div class="user-modal-input">
+    <div class="input-container">
       <mat-form-field appearance="outline">
-        <mat-label>Email*</mat-label>
-        <input matInput placeholder="Введіть email">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="login"
+          type="email" required
+          placeholder="Введіть email">
+        <mat-error align="end">some text</mat-error>
       </mat-form-field>
     </div>
 
-    <div class="user-modal-input">
+    <div class="input-container">
       <mat-form-field appearance="outline">
-        <mat-label>Password*</mat-label>
-        <input matInput placeholder="Введіть пароль">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          required
+          placeholder="Введіть пароль">
+        <mat-error align="end">some text</mat-error>
       </mat-form-field>
     </div>
 
-    <p class="forgot col-12">Не можете згадати пароль?</p>
+    <p class="forgot">
+      <a class="forgot__link" href="">Не можете згадати пароль?</a>
+    </p>
   
-    <button class="wide-btn">ВХІД</button>
+    <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">ВХІД</button>
   
-    <p class="question col-12">ще немає акаунту?</p>
+    <p class="question">ще немає акаунту?</p>
   
-    <button class="wide-btn wide-btn--transparent">СТВОРИТИ АКАУНТ</button>
+    <button mat-stroked-button class="ctrl-btn ctrl-btn--regular">СТВОРИТИ АКАУНТ</button>
   
-  </main>
+  </form>
 
-</div>
+</section>

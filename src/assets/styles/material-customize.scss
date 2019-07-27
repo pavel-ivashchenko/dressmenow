@@ -87,6 +87,7 @@ app-user-modal {
     }
     .mat-form-field-wrapper {
       margin: 0;
+      padding-bottom: 25px;
     }
     .mat-form-field-infix {
       padding: 18px 0;
@@ -98,6 +99,9 @@ app-user-modal {
       .mat-form-field-outline-end {
         border-width: 1px;
       }
+    }
+    .mat-form-field-subscript-wrapper {
+      margin-top: 0;
     }
   }
 }

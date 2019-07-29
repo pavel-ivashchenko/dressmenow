@@ -42,11 +42,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   public onUserClick(): void {
-    this.dialog.open(UserModalComponent), {
+    this.dialog.open(UserModalComponent, {
       width: '400px',
       data: {},
       autoFocus: false
-    }
+    })
   }
 
   public onCartClick(): void {

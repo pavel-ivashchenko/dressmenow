@@ -16,23 +16,29 @@
         <mat-label>Email</mat-label>
         <input
           matInput
-          formControlName="login"
-          type="email" required
-          placeholder="Введіть email">
-        <mat-error align="end">some text</mat-error>
+          formControlName="login" email
+          type="email" required placeholder="Введіть email">
+        <mat-error align="end">{{ getEmailErrorMsg() }}</mat-error>
       </mat-form-field>
     </div>
 
     <div class="input-container">
+
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <input
           matInput
-          formControlName="password"
-          required
-          placeholder="Введіть пароль">
-        <mat-error align="end">some text</mat-error>
+          [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+          required placeholder="Введіть пароль">
+        <button
+          mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword"
+          (click)="togglePassword($event)">
+            <i *ngIf="!hidePassword" class="hide-password fa fa-eye"></i>
+            <i *ngIf="hidePassword" class="hide-password fa fa-eye-slash"></i>
+        </button>
+        <mat-error align="end">Будь ласка, введіть пароль</mat-error>
       </mat-form-field>
+
     </div>
 
     <p class="forgot">

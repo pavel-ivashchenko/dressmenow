@@ -1,11 +1,10 @@
 
 @import 'mixins';
 @import 'colors';
-
-$custom-width: 400px;
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 .user-modal-container {
-  width: $custom-width;
+  width: 100%;
   position: relative;
   z-index: 1;
   &:before {
@@ -14,7 +13,7 @@ $custom-width: 400px;
     position: absolute;
     opacity: .2;
     z-index: -1;
-    background: url('assets/img/user-modal-bg.png'); // TODO compress image
+    background: url('assets/img/user-modal-bg.png');
   }
 }
 
@@ -93,4 +92,9 @@ $custom-width: 400px;
       color: #000;
     }
   }
+}
+
+.hide-password {
+  display: inline-flex;
+  font-size: 14px;
 }

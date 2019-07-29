@@ -15,7 +15,7 @@ div.cdk-overlay-pane {
 }
 
 app-header {
-  mat-form-field.mat-form-field-appearance-legacy { // TODO simplyfy
+  mat-form-field.mat-form-field-appearance-legacy { // TODO refactor
     width: 100%;
     .mat-form-field-wrapper {
       padding-bottom: 0;
@@ -77,8 +77,7 @@ app-user-modal {
   .mat-form-field {
     width: 100%;
     .mat-input-element {
-      font-size: 12px;
-      caret-color: #000;
+      font-size: 14px;
     }
     .mat-form-field-label {
       top: 50%;
@@ -103,5 +102,13 @@ app-user-modal {
     .mat-form-field-subscript-wrapper {
       margin-top: 0;
     }
+  }
+  .mat-form-field-appearance-outline .mat-form-field-prefix,
+  .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 50%; left: 5px;
+    transform: translateY(2px);
+  }
+  .mat-icon-button {
+    line-height: 0;
   }
 }

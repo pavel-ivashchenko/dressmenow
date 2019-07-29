@@ -16,6 +16,8 @@ export class UserModalComponent implements OnInit {
     password: new FormControl('')
   })
 
+  public hidePassword = false;
+
   constructor(private dialogRef: MatDialogRef<UserModalComponent>) { }
 
   ngOnInit() { }
@@ -24,6 +26,17 @@ export class UserModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  public togglePassword(event: MouseEvent): void {
+    event.stopPropagation();
+    this.hidePassword = !this.hidePassword;
+  }
+
+  public getEmailErrorMsg(): string {
+    return this.loginForm.controls.login.hasError('required') ? 'Будь ласка, введіть email' :
+      this.loginForm.controls.login.hasError('email') ? 'Будь ласка, введіть корректний email' :
+        '';
+  }
+  
   public onSubmit(): void {
     console.log('works');
   }

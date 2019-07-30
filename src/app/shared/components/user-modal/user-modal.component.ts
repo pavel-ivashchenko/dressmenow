@@ -11,18 +11,26 @@ import { MatDialogRef } from '@angular/material';
 })
 export class UserModalComponent implements OnInit {
   
-  public loginForm = new FormGroup({
+  public signInForm = new FormGroup({
     login: new FormControl(''),
     password: new FormControl('')
   })
-
+  public sendPasswordForm = new FormGroup({
+    email: new FormControl('')
+  })
   public hidePassword = false;
+  public views = {
+    default: 'DEFAULT',
+    sendPassword: 'SEND_PASSWORD',
+    createAccount: 'CREATE_ACCOUNT'
+  };
+  public currentView;
 
   constructor(private dialogRef: MatDialogRef<UserModalComponent>) { }
 
   ngOnInit() { }
 
-  public dismissModal(): void {
+  public onCloseModal(): void {
     this.dialogRef.close();
   }
 
@@ -31,14 +39,17 @@ export class UserModalComponent implements OnInit {
     this.hidePassword = !this.hidePassword;
   }
 
-  public getEmailErrorMsg(): string {
-    return this.loginForm.controls.login.hasError('required') ? 'Будь ласка, введіть email' :
-      this.loginForm.controls.login.hasError('email') ? 'Будь ласка, введіть корректний email' :
-        '';
+  public backToDefaultView(event: MouseEvent): void {
+    event.stopPropagation();
+    this.currentView = this.views.default;
   }
   
-  public onSubmit(): void {
-    console.log('works');
+  public onSignIn(): void {
+    console.log('sign in works');
+  }
+
+  public onSendPassword(): void {
+    console.log('send password works');
   }
 
 }

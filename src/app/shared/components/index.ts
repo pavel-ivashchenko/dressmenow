@@ -8,6 +8,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselSmallComponent } from './carousel-small/carousel-small.component';
 import { CartModalComponent } from './cart-modal/cart-modal.component';
 import { UserModalComponent } from './user-modal/user-modal.component';
+import { FormErrorComponent } from './form-error/form-error.component';
 
 export const COMPONENTS = [
   HeaderComponent,
@@ -18,7 +19,8 @@ export const COMPONENTS = [
   CarouselComponent,
   CarouselSmallComponent,
   CartModalComponent,
-  UserModalComponent
+  UserModalComponent,
+  FormErrorComponent
 ];
 
 export const ENTRY_COMPONENTS = [

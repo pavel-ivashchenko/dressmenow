@@ -8,8 +8,7 @@ import {
   MatDialogModule,
   MatButtonModule,
   MatSnackBarModule,
-  MatInputModule,
-  MatIconModule
+  MatInputModule
 } from '@angular/material';
 
 const MATERIAL_MODULES = [

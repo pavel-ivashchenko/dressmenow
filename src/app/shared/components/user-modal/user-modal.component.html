@@ -1,56 +1,94 @@
 
 <section class="user-modal-container">
-  
-  <i (click)="dismissModal()" class="close-btn fa fa-times"></i>
+
+  <i (click)="onCloseModal()" class="close-btn fa fa-times"></i>
 
   <header class="logo">
     <img src="./assets/img/logo.jpg" class="logo__img" alt="Logo">
   </header>
+
+  <div [ngSwitch]="currentView">
+
+    <form *ngSwitchDefault [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+      
+      <header class="title">
+        <h4 class="title__main">Увійти до акаунту</h4>
+      </header>
+      
+      <div class="input-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="login" email
+            type="email" required placeholder="Введіть email">
+          <mat-error align="end">
+            <app-form-error [control]="signInForm.controls.login"></app-form-error>
+          </mat-error>
+        </mat-form-field>
+      </div>
   
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-container">
   
-    <p class="title">Увійти до акаунту</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+            required placeholder="Введіть пароль">
+          <button
+            mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword"
+            (click)="togglePassword($event)">
+              <i *ngIf="!hidePassword" class="hide-password fa fa-eye"></i>
+              <i *ngIf="hidePassword" class="hide-password fa fa-eye-slash"></i>
+          </button>
+          <mat-error align="end">
+            <app-form-error [control]="signInForm.controls.password"></app-form-error>
+          </mat-error>
+        </mat-form-field>
+  
+      </div>
+      
+      <!-- START FROM HERE -->
+      <p class="forgot">
+        <a class="forgot__link" (click)="currentView = views.sendPassword">Не можете згадати пароль?</a>
+      </p>
     
-    <div class="input-container">
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          formControlName="login" email
-          type="email" required placeholder="Введіть email">
-        <mat-error align="end">{{ getEmailErrorMsg() }}</mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="input-container">
-
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          [type]="hidePassword ? 'password' : 'text'" formControlName="password"
-          required placeholder="Введіть пароль">
-        <button
-          mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword"
-          (click)="togglePassword($event)">
-            <i *ngIf="!hidePassword" class="hide-password fa fa-eye"></i>
-            <i *ngIf="hidePassword" class="hide-password fa fa-eye-slash"></i>
-        </button>
-        <mat-error align="end">Будь ласка, введіть пароль</mat-error>
-      </mat-form-field>
-
-    </div>
-
-    <p class="forgot">
-      <a class="forgot__link" href="">Не можете згадати пароль?</a>
-    </p>
+      <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">ВХІД</button>
+    
+      <p class="question">ще немає акаунту?</p>
+    
+      <button mat-stroked-button class="ctrl-btn ctrl-btn--regular">СТВОРИТИ АКАУНТ</button>
+    
+    </form>
   
-    <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">ВХІД</button>
+    <form *ngSwitchCase="views.sendPassword" [formGroup]="sendPasswordForm" class="send-password" (ngSubmit)="onSendPassword()">
+      
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Не можете згадати пароль?</h4>
+        <p class="title__secondary">Введіть свою електронну адресу, і ми надішлемо вам посилання для скидання пароля</p>
+      </header>
+    
+      <div class="input-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email" email
+            type="email" required placeholder="Введіть email">
+          <mat-error align="end">
+            <app-form-error [control]="sendPasswordForm.controls.email"></app-form-error>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">НАДІСЛАТИ ПАРОЛЬ</button>
+
+      <button mat-button (click)="backToDefaultView($event)" class="ctrl-btn ctrl-btn--regular">До попередньої форми</button>
+
+    </form>
+    
+  </div>
   
-    <p class="question">ще немає акаунту?</p>
-  
-    <button mat-stroked-button class="ctrl-btn ctrl-btn--regular">СТВОРИТИ АКАУНТ</button>
-  
-  </form>
 
 </section>

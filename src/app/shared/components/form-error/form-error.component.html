@@ -1,0 +1,13 @@
+
+<div *ngIf="control?.invalid && (control?.dirty || control?.touched)">
+
+  <p *ngIf="!control.errors">
+    Будь ласка, перевірте, чи всі необхідні поля було заповнено
+  </p>
+
+  <p *ngFor="let error of control?.errors | keyvalue">
+    <span *ngIf="!nativeFormErrors[error.key]">{{ error.value }}</span>
+    <span *ngIf="nativeFormErrors[error.key]">{{ nativeFormErrors[error.key] }}</span>
+  </p>
+
+</div>

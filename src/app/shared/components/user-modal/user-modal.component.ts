@@ -22,7 +22,8 @@ export class UserModalComponent implements OnInit {
   public views = {
     default: 'DEFAULT',
     sendPassword: 'SEND_PASSWORD',
-    createAccount: 'CREATE_ACCOUNT'
+    createAccount: 'CREATE_ACCOUNT',
+    checkEmail: 'CHECK_EMAIL'
   };
   public currentView;
 
@@ -49,7 +50,14 @@ export class UserModalComponent implements OnInit {
   }
 
   public onSendPassword(): void {
-    console.log('send password works');
+    if (this.sendPasswordForm.valid) {
+      this.currentView = this.views.checkEmail;
+    }
+  }
+
+  public gotoCreateAccountForm(event: MouseEvent): void {
+    event.stopPropagation();
+    this.currentView = this.views.createAccount;
   }
 
 }

@@ -48,8 +48,7 @@
         </mat-form-field>
   
       </div>
-      
-      <!-- START FROM HERE -->
+
       <p class="forgot">
         <a class="forgot__link" (click)="currentView = views.sendPassword">Не можете згадати пароль?</a>
       </p>
@@ -58,11 +57,11 @@
     
       <p class="question">ще немає акаунту?</p>
     
-      <button mat-stroked-button class="ctrl-btn ctrl-btn--regular">СТВОРИТИ АКАУНТ</button>
+      <button mat-stroked-button class="ctrl-btn ctrl-btn--regular" (click)="gotoCreateAccountForm($event)">СТВОРИТИ АКАУНТ</button>
     
     </form>
   
-    <form *ngSwitchCase="views.sendPassword" [formGroup]="sendPasswordForm" class="send-password" (ngSubmit)="onSendPassword()">
+    <form *ngSwitchCase="views.sendPassword" [formGroup]="sendPasswordForm" (ngSubmit)="onSendPassword()">
       
       <header class="title">
         <h4 class="title__main title__main--withborder">Не можете згадати пароль?</h4>
@@ -85,6 +84,26 @@
       <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">НАДІСЛАТИ ПАРОЛЬ</button>
 
       <button mat-button (click)="backToDefaultView($event)" class="ctrl-btn ctrl-btn--regular">До попередньої форми</button>
+
+    </form>
+
+    <div *ngSwitchCase="views.checkEmail">
+
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Перевірте свій email</h4>
+        <p class="title__secondary">Ми надіслали електронний лист на електронну скриньку <span class="bold-and-underline">samoran4ez@gmail.com</span> з інструкціями щодо відновлення пароля</p>
+      </header>
+
+      <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" (click)="currentView = views.default">ДЯКУЮ</button>
+
+    </div>
+
+    <form *ngSwitchCase="views.createAccount" [formGroup]="createAccountForm" (ngSubmit)="onCreateAccount()">
+
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Створити акаунт</h4>
+        <p class="title__secondary title__secondary--bold">Лише декілька простих кроків</p>
+      </header>
 
     </form>
     

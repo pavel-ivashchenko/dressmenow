@@ -49,7 +49,10 @@
     }
   }
   @include e('secondary') {
-    margin: 20px 0;
+    margin: 20px 0 40px;
+    @include m('bold') {
+      font-weight: bold;
+    }
   }
 }
 
@@ -95,7 +98,7 @@
 
 .forgot {
   width: 100%;
-  margin: -5px 0 15px;
+  margin-bottom: 15px;
   font-size: 12px;
   text-align: right;
   @include e('link') {
@@ -110,4 +113,9 @@
 .hide-password {
   display: inline-flex;
   font-size: 14px;
+}
+
+.bold-and-underline {
+  font-weight: bolder;
+  text-decoration: underline;
 }

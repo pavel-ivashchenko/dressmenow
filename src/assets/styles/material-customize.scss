@@ -89,7 +89,7 @@ app-user-modal {
       padding-bottom: 25px;
     }
     .mat-form-field-infix {
-      padding: 18px 0;
+      padding: 20px 0 16px;
       border-top: 0;
     }
     .mat-form-field-outline-thick {
@@ -106,7 +106,7 @@ app-user-modal {
   .mat-form-field-appearance-outline .mat-form-field-prefix,
   .mat-form-field-appearance-outline .mat-form-field-suffix {
     top: 50%; left: 5px;
-    transform: translateY(1px);
+    transform: translateY(-1px);
   }
   .mat-icon-button {
     line-height: 0;

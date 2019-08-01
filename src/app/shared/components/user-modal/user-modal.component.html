@@ -101,9 +101,43 @@
     <form *ngSwitchCase="views.createAccount" [formGroup]="createAccountForm" (ngSubmit)="onCreateAccount()">
 
       <header class="title">
-        <h4 class="title__main title__main--withborder">Створити акаунт</h4>
+        <h4 class="title__main">Створити акаунт</h4>
         <p class="title__secondary title__secondary--bold">Лише декілька простих кроків</p>
       </header>
+
+      <div class="input-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email_1" email
+            type="email" required>
+          <mat-error align="end">
+            <app-form-error [control]="createAccountForm.controls.email_1"></app-form-error>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Підтвердіть Email</mat-label>
+          <input
+            matInput
+            formControlName="email_2" email
+            type="email" required>
+          <mat-error align="end">
+            <app-form-error [control]="createAccountForm.controls.email_2"></app-form-error>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="checkbox-container">
+        <mat-checkbox>Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
+      </div>
+
+      <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">ДАЛІ</button>
+
+      <p class="already-have">Уже маєте акаунт? <span class="already-have__back-btn" (click)="backToDefaultView($event)">УВІЙТИ</span></p>
 
     </form>
     

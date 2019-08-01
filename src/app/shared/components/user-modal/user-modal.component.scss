@@ -119,3 +119,23 @@
   font-weight: bolder;
   text-decoration: underline;
 }
+
+.already-have {
+  margin: 20px auto 0;
+  font-size: 12px;
+  text-align: center;
+  @include e('back-btn') {
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: rgba(0,0,0,.8);
+    }
+  }
+}
+
+// TODO fix wrap
+.checkbox-container {
+  width: 100%;
+  margin: -5px 0 18px;
+  overflow: hidden;
+}

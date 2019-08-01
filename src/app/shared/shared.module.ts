@@ -8,7 +8,8 @@ import {
   MatDialogModule,
   MatButtonModule,
   MatSnackBarModule,
-  MatInputModule
+  MatInputModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 const MATERIAL_MODULES = [
@@ -16,7 +17,8 @@ const MATERIAL_MODULES = [
   MatDialogModule,
   MatButtonModule,
   MatSnackBarModule,
-  MatInputModule
+  MatInputModule,
+  MatCheckboxModule
 ];
 
 import { COMPONENTS, ENTRY_COMPONENTS } from './components';

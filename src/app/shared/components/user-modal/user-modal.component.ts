@@ -18,6 +18,10 @@ export class UserModalComponent implements OnInit {
   public sendPasswordForm = new FormGroup({
     email: new FormControl('')
   })
+  public createAccountForm = new FormGroup({
+    email_1: new FormControl(''),
+    email_2: new FormControl('')
+  })
   public hidePassword = false;
   public views = {
     default: 'DEFAULT',

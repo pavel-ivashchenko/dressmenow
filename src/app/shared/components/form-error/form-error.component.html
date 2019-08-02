@@ -5,9 +5,16 @@
     Будь ласка, перевірте, чи всі необхідні поля було заповнено
   </p>
 
-  <p *ngFor="let error of control?.errors | keyvalue">
-    <span *ngIf="!nativeFormErrors[error.key]">{{ error.value }}</span>
-    <span *ngIf="nativeFormErrors[error.key]">{{ nativeFormErrors[error.key] }}</span>
+  <p *ngIf="showOnly && control.errors[showOnly]">
+    <span *ngIf="!nativeFormErrors[showOnly]">{{ control.errors[showOnly] }}</span>
+    <span *ngIf="nativeFormErrors[showOnly]">{{ nativeFormErrors[showOnly] }}</span>
   </p>
 
+  <ng-container *ngIf="!showOnly">
+    <p *ngFor="let error of control?.errors | keyvalue">
+      <span *ngIf="!nativeFormErrors[error.key]">{{ error.value }}</span>
+      <span *ngIf="nativeFormErrors[error.key]">{{ nativeFormErrors[error.key] }}</span>
+    </p>
+  </ng-container>
+  
 </div>

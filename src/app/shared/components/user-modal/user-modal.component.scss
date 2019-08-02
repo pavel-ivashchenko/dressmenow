@@ -2,6 +2,8 @@
 @import 'mixins';
 @import 'colors';
 
+$hover-black: rgba(0,0,0,.6);
+
 .user-modal-container {
   width: 100%;
   position: relative;
@@ -79,7 +81,7 @@
   }
   @include m('submit') {
     color: #fff;
-    background-color: rgba(0,0,0,.9);
+    background-color: $hover-black;
     &:hover {
       background-color: #000;
     }
@@ -128,14 +130,40 @@
     text-decoration: underline;
     cursor: pointer;
     &:hover {
-      color: rgba(0,0,0,.8);
+      color: $hover-black;
     }
   }
 }
 
-// TODO fix wrap
 .checkbox-container {
   width: 100%;
-  margin: -5px 0 18px;
+  padding: 10px;
+  margin-top: -15px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.reg {
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  @include e('step') {
+    padding: 0 15px;
+    border-right: 1px solid #000;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    @include m('last') {
+      border-right: 0;
+    }
+    @include m('active') {
+      font-weight: bold;
+    }
+    &:hover {
+      color: $hover-black;
+    }
+  }
 }

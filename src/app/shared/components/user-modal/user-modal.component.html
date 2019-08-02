@@ -105,6 +105,16 @@
         <p class="title__secondary title__secondary--bold">Лише декілька простих кроків</p>
       </header>
 
+      <div class="reg">
+        <p *ngFor="let step of regSteps | keyvalue; last as isLast"
+          [ngClass]="{
+            'reg__step--active': currRegStep === step.value,
+            'reg__step--last': isLast
+          }"
+          (click)="currRegStep = step.value"
+          class="reg__step">{{ step.value }}</p>
+      </div>
+
       <div class="input-container">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
@@ -131,8 +141,10 @@
         </mat-form-field>
       </div>
 
+      <app-form-error [control]="createAccountForm" [showOnly]="misMatch"></app-form-error>
+
       <div class="checkbox-container">
-        <mat-checkbox>Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
+        <mat-checkbox formControlName="sendnews" color="primary">Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
       </div>
 
       <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">ДАЛІ</button>

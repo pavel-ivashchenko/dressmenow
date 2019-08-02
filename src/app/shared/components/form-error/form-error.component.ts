@@ -9,6 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class FormErrorComponent implements OnInit {
 
   @Input() control: FormControl | FormGroup;
+  @Input() showOnly: string;
 
   public nativeFormErrors: { [key: string]: string } = {
     required: 'Будь ласка, заповніть це поле',

@@ -22,7 +22,7 @@ export class UserModalComponent implements OnInit {
     email_1: new FormControl(''),
     email_2: new FormControl(''),
     sendnews: new FormControl('')
-  }, this.checkIfEqual('email_1', 'email_2'))
+  }, this.checkIfEqual('email_1', 'email_2', 'Email адреси повинні співпадати'))
   public hidePassword = false;
   public views = {
     default: 'DEFAULT',
@@ -71,14 +71,17 @@ export class UserModalComponent implements OnInit {
     this.currentView = this.views.createAccount;
   }
 
-  private checkIfEqual(prop1: string, prop2: string) {
-    const prop1name = prop1;
-    const prop2name = prop2;
+  private checkIfEqual(prop1: string, prop2: string, errorMsg) {
     return (group: FormGroup) => {
-      debugger;
-      let firstProp = group.controls[prop1name].value;
-      let secondProp = group.controls[prop2name].value;
-      return firstProp === secondProp ? null : { misMatch: true }
+      const firstCtrl = group.controls[prop1];
+      const secondCtrl = group.controls[prop2];
+      const error = { misMatch: errorMsg };
+      if (firstCtrl.value !== secondCtrl.value) {
+        secondCtrl.setErrors(error);
+        return error;
+      }
+      secondCtrl.setErrors(null);
+      return null;
     }
   }
 

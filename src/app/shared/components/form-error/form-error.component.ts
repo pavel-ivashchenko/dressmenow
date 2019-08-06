@@ -13,7 +13,8 @@ export class FormErrorComponent implements OnInit {
 
   public nativeFormErrors: { [key: string]: string } = {
     required: 'Будь ласка, заповніть це поле',
-    email: 'Будь ласка, введіть корректний email'
+    email: 'Будь ласка, введіть корректний email',
+    minlength: 'Потрібно ввести щонайменше два символи'
   };
   
   constructor() { }

@@ -7,7 +7,7 @@
     <img src="./assets/img/logo.jpg" class="logo__img" alt="Logo">
   </header>
 
-  <div [ngSwitch]="currentView">
+  <ng-container [ngSwitch]="currView$ | async">
 
     <form *ngSwitchDefault [formGroup]="signInForm" (ngSubmit)="onSignIn()">
       
@@ -29,35 +29,33 @@
       </div>
   
       <div class="input-container">
-  
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
           <input
             matInput
-            [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+            [type]="(hidePassword$ | async) ? 'password' : 'text'" formControlName="password"
             required placeholder="Введіть пароль">
           <button
-            mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword"
-            (click)="togglePassword($event)">
-              <i *ngIf="!hidePassword" class="hide-password fa fa-eye"></i>
-              <i *ngIf="hidePassword" class="hide-password fa fa-eye-slash"></i>
+            mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword$ | async"
+            (click)="hidePassword$.next()">
+              <i *ngIf="!(hidePassword$ | async)" class="hide-password fa fa-eye"></i>
+              <i *ngIf="hidePassword$ | async" class="hide-password fa fa-eye-slash"></i>
           </button>
           <mat-error align="end">
             <app-form-error [control]="signInForm.controls.password"></app-form-error>
           </mat-error>
         </mat-form-field>
-  
       </div>
 
       <p class="forgot">
-        <a class="forgot__link" (click)="currentView = views.sendPassword">Не можете згадати пароль?</a>
+        <a (click)="currView$.next([$event, views.sendPassword])" class="forgot__link">Не можете згадати пароль?</a>
       </p>
     
       <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">ВХІД</button>
     
       <p class="question">ще немає акаунту?</p>
     
-      <button mat-stroked-button class="ctrl-btn ctrl-btn--regular" (click)="gotoCreateAccountForm($event)">СТВОРИТИ АКАУНТ</button>
+      <a mat-stroked-button (click)="currView$.next([$event, views.createAccount])" class="ctrl-btn ctrl-btn--regular">СТВОРИТИ АКАУНТ</a>
     
     </form>
   
@@ -81,9 +79,9 @@
         </mat-form-field>
       </div>
 
-      <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">НАДІСЛАТИ ПАРОЛЬ</button>
+      <button mat-stroked-button type="submit" class="ctrl-btn ctrl-btn--submit">НАДІСЛАТИ ПАРОЛЬ</button>
 
-      <button mat-button (click)="backToDefaultView($event)" class="ctrl-btn ctrl-btn--regular">До попередньої форми</button>
+      <a mat-button (click)="currView$.next([$event, views.default])" class="ctrl-btn ctrl-btn--regular">До попередньої форми</a>
 
     </form>
 
@@ -91,10 +89,14 @@
 
       <header class="title">
         <h4 class="title__main title__main--withborder">Перевірте свій email</h4>
-        <p class="title__secondary">Ми надіслали електронний лист на електронну скриньку <span class="bold-and-underline">samoran4ez@gmail.com</span> з інструкціями щодо відновлення пароля</p>
+        <p class="title__secondary">
+          Ми надіслали електронний лист на електронну скриньку
+          <span class="bold-and-underline">samoran4ez@gmail.com</span>
+          з інструкціями щодо відновлення пароля
+        </p>
       </header>
 
-      <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" (click)="currentView = views.default">ДЯКУЮ</button>
+      <a mat-stroked-button (click)="currView$.next([$event, views.default])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
 
     </div>
 
@@ -106,54 +108,96 @@
       </header>
 
       <div class="reg">
-        <p *ngFor="let step of regSteps | keyvalue; last as isLast"
+        <button
+          *ngFor="let step of regSteps | keyvalue; last as isLast"
           [ngClass]="{
             'reg__step--active': currRegStep === step.value,
             'reg__step--last': isLast
           }"
-          (click)="currRegStep = step.value"
-          class="reg__step">{{ step.value }}</p>
+          (click)="gotoRegStep($event, step.value)"
+          type="submit" class="reg__step">
+            {{ step.value }}
+        </button>
       </div>
 
-      <div class="input-container">
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input
-            matInput
-            formControlName="email_1" email
-            type="email" required>
-          <mat-error align="end">
-            <app-form-error [control]="createAccountForm.controls.email_1"></app-form-error>
-          </mat-error>
-        </mat-form-field>
-      </div>
+      <ng-container [ngSwitch]="currRegStep">
 
-      <div class="input-container">
-        <mat-form-field appearance="outline">
-          <mat-label>Підтвердіть Email</mat-label>
-          <input
-            matInput
-            formControlName="email_2" email
-            type="email" required>
-          <mat-error align="end">
-            <app-form-error [control]="createAccountForm.controls.email_2"></app-form-error>
-          </mat-error>
-        </mat-form-field>
-      </div>
+        <div formGroupName="email" *ngSwitchCase="regSteps.email">
 
-      <!-- <app-form-error [control]="createAccountForm" [showOnly]="misMatch"></app-form-error> -->
+          <div class="input-container">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                formControlName="email_1" email
+                type="email" required>
+              <mat-error align="end">
+                <app-form-error [control]="createAccountForm.controls.email.controls.email_1"></app-form-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+    
+          <div class="input-container">
+            <mat-form-field appearance="outline">
+              <mat-label>Підтвердіть Email</mat-label>
+              <input
+                matInput
+                formControlName="email_2" email
+                type="email" required>
+              <mat-error align="end">
+                <app-form-error [control]="createAccountForm.controls.email.controls.email_2"></app-form-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+    
+          <div class="checkbox-container">
+            <mat-checkbox formControlName="sendnews" color="primary">Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
+          </div>
+    
+          <button mat-stroked-button (click)="onCreateAccount(regSteps.name)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
+    
+          <p class="already-have">Уже маєте акаунт?
+            <a class="already-have__back-btn" (click)="currView$.next([$event, views.default])">УВІЙТИ</a>
+          </p>
 
-      <div class="checkbox-container">
-        <mat-checkbox formControlName="sendnews" color="primary">Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
-      </div>
+        </div>
 
-      <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">ДАЛІ</button>
+        <div formGroupName="name" *ngSwitchCase="regSteps.name">
 
-      <p class="already-have">Уже маєте акаунт? <span class="already-have__back-btn" (click)="backToDefaultView($event)">УВІЙТИ</span></p>
+          <div class="input-container">
+            <mat-form-field appearance="outline">
+              <mat-label>First name</mat-label>
+              <input
+                matInput
+                formControlName="firstName" minlength="2"
+                required>
+              <mat-error align="end">
+                <app-form-error [control]="createAccountForm.controls.name.controls.firstName"></app-form-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="input-container">
+            <mat-form-field appearance="outline">
+              <mat-label>Last name</mat-label>
+              <input
+                matInput
+                formControlName="lastName" minlength="2"
+                required>
+              <mat-error align="end">
+                <app-form-error [control]="createAccountForm.controls.name.controls.lastName"></app-form-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <button mat-stroked-button (click)="onCreateAccount(regSteps.password)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
+
+        </div>
+
+      </ng-container>
 
     </form>
-    
-  </div>
-  
+
+  </ng-container>
 
 </section>

@@ -1,10 +1,6 @@
 
 <div *ngIf="control?.invalid && (control?.dirty || control?.touched)">
 
-  <p *ngIf="!control.errors">
-    Будь ласка, перевірте, чи всі необхідні поля було заповнено
-  </p>
-
   <p *ngIf="showOnly && control.errors[showOnly]">
     <span *ngIf="!nativeFormErrors[showOnly]">{{ control.errors[showOnly] }}</span>
     <span *ngIf="nativeFormErrors[showOnly]">{{ nativeFormErrors[showOnly] }}</span>

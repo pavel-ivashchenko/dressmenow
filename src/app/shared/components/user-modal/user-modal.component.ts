@@ -60,13 +60,8 @@ export class UserModalComponent implements OnInit {
       shareReplay()
     );
 
-  public regSteps = {
-    email: 'email',
-    name: 'name',
-    password: 'password'
-  };
-
-  public currRegStep: string = this.regSteps.email;
+  public regSteps = ['email', 'name', 'password'];
+  public currRegIdx: number = 0;
 
   constructor(private dialogRef: MatDialogRef<UserModalComponent>) { }
 
@@ -85,16 +80,13 @@ export class UserModalComponent implements OnInit {
   }
 
   public onCreateAccount(stepName: string): void {
-    this.createAccountForm.controls[this.currRegStep].valid ? 
-      this.currRegStep === this.regSteps.password ?
-        null : this.currRegStep = stepName :
-          null;
+    console.log('create account works');
   }
 
-  public gotoRegStep(event: MouseEvent, stepName: string): void {
-    this.stopEvent(event);
-    const form = this.createAccountForm.controls[stepName];
-    form.valid || form.touched || form.dirty ? this.currRegStep = stepName : null;
+  public gotoRegStep(stepIdx: number): void {
+    const currForm = this.createAccountForm.controls[this.regSteps[this.currRegIdx]];
+    ((this.currRegIdx - stepIdx < 0) && currForm.valid) || this.currRegIdx - stepIdx > 0 ?
+      this.currRegIdx = stepIdx : null;
   }
 
   private stopEvent(event: any): void {
@@ -105,12 +97,15 @@ export class UserModalComponent implements OnInit {
     return (group: FormGroup): { [key: string]: string } | null => {
       const firstCtrl = group.controls[prop1];
       const secondCtrl = group.controls[prop2];
-      const error = { misMatch: errorMsg };
+      const error = { misMatch: null };
       if (firstCtrl.value !== secondCtrl.value) {
+        error.misMatch = errorMsg;
         secondCtrl.setErrors({ ...secondCtrl.errors, ...error });
-        return error;
-      }
-      return null;
+      } else if (secondCtrl.errors && secondCtrl.errors.misMatch) {
+        secondCtrl.setErrors({ ...secondCtrl.errors, ...error });
+        secondCtrl.updateValueAndValidity();
+      };
+      return error.misMatch ? error : null;
     }
   }
 

@@ -109,20 +109,20 @@
 
       <div class="reg">
         <button
-          *ngFor="let step of regSteps | keyvalue; last as isLast"
+          *ngFor="let step of regSteps; let i = index; last as isLast"
           [ngClass]="{
-            'reg__step--active': currRegStep === step.value,
+            'reg__step--active': currRegIdx === i,
             'reg__step--last': isLast
           }"
-          (click)="gotoRegStep($event, step.value)"
+          (click)="gotoRegStep(i)"
           type="submit" class="reg__step">
-            {{ step.value }}
+            {{ step }}
         </button>
       </div>
 
-      <ng-container [ngSwitch]="currRegStep">
+      <ng-container [ngSwitch]="regSteps[currRegIdx]">
 
-        <div formGroupName="email" *ngSwitchCase="regSteps.email">
+        <div formGroupName="email" *ngSwitchCase="regSteps[0]">
 
           <div class="input-container">
             <mat-form-field appearance="outline">
@@ -154,7 +154,7 @@
             <mat-checkbox formControlName="sendnews" color="primary">Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
           </div>
     
-          <button mat-stroked-button (click)="onCreateAccount(regSteps.name)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
+          <button mat-stroked-button (click)="gotoRegStep(1)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
     
           <p class="already-have">Уже маєте акаунт?
             <a class="already-have__back-btn" (click)="currView$.next([$event, views.default])">УВІЙТИ</a>
@@ -162,7 +162,7 @@
 
         </div>
 
-        <div formGroupName="name" *ngSwitchCase="regSteps.name">
+        <div formGroupName="name" *ngSwitchCase="regSteps[1]">
 
           <div class="input-container">
             <mat-form-field appearance="outline">
@@ -190,9 +190,11 @@
             </mat-form-field>
           </div>
 
-          <button mat-stroked-button (click)="onCreateAccount(regSteps.password)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
+          <button mat-stroked-button (click)="gotoRegStep(2)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
 
         </div>
+
+        <div formGroupName="password"></div>
 
       </ng-container>
 

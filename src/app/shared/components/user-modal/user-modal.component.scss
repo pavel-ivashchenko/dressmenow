@@ -106,11 +106,15 @@ $hover-black: rgba(0,0,0,.6);
   text-align: center;
 }
 
-.forgot {
+.info {
   width: 100%;
-  margin-bottom: 15px;
+  margin: 0 0 15px 0;
   font-size: 12px;
   text-align: right;
+  @include m('password') {
+    margin: -15px 0 0;
+    text-align: center;
+  }
   @include e('link') {
     color: $grey-dim;
     cursor: pointer;
@@ -130,11 +134,11 @@ $hover-black: rgba(0,0,0,.6);
   text-decoration: underline;
 }
 
-.already-have {
+.footer-info {
   margin: 20px auto 0;
   font-size: 12px;
   text-align: center;
-  @include e('back-btn') {
+  @include e('btn') {
     text-decoration: underline;
     cursor: pointer;
     &:hover {
@@ -173,5 +177,14 @@ $hover-black: rgba(0,0,0,.6);
     &:hover {
       color: $hover-black;
     }
+  }
+}
+
+.pass-chkbx {
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  @include e('wrap') {
+    width: 40%;
   }
 }

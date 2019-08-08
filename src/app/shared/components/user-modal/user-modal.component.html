@@ -47,8 +47,8 @@
         </mat-form-field>
       </div>
 
-      <p class="forgot">
-        <a (click)="currView$.next([$event, views.sendPassword])" class="forgot__link">Не можете згадати пароль?</a>
+      <p class="info">
+        <a (click)="currView$.next([$event, views.sendPassword])" class="info__link">Не можете згадати пароль?</a>
       </p>
     
       <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">ВХІД</button>
@@ -114,7 +114,7 @@
             'reg__step--active': currRegIdx === i,
             'reg__step--last': isLast
           }"
-          (click)="gotoRegStep(i)"
+          (click)="gotoRegStep($event, i)"
           type="submit" class="reg__step">
             {{ step }}
         </button>
@@ -154,10 +154,11 @@
             <mat-checkbox formControlName="sendnews" color="primary">Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
           </div>
     
-          <button mat-stroked-button (click)="gotoRegStep(1)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
+          <button mat-stroked-button (click)="gotoRegStep($event, 1)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
     
-          <p class="already-have">Уже маєте акаунт?
-            <a class="already-have__back-btn" (click)="currView$.next([$event, views.default])">УВІЙТИ</a>
+          <p class="footer-info">
+            Уже маєте акаунт?
+            <a class="footer-info__btn" (click)="currView$.next([$event, views.default])">УВІЙТИ</a>
           </p>
 
         </div>
@@ -190,11 +191,55 @@
             </mat-form-field>
           </div>
 
-          <button mat-stroked-button (click)="gotoRegStep(2)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
+          <button mat-stroked-button (click)="gotoRegStep($event, 2)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
 
         </div>
 
-        <div formGroupName="password"></div>
+        <div *ngSwitchCase="regSteps[2]">
+          
+          <div class="input-container">
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                [type]="(hidePassword$ | async) ? 'password' : 'text'" formControlName="createPassword"
+                required placeholder="Введіть пароль">
+              <button
+                mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword$ | async"
+                (click)="hidePassword$.next()">
+                  <i *ngIf="!(hidePassword$ | async)" class="hide-password fa fa-eye"></i>
+                  <i *ngIf="hidePassword$ | async" class="hide-password fa fa-eye-slash"></i>
+              </button>
+              <mat-error align="end">
+                <app-form-error [control]="createAccountForm.controls.password"></app-form-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <p class="info info--password">Повинен складатись з 8 символів та містити наступне</p>
+
+          <div class="pass-chkbx">
+
+            <div class="pass-chkbx__wrap">
+              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" color="primary">Велика літера</mat-checkbox>
+              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" color="primary">Мала літера</mat-checkbox>
+            </div>
+
+            <div class="pass-chkbx__wrap">
+              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" color="primary">Цифра</mat-checkbox>
+              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" color="primary">Символ <u>(!@#$%)</u></mat-checkbox>
+            </div>
+
+          </div>
+
+          <button mat-stroked-button (click)="onCreateAccount($event)" type="submit" class="ctrl-btn ctrl-btn--submit">СТВОРИТИ АКАУНТ</button>
+
+          <footer class="footer-info">
+            Створюючи акаунт, Ви приймаєте <br>
+            <a class="footer-info__btn" (click)="currView$.next([$event, views.default])">Правила та Політику конфіденційності</a>
+          </footer>
+  
+        </div>
 
       </ng-container>
 

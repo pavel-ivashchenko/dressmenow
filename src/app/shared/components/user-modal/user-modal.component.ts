@@ -26,13 +26,13 @@ export class UserModalComponent implements OnInit {
     email: new FormGroup({
       email_1: new FormControl(''),
       email_2: new FormControl(''),
-      sendnews: new FormControl('')
+      sendnews: new FormControl('true')
     }, this.checkIfEqual('email_1', 'email_2', 'Email адреси повинні співпадати')),
     name: new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl('')
     }),
-    password: new FormControl('')
+    createPassword: new FormControl('')
   });
 
   public hidePassword$: Observable<any> = new Subject().pipe(
@@ -79,11 +79,13 @@ export class UserModalComponent implements OnInit {
     this.sendPasswordForm.valid ? this.currView$.next([null, this.views.checkEmail]) : null;
   }
 
-  public onCreateAccount(stepName: string): void {
+  public onCreateAccount(event: MouseEvent): void {
     console.log('create account works');
+    this.stopEvent(event);
   }
 
-  public gotoRegStep(stepIdx: number): void {
+  public gotoRegStep(event: MouseEvent, stepIdx: number): void {
+    this.stopEvent(event);
     const currForm = this.createAccountForm.controls[this.regSteps[this.currRegIdx]];
     ((this.currRegIdx - stepIdx < 0) && currForm.valid) || this.currRegIdx - stepIdx > 0 ?
       this.currRegIdx = stepIdx : null;

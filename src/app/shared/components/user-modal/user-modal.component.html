@@ -122,7 +122,10 @@
 
       <ng-container [ngSwitch]="regSteps[currRegIdx]">
 
-        <div formGroupName="email" *ngSwitchCase="regSteps[0]">
+        <div
+          *ngSwitchCase="regSteps[0]"
+          formGroupName="email"
+          [appCheckIfEqual]="['email_1', 'email_2', 'Email адреси повинні співпадати']">
 
           <div class="input-container">
             <mat-form-field appearance="outline">
@@ -163,7 +166,7 @@
 
         </div>
 
-        <div formGroupName="name" *ngSwitchCase="regSteps[1]">
+        <div *ngSwitchCase="regSteps[1]" formGroupName="name">
 
           <div class="input-container">
             <mat-form-field appearance="outline">
@@ -203,6 +206,7 @@
               <input
                 matInput
                 [type]="(hidePassword$ | async) ? 'password' : 'text'" formControlName="createPassword"
+                appHasCapitalCase
                 required placeholder="Введіть пароль">
               <button
                 mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword$ | async"
@@ -221,7 +225,10 @@
           <div class="pass-chkbx">
 
             <div class="pass-chkbx__wrap">
-              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" color="primary">Велика літера</mat-checkbox>
+              <mat-checkbox
+                [disableRipple]="true" color="primary"
+                [ngModel]=""
+                (click)="$event.preventDefault()">Велика літера</mat-checkbox>
               <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" color="primary">Мала літера</mat-checkbox>
             </div>
 

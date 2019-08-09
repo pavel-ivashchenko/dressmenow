@@ -1,9 +1,9 @@
 
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormControl, ValidatorFn, AbstractControlOptions } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
-import { tap, scan, map, shareReplay } from 'rxjs/operators';
+import { tap, scan, map, shareReplay, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-modal',
@@ -27,7 +27,7 @@ export class UserModalComponent implements OnInit {
       email_1: new FormControl(''),
       email_2: new FormControl(''),
       sendnews: new FormControl('true')
-    }, this.checkIfEqual('email_1', 'email_2', 'Email адреси повинні співпадати')),
+    }),
     name: new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl('')
@@ -63,6 +63,13 @@ export class UserModalComponent implements OnInit {
   public regSteps = ['email', 'name', 'password'];
   public currRegIdx: number = 0;
 
+  // createPasswordErrors$ = new Subject().pipe(
+  //   startWith({
+  //     hasCapitalCase: null
+  //   }),
+  //   scan((acc, curr) => )
+  // )
+
   constructor(private dialogRef: MatDialogRef<UserModalComponent>) { }
 
   ngOnInit() { }
@@ -93,22 +100,6 @@ export class UserModalComponent implements OnInit {
 
   private stopEvent(event: any): void {
     event.stopPropagation(); event.preventDefault();
-  }
-
-  private checkIfEqual(prop1: string, prop2: string, errorMsg: string): ValidatorFn | ValidatorFn[] | AbstractControlOptions {
-    return (group: FormGroup): { [key: string]: string } | null => {
-      const firstCtrl = group.controls[prop1];
-      const secondCtrl = group.controls[prop2];
-      const error = { misMatch: null };
-      if (firstCtrl.value !== secondCtrl.value) {
-        error.misMatch = errorMsg;
-        secondCtrl.setErrors({ ...secondCtrl.errors, ...error });
-      } else if (secondCtrl.errors && secondCtrl.errors.misMatch) {
-        secondCtrl.setErrors({ ...secondCtrl.errors, ...error });
-        secondCtrl.updateValueAndValidity();
-      };
-      return error.misMatch ? error : null;
-    }
   }
 
 }

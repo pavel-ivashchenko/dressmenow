@@ -24,12 +24,14 @@ const MATERIAL_MODULES = [
 import { COMPONENTS, ENTRY_COMPONENTS } from './components';
 import { PIPES } from './pipes';
 import { DIRECTIVES } from './directives';
+import { VALIDATORS } from './validators';
 
 @NgModule({
   declarations: [
     ...COMPONENTS,
     ...PIPES,
-    ...DIRECTIVES
+    ...DIRECTIVES,
+    ...VALIDATORS
   ],
   imports: [
     CommonModule, // TODO investigate usage and where to import
@@ -43,7 +45,8 @@ import { DIRECTIVES } from './directives';
     ...MATERIAL_MODULES,
     ...COMPONENTS,
     ...PIPES,
-    ...DIRECTIVES
+    ...DIRECTIVES,
+    ...VALIDATORS
   ],
   entryComponents: [
     ...ENTRY_COMPONENTS

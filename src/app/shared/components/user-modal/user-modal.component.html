@@ -207,6 +207,8 @@
                 matInput
                 [type]="(hidePassword$ | async) ? 'password' : 'text'" formControlName="createPassword"
                 appHasCapitalCase
+                appHasSmallCase
+                appHasNumber
                 required placeholder="Введіть пароль">
               <button
                 mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword$ | async"
@@ -215,7 +217,7 @@
                   <i *ngIf="hidePassword$ | async" class="hide-password fa fa-eye-slash"></i>
               </button>
               <mat-error align="end">
-                <app-form-error [control]="createAccountForm.controls.password"></app-form-error>
+                <app-form-error [control]="createAccountForm.controls.createPassword"></app-form-error>
               </mat-error>
             </mat-form-field>
           </div>
@@ -227,14 +229,26 @@
             <div class="pass-chkbx__wrap">
               <mat-checkbox
                 [disableRipple]="true" color="primary"
-                [ngModel]=""
+                [checked]="!(createPasswordErrors$ | async)?.hasCapitalCase"
                 (click)="$event.preventDefault()">Велика літера</mat-checkbox>
-              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" color="primary">Мала літера</mat-checkbox>
+              <mat-checkbox
+                [disableRipple]="true"
+                [checked]="!(createPasswordErrors$ | async)?.hasSmallCase"
+                (click)="$event.preventDefault()"
+                color="primary">Мала літера</mat-checkbox>
             </div>
 
             <div class="pass-chkbx__wrap">
-              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" color="primary">Цифра</mat-checkbox>
-              <mat-checkbox [disableRipple]="true" (click)="$event.preventDefault()" color="primary">Символ <u>(!@#$%)</u></mat-checkbox>
+              <mat-checkbox
+                [disableRipple]="true"
+                [checked]="!(createPasswordErrors$ | async)?.hasNumber"
+                (click)="$event.preventDefault()"
+                color="primary">Цифра</mat-checkbox>
+              <mat-checkbox
+                [disableRipple]="true"
+                [checked]="!(createPasswordErrors$ | async)?.hasSpecialChar"
+                (click)="$event.preventDefault()"
+                color="primary">Символ ( <u>!@#$%</u> )</mat-checkbox>
             </div>
 
           </div>

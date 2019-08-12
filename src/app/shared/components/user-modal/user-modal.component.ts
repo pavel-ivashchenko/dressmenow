@@ -63,12 +63,13 @@ export class UserModalComponent implements OnInit {
   public regSteps = ['email', 'name', 'password'];
   public currRegIdx: number = 0;
 
-  // createPasswordErrors$ = new Subject().pipe(
-  //   startWith({
-  //     hasCapitalCase: null
-  //   }),
-  //   scan((acc, curr) => )
-  // )
+  public createPasswordErrors$: Observable<{ [ key: string ]: string }> = 
+    this.createAccountForm.controls.createPassword.statusChanges
+      .pipe(
+        startWith(''),
+        map(_ => this.createAccountForm.controls.createPassword.errors || {}),
+        shareReplay(1)
+      )
 
   constructor(private dialogRef: MatDialogRef<UserModalComponent>) { }
 

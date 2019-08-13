@@ -9,7 +9,7 @@
 
   <ng-container [ngSwitch]="currView$ | async">
 
-    <form *ngSwitchDefault [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+    <form *ngSwitchDefault [formGroup]="signInForm">
       
       <header class="title">
         <h4 class="title__main">Увійти до акаунту</h4>
@@ -51,7 +51,11 @@
         <a (click)="currView$.next([$event, views.sendPassword])" class="info__link">Не можете згадати пароль?</a>
       </p>
     
-      <button mat-stroked-button class="ctrl-btn ctrl-btn--submit" type="submit">ВХІД</button>
+      <button
+        mat-stroked-button
+        appDelayClick (delayClick)="onSignIn()"
+        class="ctrl-btn ctrl-btn--submit" type="submit"
+      >ВХІД</button>
     
       <p class="question">ще немає акаунту?</p>
     
@@ -59,7 +63,7 @@
     
     </form>
   
-    <form *ngSwitchCase="views.sendPassword" [formGroup]="sendPasswordForm" (ngSubmit)="onSendPassword()">
+    <form *ngSwitchCase="views.sendPassword" [formGroup]="sendPasswordForm" (ngSubmit)="onSendPassword($event)">
       
       <header class="title">
         <h4 class="title__main title__main--withborder">Не можете згадати пароль?</h4>
@@ -157,7 +161,7 @@
             <mat-checkbox formControlName="sendnews" color="primary">Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
           </div>
     
-          <button mat-stroked-button (click)="gotoRegStep($event, 1)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
+          <button mat-stroked-button (click)="checkEmail($event)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
     
           <p class="footer-info">
             Уже маєте акаунт?
@@ -209,6 +213,8 @@
                 appHasCapitalCase
                 appHasSmallCase
                 appHasNumber
+                appHasSpecialChar
+                minlength="8"
                 required placeholder="Введіть пароль">
               <button
                 mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword$ | async"
@@ -216,24 +222,24 @@
                   <i *ngIf="!(hidePassword$ | async)" class="hide-password fa fa-eye"></i>
                   <i *ngIf="hidePassword$ | async" class="hide-password fa fa-eye-slash"></i>
               </button>
-              <mat-error align="end">
-                <app-form-error [control]="createAccountForm.controls.createPassword"></app-form-error>
-              </mat-error>
             </mat-form-field>
           </div>
 
-          <p class="info info--password">Повинен складатись з 8 символів та містити наступне</p>
+          <p
+            class="info info--password"
+            [ngClass]="{ 'error': (passwordErrors$ | async)?.minlength }"
+            >Повинен складатись з 8 символів та містити наступне</p>
 
           <div class="pass-chkbx">
 
             <div class="pass-chkbx__wrap">
               <mat-checkbox
                 [disableRipple]="true" color="primary"
-                [checked]="!(createPasswordErrors$ | async)?.hasCapitalCase"
+                [checked]="!(passwordErrors$ | async)?.hasCapitalCase"
                 (click)="$event.preventDefault()">Велика літера</mat-checkbox>
               <mat-checkbox
                 [disableRipple]="true"
-                [checked]="!(createPasswordErrors$ | async)?.hasSmallCase"
+                [checked]="!(passwordErrors$ | async)?.hasSmallCase"
                 (click)="$event.preventDefault()"
                 color="primary">Мала літера</mat-checkbox>
             </div>
@@ -241,12 +247,12 @@
             <div class="pass-chkbx__wrap">
               <mat-checkbox
                 [disableRipple]="true"
-                [checked]="!(createPasswordErrors$ | async)?.hasNumber"
+                [checked]="!(passwordErrors$ | async)?.hasNumber"
                 (click)="$event.preventDefault()"
                 color="primary">Цифра</mat-checkbox>
               <mat-checkbox
                 [disableRipple]="true"
-                [checked]="!(createPasswordErrors$ | async)?.hasSpecialChar"
+                [checked]="!(passwordErrors$ | async)?.hasSpecialChar"
                 (click)="$event.preventDefault()"
                 color="primary">Символ ( <u>!@#$%</u> )</mat-checkbox>
             </div>
@@ -265,6 +271,36 @@
       </ng-container>
 
     </form>
+
+    <div *ngSwitchCase="views.alreadyExists">
+
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Існуючий email</h4>
+        <p class="title__secondary">
+          У нас уже зареєстрований такий email:
+          <span class="bold-and-underline">samoran4ez@gmail.com</span>
+          Спробуйте увійти з ним, або введіть інший email
+        </p>
+      </header>
+
+      <a mat-stroked-button (click)="currView$.next([$event, views.default])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+
+    </div>
+
+    <div *ngSwitchCase="views.notExists">
+
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Email не зареєстрований</h4>
+        <p class="title__secondary">
+          Не знайдено жодного email:
+          <span class="bold-and-underline">samoran4ez@gmail.com</span>
+          Будь ласка, перевірте і спробуйте зайти ще раз
+        </p>
+      </header>
+
+      <a mat-stroked-button (click)="currView$.next([$event, views.default])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+
+    </div>
 
   </ng-container>
 

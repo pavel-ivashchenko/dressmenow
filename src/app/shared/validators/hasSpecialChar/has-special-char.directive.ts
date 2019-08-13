@@ -9,7 +9,9 @@ import { NG_VALIDATORS, Validator, AbstractControl } from '@angular/forms';
 export class HasSpecialCharDirective implements Validator {
 
   validate(control: AbstractControl): { [key: string]: any } | null {
-    return RegExp(/[!@#$%/?]/).test(control.value) ? null : { hasSpecialChar: 'Необхідно ввести хоча б один спеціальний символ' };
+    debugger;
+    const test = RegExp(/[!@#$%/?]/g).test(control.value);
+    return RegExp(/[!@#$%/?]/g).test(control.value) ? null : { hasSpecialChar: 'Необхідно ввести хоча б один спеціальний символ' };
   }
 
 }

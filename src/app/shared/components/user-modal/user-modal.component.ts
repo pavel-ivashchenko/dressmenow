@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
-import { tap, scan, map, shareReplay, startWith } from 'rxjs/operators';
+import { tap, scan, map, shareReplay, startWith, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-modal',
@@ -36,6 +36,7 @@ export class UserModalComponent implements OnInit {
   });
 
   public hidePassword$: Observable<any> = new Subject().pipe(
+    distinctUntilChanged(),
     scan((acc) => acc = !acc, false)
   );
 
@@ -43,7 +44,9 @@ export class UserModalComponent implements OnInit {
     default: 'DEFAULT',
     sendPassword: 'SEND_PASSWORD',
     createAccount: 'CREATE_ACCOUNT',
-    checkEmail: 'CHECK_EMAIL'
+    checkEmail: 'CHECK_EMAIL',
+    alreadyExists: 'ALREADY_EXISTS',
+    notExists: 'NOT_EXISTS'
   };
 
   private preventDefault$ = source$ => source$.pipe(
@@ -55,6 +58,7 @@ export class UserModalComponent implements OnInit {
 
   public currView$: any = new Subject()
     .pipe(
+      distinctUntilChanged(),
       this.preventDefault$,
       scan((acc, viewName) => acc = viewName, this.views.default),
       shareReplay()
@@ -63,7 +67,7 @@ export class UserModalComponent implements OnInit {
   public regSteps = ['email', 'name', 'password'];
   public currRegIdx: number = 0;
 
-  public createPasswordErrors$: Observable<{ [ key: string ]: string }> = 
+  public passwordErrors$: Observable<{ [ key: string ]: string }> = 
     this.createAccountForm.controls.createPassword.statusChanges
       .pipe(
         startWith(''),
@@ -83,8 +87,13 @@ export class UserModalComponent implements OnInit {
     console.log('sign in works');
   }
 
-  public onSendPassword(): void {
-    this.sendPasswordForm.valid ? this.currView$.next([null, this.views.checkEmail]) : null;
+  public onSendPassword(event: MouseEvent): void {
+    // here will be a request to the server
+    this.sendPasswordForm.valid ? true : null;
+    false ?
+      this.currView$.next([event, this.views.checkEmail]) :
+      this.currView$.next([event, this.views.notExists]);
+    this.sendPasswordForm.reset();
   }
 
   public onCreateAccount(event: MouseEvent): void {
@@ -101,6 +110,13 @@ export class UserModalComponent implements OnInit {
 
   private stopEvent(event: any): void {
     event.stopPropagation(); event.preventDefault();
+  }
+
+  private checkEmail(event: MouseEvent): void {
+    // here will be a request to the server
+    true ?
+      this.gotoRegStep(event, 1) :
+      this.currView$.next([event, this.views.alreadyExists]);
   }
 
 }

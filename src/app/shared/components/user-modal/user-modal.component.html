@@ -48,7 +48,7 @@
       </div>
 
       <p class="info">
-        <a (click)="currView$.next([$event, views.sendPassword])" class="info__link">Не можете згадати пароль?</a>
+        <a (click)="currView$.next([views.sendPassword, $event])" class="info__link">Не можете згадати пароль?</a>
       </p>
     
       <button
@@ -59,11 +59,13 @@
     
       <p class="question">ще немає акаунту?</p>
     
-      <a mat-stroked-button (click)="currView$.next([$event, views.createAccount])" class="ctrl-btn ctrl-btn--regular">СТВОРИТИ АКАУНТ</a>
+      <a mat-stroked-button (click)="currView$.next([views.createAccount, $event])" class="ctrl-btn ctrl-btn--regular">СТВОРИТИ АКАУНТ</a>
     
     </form>
   
-    <form *ngSwitchCase="views.sendPassword" [formGroup]="sendPasswordForm" (ngSubmit)="onSendPassword($event)">
+    <form *ngSwitchCase="views.sendPassword"
+      [formGroup]="sendPasswordForm"
+      (ngSubmit)="onSendPassword($event)">
       
       <header class="title">
         <h4 class="title__main title__main--withborder">Не можете згадати пароль?</h4>
@@ -85,7 +87,7 @@
 
       <button mat-stroked-button type="submit" class="ctrl-btn ctrl-btn--submit">НАДІСЛАТИ ПАРОЛЬ</button>
 
-      <a mat-button (click)="currView$.next([$event, views.default])" class="ctrl-btn ctrl-btn--regular">До попередньої форми</a>
+      <a mat-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--regular">До попередньої форми</a>
 
     </form>
 
@@ -100,11 +102,12 @@
         </p>
       </header>
 
-      <a mat-stroked-button (click)="currView$.next([$event, views.default])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+      <a mat-stroked-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
 
     </div>
 
-    <form *ngSwitchCase="views.createAccount" [formGroup]="createAccountForm" (ngSubmit)="onCreateAccount()">
+    <form *ngSwitchCase="views.createAccount"
+      [formGroup]="createAccountForm">
 
       <header class="title">
         <h4 class="title__main">Створити акаунт</h4>
@@ -126,8 +129,7 @@
 
       <ng-container [ngSwitch]="regSteps[currRegIdx]">
 
-        <div
-          *ngSwitchCase="regSteps[0]"
+        <div *ngSwitchCase="regSteps[0]"
           formGroupName="email"
           [appCheckIfEqual]="['email_1', 'email_2', 'Email адреси повинні співпадати']">
 
@@ -165,12 +167,13 @@
     
           <p class="footer-info">
             Уже маєте акаунт?
-            <a class="footer-info__btn" (click)="currView$.next([$event, views.default])">УВІЙТИ</a>
+            <a class="footer-info__btn" (click)="currView$.next([views.default, $event])">УВІЙТИ</a>
           </p>
 
         </div>
 
-        <div *ngSwitchCase="regSteps[1]" formGroupName="name">
+        <div *ngSwitchCase="regSteps[1]"
+          formGroupName="name">
 
           <div class="input-container">
             <mat-form-field appearance="outline">
@@ -218,7 +221,7 @@
                 required placeholder="Введіть пароль">
               <button
                 mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword$ | async"
-                (click)="hidePassword$.next()">
+                (click)="hidePassword$.next($event)">
                   <i *ngIf="!(hidePassword$ | async)" class="hide-password fa fa-eye"></i>
                   <i *ngIf="hidePassword$ | async" class="hide-password fa fa-eye-slash"></i>
               </button>
@@ -263,7 +266,7 @@
 
           <footer class="footer-info">
             Створюючи акаунт, Ви приймаєте <br>
-            <a class="footer-info__btn" (click)="currView$.next([$event, views.default])">Правила та Політику конфіденційності</a>
+            <a class="footer-info__btn" (click)="currView$.next([views.default, $event])">Правила та Політику конфіденційності</a>
           </footer>
   
         </div>
@@ -283,7 +286,7 @@
         </p>
       </header>
 
-      <a mat-stroked-button (click)="currView$.next([$event, views.default])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+      <a mat-stroked-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
 
     </div>
 
@@ -298,7 +301,23 @@
         </p>
       </header>
 
-      <a mat-stroked-button (click)="currView$.next([$event, views.default])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+      <a mat-stroked-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+
+    </div>
+
+    <div *ngSwitchCase="views.afterCreate">
+
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Майже все</h4>
+        <p class="title__secondary">
+          Було надіслано електронний лист на адресу
+          <span class="bold-and-underline">samoran4ez@gmail.com</span>
+          Будь ласка, перевірте email і перейдіть за посиланням у листі<br>
+          для завершення регістрації
+        </p>
+      </header>
+
+      <a mat-stroked-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
 
     </div>
 

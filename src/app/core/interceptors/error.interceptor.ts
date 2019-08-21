@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material';
 
 @Injectable() export class ErrorInterceptor implements HttpInterceptor {
 
-  private MAT_SNACKBAR_DURATION: number = 5000;
+  private MAT_SNACKBAR_DURATION = 5000;
 
   constructor(private snackBar: MatSnackBar) { }
 

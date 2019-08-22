@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { delay, mergeMap, materialize, dematerialize, tap } from 'rxjs/operators';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -12,10 +12,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+    debugger;
+
     const { url, method, headers, body } = request;
 
     return of(null)
       .pipe(
+        tap(res => { debugger }),
         mergeMap(handleRoute),
         materialize(),
         delay(500),
@@ -44,7 +47,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       const user = body;
 
       if (this.users.find(x => x.username === user.username)) {
-          return error('Username "' + user.username + '" is already taken');
+        return error('Username "' + user.username + '" is already taken');
       }
 
       user.id = this.users.length ? Math.max(...this.users.map(x => x.id)) + 1 : 1;
@@ -66,7 +69,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           firstName: user.firstName,
           lastName: user.lastName,
           token: 'fake-jwt-token'
-      });
+        });
     }
 
     function getUsers() {
@@ -112,7 +115,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function idFromUrl() {
       const urlParts = url.split('/');
-      return parseInt(urlParts[urlParts.length - 1]);
+      return parseInt(urlParts[urlParts.length - 1], 10);
     }
 
     //https://jasonwatmore.com/post/2018/10/29/angular-7-user-registration-and-login-example-tutorial

@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
 import { tap, scan, map, shareReplay, startWith, distinctUntilChanged } from 'rxjs/operators';
 
+import { AuthenticationService } from '@app/core/services';
 import { preventDefault$, stopEvent } from '@app/shared/helpers';
 
 @Component({
@@ -73,7 +74,10 @@ export class UserModalComponent implements OnInit {
         shareReplay(1)
       );
 
-  constructor(private dialogRef: MatDialogRef<UserModalComponent>) { }
+  constructor(
+    private dialogRef: MatDialogRef<UserModalComponent>,
+    private authenticationService: AuthenticationService
+  ) { }
 
   ngOnInit() { }
 
@@ -82,7 +86,9 @@ export class UserModalComponent implements OnInit {
   }
 
   public onSignIn(): void {
-    console.log('sign in works');
+    debugger;
+    this.authenticationService.login(this.signInForm.value.login, this.signInForm.value.password)
+      .subscribe(res => { debugger });
   }
 
   public onSendPassword(event: MouseEvent): void {

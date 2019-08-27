@@ -1,12 +1,14 @@
 
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
-import { tap, scan, map, shareReplay, startWith, distinctUntilChanged } from 'rxjs/operators';
+import { tap, scan, map, shareReplay, startWith, distinctUntilChanged, first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/core/services';
 import { preventDefault$, stopEvent } from '@app/shared/helpers';
+import { User } from '@app/shared/interfaces';
 
 @Component({
   selector: 'app-user-modal',
@@ -17,16 +19,15 @@ import { preventDefault$, stopEvent } from '@app/shared/helpers';
 export class UserModalComponent implements OnInit {
 
   private preventDefault$ = preventDefault$;
+  private afterLoginURL = '/user'; // TODO change to appropriate name
 
   public signInForm = new FormGroup({
     login: new FormControl(''),
     password: new FormControl('')
   });
-
-  public sendPasswordForm = new FormGroup({
+  public remindPasswordForm = new FormGroup({
     email: new FormControl('')
   });
-
   public createAccountForm = new FormGroup({
     email: new FormGroup({
       email_1: new FormControl(''),
@@ -39,22 +40,19 @@ export class UserModalComponent implements OnInit {
     }),
     createPassword: new FormControl('')
   });
-
   public hidePassword$: Observable<any> = new Subject().pipe(
     distinctUntilChanged(),
     scan((acc) => acc = !acc, false)
   );
-
-  public views = {
+  public views: { [key: string]: string } = {
     default: 'DEFAULT',
-    sendPassword: 'SEND_PASSWORD',
+    remindPassword: 'REMIND_PASSWORD',
     createAccount: 'CREATE_ACCOUNT',
     checkEmail: 'CHECK_EMAIL',
     alreadyExists: 'ALREADY_EXISTS',
     notExists: 'NOT_EXISTS',
     afterCreate: 'AFTER_CREATE'
   };
-
   public currView$: any = new Subject()
     .pipe(
       distinctUntilChanged(),
@@ -62,10 +60,8 @@ export class UserModalComponent implements OnInit {
       scan((acc, viewName) => acc = viewName, this.views.default),
       shareReplay()
     );
-
-  public regSteps = ['email', 'name', 'password'];
+  public regSteps: string[] = ['email', 'name', 'password'];
   public currRegIdx = 0;
-
   public passwordErrors$: Observable<{ [ key: string ]: string }> =
     this.createAccountForm.controls.createPassword.statusChanges
       .pipe(
@@ -76,7 +72,8 @@ export class UserModalComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<UserModalComponent>,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) { }
 
   ngOnInit() { }
@@ -86,18 +83,25 @@ export class UserModalComponent implements OnInit {
   }
 
   public onSignIn(): void {
-    debugger;
+    if (this.signInForm.invalid) return;
     this.authenticationService.login(this.signInForm.value.login, this.signInForm.value.password)
-      .subscribe(res => { debugger });
+      .pipe(first())
+      .subscribe(
+        (res: User | null) => { res ? this.router.navigate([ this.afterLoginURL ]) : null; }
+      );
   }
 
-  public onSendPassword(event: MouseEvent): void {
-    // here will be a request to the server
-    this.sendPasswordForm.valid ? true : null;
-    false ?
-      this.currView$.next([this.views.checkEmail, event]) :
-      this.currView$.next([this.views.notExists, event]);
-    this.sendPasswordForm.reset();
+  public onRemindPassword(event: MouseEvent): void {
+    if (this.remindPasswordForm.invalid) return;
+    this.authenticationService.remindPassword(this.remindPasswordForm.value.email)
+      .pipe(first())
+      .subscribe(
+        ((res: boolean) => {
+          res ?
+            this.currView$.next([this.views.checkEmail, event]) :
+            this.currView$.next([this.views.notExists, event]);
+        })
+      )
   }
 
   public onCreateAccount(event: MouseEvent): void {
@@ -114,10 +118,16 @@ export class UserModalComponent implements OnInit {
   }
 
   public checkEmail(event: MouseEvent): void {
-    // here will be a request to the server
-    true ?
-      this.gotoRegStep(event, 1) :
-      this.currView$.next([this.views.alreadyExists, event]);
+    debugger;
+    this.authenticationService.checkLogin(this.createAccountForm.value.email)
+      .pipe(first())
+      .subscribe(
+        ((res: boolean) => {
+          res ?
+            this.currView$.next([this.views.checkEmail]) :
+            this.currView$.next([this.views.notExists]);
+        })
+      );
   }
 
 }

@@ -1,7 +1,7 @@
 
 
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpRequest, HttpResponse, HttpHandler, HttpInterceptor, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize, tap } from 'rxjs/operators';
 
@@ -10,115 +10,130 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
   private users = JSON.parse(localStorage.getItem('users')) || [];
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    debugger;
-
-    const { url, method, headers, body } = request;
-
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     return of(null)
       .pipe(
-        tap(res => { debugger }),
-        mergeMap(handleRoute),
+        mergeMap(this.handleRoute(req, next)),
         materialize(),
         delay(500),
-        dematerialize()
+        dematerialize(),
       );
+  }
 
-    function handleRoute() {
+  private handleRoute(req, next: HttpHandler) { // TODO investigate error when type of req is set
+    return () => {
+      const { url, method, body, headers } = req;
       switch (true) {
         case url.endsWith('/users/register') && method === 'POST':
-          return register();
+          return this.register(body);
         case url.endsWith('/users/authenticate') && method === 'POST':
-          return authenticate();
+          return this.authenticate(body);
+        case url.match('/users/remindPassword') && method === 'POST':
+          return this.remindPassword(body);
+        case url.match('/users/checkEmail') && method === 'POST':
+          return this.checkEmail(body);
         case url.endsWith('/users') && method === 'GET':
-          return getUsers();
+          return this.getUsers(headers);
         case url.match(/\/users\/\d+$/) && method === 'GET':
-          return getUserById();
+          return this.getUserById(url, headers);
         case url.match(/\/users\/\d+$/) && method === 'DELETE':
-          return deleteUser();
+          return this.deleteUser(url, headers);
         default:
-          return next.handle(request);
+          return next.handle(req);
       }
     }
+  }
 
-    function register() {
+  private register(body) {
 
-      const user = body;
+    const user = body;
 
-      if (this.users.find(x => x.username === user.username)) {
-        return error('Username "' + user.username + '" is already taken');
-      }
-
-      user.id = this.users.length ? Math.max(...this.users.map(x => x.id)) + 1 : 1;
-      this.users.push(user);
-      localStorage.setItem('users', JSON.stringify(this.users));
-
-      return ok();
-
+    if (this.users.find(x => x.login === user.email)) {
+      return this.error('Email "' + user.email + '" is already taken');
     }
 
-    function authenticate() {
-      const { username, password } = body;
-      const user = this.users.find(x => x.username === username && x.password === password);
+    user.id = this.users.length ? Math.max(...this.users.map(x => x.id)) + 1 : 1;
+    this.users.push(user);
+    localStorage.setItem('users', JSON.stringify(this.users));
+
+    return this.ok();
+
+  }
+
+  private authenticate(body):
+    Observable<never> | Observable<HttpResponse<{ status: 200, body: any }>> {
+      const { login, password } = body;
+      const user = this.users.find(x => x.email === login && x.password === password);
       return !user ?
-        error('Username or password is incorrect') :
-        ok({
+        this.error('Будь ласка, перевірте корректність email та пароля') :
+        this.ok({
           id: user.id,
-          username: user.username,
+          email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
           token: 'fake-jwt-token'
         });
-    }
-
-    function getUsers() {
-      return !isLoggedIn() ?
-        unauthorized() :
-        ok(this.users);
-    }
-
-    function getUserById() {
-      if (!isLoggedIn()) {
-        return unauthorized();
-      } else {
-        const user = this.users.find(x => x.id === idFromUrl());
-        return ok(user);
-      }
-    }
-
-    function deleteUser() {
-      if (!isLoggedIn()) {
-        return unauthorized();
-      } else {
-        this.users = this.users.filter(x => x.id !== idFromUrl());
-        localStorage.setItem('users', JSON.stringify(this.users));
-        return ok();
-      }
-    }
-
-    function ok(bodyParam?) {
-      return of(new HttpResponse({ status: 200, body: bodyParam }));
-    }
-
-    function unauthorized() {
-      return throwError({ status: 401, error: { message: 'Unauthorised' } });
-    }
-
-    function error(message) {
-      return throwError({ error: { message } });
-    }
-
-    function isLoggedIn() {
-      return headers.get('Authorization') === 'Bearer fake-jwt-token';
-    }
-
-    function idFromUrl() {
-      const urlParts = url.split('/');
-      return parseInt(urlParts[urlParts.length - 1], 10);
-    }
-
-    //https://jasonwatmore.com/post/2018/10/29/angular-7-user-registration-and-login-example-tutorial
-
   }
+
+  private checkEmail(body: { email: string }):
+    Observable<HttpResponse<{ status: 200, body: any }>> {
+      return this.ok(
+        this.users.find(x => x.email === body.email)
+      );
+  }
+
+  private getUsers(headers: HttpHeaders):
+    Observable<never> | Observable<HttpResponse<{ status: 200, body: any }>> {
+      return !this.isLoggedIn(headers) ?
+        this.unauthorized() :
+        this.ok(this.users);
+  }
+
+  private getUserById(headers: HttpHeaders, url: string):
+    Observable<never> | Observable<HttpResponse<{ status: 200, body: any }>> {
+      if (!this.isLoggedIn(headers)) {
+        return this.unauthorized();
+      } else {
+        const user = this.users.find(x => x.id === this.idFromUrl(url));
+        return this.ok(user);
+      }
+  }
+
+  private deleteUser(url: string, headers: HttpHeaders):
+    Observable<never> | Observable<HttpResponse<{ status: 200, body: any }>> {
+      if (!this.isLoggedIn(headers)) {
+        return this.unauthorized();
+      } else {
+        this.users = this.users.filter(x => x.id !== this.idFromUrl(url));
+        localStorage.setItem('users', JSON.stringify(this.users));
+        return this.ok();
+      }
+  }
+
+  private ok(bodyParam?): Observable<HttpResponse<{ status: 200, body: any }>> {
+    return of(new HttpResponse({ status: 200, body: bodyParam }));
+  }
+
+  private unauthorized(): Observable<never> {
+    return throwError({ status: 401, error: { message: 'Unauthorised' } });
+  }
+
+  private error(message: string): Observable<never> {
+    return throwError({ error: { message } });
+  }
+
+  private isLoggedIn(headers: HttpHeaders): boolean {
+    return headers.get('Authorization') === 'Bearer fake-jwt-token';
+  }
+
+  private idFromUrl(url: string): number {
+    const urlParts = url.split('/');
+    return parseInt(urlParts[urlParts.length - 1], 10);
+  }
+
+  private remindPassword(email: string):
+    Observable<HttpResponse<{ status: 200, body: any }>> {
+      return this.ok(false);
+  }
+
 }

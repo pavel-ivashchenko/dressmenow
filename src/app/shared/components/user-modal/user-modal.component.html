@@ -48,7 +48,7 @@
       </div>
 
       <p class="info">
-        <a (click)="currView$.next([views.sendPassword, $event])" class="info__link">Не можете згадати пароль?</a>
+        <a (click)="currView$.next([views.remindPassword, $event])" class="info__link">Не можете згадати пароль?</a>
       </p>
     
       <button
@@ -63,9 +63,9 @@
     
     </form>
   
-    <form *ngSwitchCase="views.sendPassword"
-      [formGroup]="sendPasswordForm"
-      (ngSubmit)="onSendPassword($event)">
+    <form *ngSwitchCase="views.remindPassword"
+      [formGroup]="remindPasswordForm"
+      (ngSubmit)="onRemindPassword($event)">
       
       <header class="title">
         <h4 class="title__main title__main--withborder">Не можете згадати пароль?</h4>
@@ -80,7 +80,7 @@
             formControlName="email" email
             type="email" required placeholder="Введіть email">
           <mat-error align="end">
-            <app-form-error [control]="sendPasswordForm.controls.email"></app-form-error>
+            <app-form-error [control]="remindPasswordForm.controls.email"></app-form-error>
           </mat-error>
         </mat-form-field>
       </div>
@@ -301,7 +301,7 @@
         </p>
       </header>
 
-      <a mat-stroked-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+      <a mat-stroked-button (click)="currView$.next([views.remindPassword, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
 
     </div>
 

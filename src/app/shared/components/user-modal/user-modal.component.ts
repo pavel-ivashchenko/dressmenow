@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
@@ -73,7 +73,8 @@ export class UserModalComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<UserModalComponent>,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() { }
@@ -83,7 +84,7 @@ export class UserModalComponent implements OnInit {
   }
 
   public onSignIn(): void {
-    if (this.signInForm.invalid) return;
+    if (this.signInForm.invalid) { return; }
     this.authenticationService.login(this.signInForm.value.login, this.signInForm.value.password)
       .pipe(first())
       .subscribe(
@@ -92,16 +93,16 @@ export class UserModalComponent implements OnInit {
   }
 
   public onRemindPassword(event: MouseEvent): void {
-    if (this.remindPasswordForm.invalid) return;
+    if (this.remindPasswordForm.invalid) { return; }
     this.authenticationService.remindPassword(this.remindPasswordForm.value.email)
       .pipe(first())
       .subscribe(
-        ((res: boolean) => {
+        (res: boolean) => {
           res ?
             this.currView$.next([this.views.checkEmail, event]) :
-            this.currView$.next([this.views.notExists, event]);
-        })
-      )
+              this.currView$.next([this.views.notExists, event]);
+        }
+      );
   }
 
   public onCreateAccount(event: MouseEvent): void {
@@ -112,21 +113,23 @@ export class UserModalComponent implements OnInit {
 
   public gotoRegStep(event: MouseEvent, stepIdx: number): void {
     stopEvent(event);
-    const currForm = this.createAccountForm.controls[this.regSteps[this.currRegIdx]];
-    ((this.currRegIdx - stepIdx < 0) && currForm.valid) || this.currRegIdx - stepIdx > 0 ?
-      this.currRegIdx = stepIdx : null;
+    const currForm = this.createAccountForm.controls[ this.regSteps[this.currRegIdx] ];
+    if (((this.currRegIdx - stepIdx < 0) && currForm.valid) || this.currRegIdx - stepIdx > 0) {
+      this.currRegIdx = stepIdx;
+      this.cdr.detectChanges();
+    }
   }
 
   public checkEmail(event: MouseEvent): void {
-    debugger;
-    this.authenticationService.checkLogin(this.createAccountForm.value.email)
+    stopEvent(event);
+    if (this.createAccountForm.controls.email.invalid) { return; }
+    this.authenticationService.checkLogin(this.createAccountForm.value.email.email_1)
       .pipe(first())
       .subscribe(
-        ((res: boolean) => {
+        (res: boolean) =>
           res ?
-            this.currView$.next([this.views.checkEmail]) :
-            this.currView$.next([this.views.notExists]);
-        })
+            this.currView$.next([this.views.alreadyExists]) :
+              this.gotoRegStep(event, 1)
       );
   }
 

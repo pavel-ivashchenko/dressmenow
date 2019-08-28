@@ -10,7 +10,6 @@ import { AuthenticationService } from '@app/core/services';
   constructor(private authenticationService: AuthenticationService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     const currentUser = this.authenticationService.currentUserValue;
     if (currentUser && currentUser.token) {
       request = request.clone({
@@ -19,9 +18,7 @@ import { AuthenticationService } from '@app/core/services';
         }
       });
     }
-
     return next.handle(request);
-
   }
 
 }

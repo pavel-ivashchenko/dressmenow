@@ -30,8 +30,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return this.authenticate(body);
         case url.match('/users/remindPassword') && method === 'POST':
           return this.remindPassword(body);
-        case url.match('/users/checkEmail') && method === 'POST':
-          return this.checkEmail(body);
+        case url.match('/users/checkLogin') && method === 'POST':
+          return this.checkLogin(body);
         case url.endsWith('/users') && method === 'GET':
           return this.getUsers(headers);
         case url.match(/\/users\/\d+$/) && method === 'GET':
@@ -41,7 +41,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         default:
           return next.handle(req);
       }
-    }
+    };
   }
 
   private register(body) {
@@ -75,7 +75,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         });
   }
 
-  private checkEmail(body: { email: string }):
+  private checkLogin(body: { email: string }):
     Observable<HttpResponse<{ status: 200, body: any }>> {
       return this.ok(
         this.users.find(x => x.email === body.email)

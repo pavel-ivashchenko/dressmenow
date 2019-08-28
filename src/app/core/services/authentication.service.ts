@@ -11,24 +11,24 @@ import { User } from '@app/shared/interfaces';
 
 @Injectable({ providedIn: 'root' }) export class AuthenticationService {
 
-  private currentUserSubject: BehaviorSubject<User>;
+  private currentUserSubject$: BehaviorSubject<User>;
   private MAT_SNACKBAR_DURATION = MAT_SNACKBAR_CONSTANTS.MAT_SNACKBAR_DURATION;
   private MAT_SNACKBAR_OK_PHRASE = MAT_SNACKBAR_CONSTANTS.MAT_SNACKBAR_OK_PHRASE;
+  public currentUser$: Observable<User>;
   private errorHandler = ({ error }: { error: { message: string } }) => {
     this.snackBar.open(error.message, this.MAT_SNACKBAR_OK_PHRASE, { duration: this.MAT_SNACKBAR_DURATION });
   }
-  public currentUser: Observable<User>;
 
   constructor(
     private http: HttpClient,
     private snackBar: MatSnackBar
   ) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.currentUserSubject$ = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser$ = this.currentUserSubject$.asObservable();
   }
 
   public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+    return this.currentUserSubject$.value;
   }
 
   public login(login: string, password: string): Observable<any> {
@@ -37,7 +37,7 @@ import { User } from '@app/shared/interfaces';
         map(user => {
           if (user && user.token) {
             localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
+            this.currentUserSubject$.next(user);
           }
           return user;
         }),
@@ -50,7 +50,7 @@ import { User } from '@app/shared/interfaces';
 
   public logout(): void {
     localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    this.currentUserSubject$.next(null);
   }
 
   public remindPassword(email: string): Observable<any> {
@@ -58,7 +58,7 @@ import { User } from '@app/shared/interfaces';
   }
 
   public checkLogin(email: string): Observable<any> {
-    return this.http.post<any>(`${environment.baseURL}/users/checkEmail}`, { email });
+    return this.http.post<any>(`${environment.baseURL}/users/checkLogin`, { email });
   }
 
 }

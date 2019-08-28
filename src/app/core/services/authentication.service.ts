@@ -61,4 +61,14 @@ import { User } from '@app/shared/interfaces';
     return this.http.post<any>(`${environment.baseURL}/users/checkLogin`, { email });
   }
 
+  public createAccount(newUser: User): Observable<any> {
+    return this.http.post<any>(`${environment.baseURL}/users/createAccount`, newUser)
+      .pipe(
+        catchError((err: { error: { message: string } }) => {
+          this.errorHandler(err);
+          return of(null);
+        })
+      );
+  }
+
 }

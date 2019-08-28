@@ -5,6 +5,8 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpInterceptor, HttpHeaders } 
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize, tap } from 'rxjs/operators';
 
+import { User } from '@app/shared/interfaces';
+
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
 
@@ -24,13 +26,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     return () => {
       const { url, method, body, headers } = req;
       switch (true) {
-        case url.endsWith('/users/register') && method === 'POST':
+        case url.endsWith('/users/createAccount') && method === 'POST':
           return this.register(body);
         case url.endsWith('/users/authenticate') && method === 'POST':
           return this.authenticate(body);
-        case url.match('/users/remindPassword') && method === 'POST':
+        case url.endsWith('/users/remindPassword') && method === 'POST':
           return this.remindPassword(body);
-        case url.match('/users/checkLogin') && method === 'POST':
+        case url.endsWith('/users/checkLogin') && method === 'POST':
           return this.checkLogin(body);
         case url.endsWith('/users') && method === 'GET':
           return this.getUsers(headers);
@@ -44,24 +46,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     };
   }
 
-  private register(body) {
-
-    const user = body;
-
-    if (this.users.find(x => x.login === user.email)) {
-      return this.error('Email "' + user.email + '" is already taken');
-    }
-
-    user.id = this.users.length ? Math.max(...this.users.map(x => x.id)) + 1 : 1;
-    this.users.push(user);
-    localStorage.setItem('users', JSON.stringify(this.users));
-
-    return this.ok();
-
+  private register(body: User):
+    Observable<never> | Observable<HttpResponse<{ status: 200, body: User }>> {
+      const user = body;
+      user.id = this.users.length ? Math.max(...this.users.map(x => x.id)) + 1 : 1;
+      this.users.push(user);
+      localStorage.setItem('users', JSON.stringify(this.users));
+      return true ?
+        this.ok(user) : this.error('Будь ласка, спробуйте ще раз або перезавантажте сторінку і введіть дані повторно');
   }
 
-  private authenticate(body):
-    Observable<never> | Observable<HttpResponse<{ status: 200, body: any }>> {
+  private authenticate(body: { login: string; password: string }):
+    Observable<never> | Observable<HttpResponse<{ status: 200, body: User }>> {
       const { login, password } = body;
       const user = this.users.find(x => x.email === login && x.password === password);
       return !user ?

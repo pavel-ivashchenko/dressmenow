@@ -106,9 +106,10 @@ export class UserModalComponent implements OnInit {
   }
 
   public onCreateAccount(event: MouseEvent): void {
-    console.log('create account works');
     stopEvent(event);
-    this.currView$.next([this.views.afterCreate]);
+    if (this.createAccountForm.invalid) { return; }
+    this.authenticationService.createAccount(this.createAccountForm.value)
+      .subscribe((res: User | null) => { if (res) { this.currView$.next([this.views.afterCreate]); } });
   }
 
   public gotoRegStep(event: MouseEvent, stepIdx: number): void {

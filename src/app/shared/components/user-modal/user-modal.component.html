@@ -106,8 +106,7 @@
 
     </div>
 
-    <form *ngSwitchCase="views.createAccount"
-      [formGroup]="createAccountForm">
+    <form *ngSwitchCase="views.createAccount" [formGroup]="createAccountForm">
 
       <header class="title">
         <h4 class="title__main">Створити акаунт</h4>
@@ -116,15 +115,20 @@
 
       <div class="reg">
         <button
-          *ngFor="let step of regSteps; let i = index; last as isLast"
-          [ngClass]="{
-            'reg__step--active': currRegIdx === i,
-            'reg__step--last': isLast
-          }"
-          (click)="gotoRegStep($event, i)"
-          type="submit" class="reg__step">
-            {{ step }}
-        </button>
+          type="submit" class="reg__step"
+          [ngClass]="{ 'reg__step--active': currRegIdx === 0 }"
+          (click)="checkEmail($event)"
+        >{{ regSteps[0] }}</button>
+        <button
+          type="submit" class="reg__step"
+          [ngClass]="{ 'reg__step--active': currRegIdx === 1 }"
+          (click)="gotoRegStep($event, 1)"
+        >{{ regSteps[1] }}</button>
+        <button
+          type="submit" class="reg__step reg__step--last"
+          [ngClass]="{ 'reg__step--active': currRegIdx === 2 }"
+          (click)="gotoRegStep($event, 2)"
+        >{{ regSteps[2] }}</button>
       </div>
 
       <ng-container [ngSwitch]="regSteps[currRegIdx]">
@@ -297,7 +301,7 @@
         <p class="title__secondary">
           Не знайдено жодного email:
           <span class="bold-and-underline">samoran4ez@gmail.com</span>
-          Будь ласка, перевірте і спробуйте зайти ще раз
+          Будь ласка, перевірте і спробуйте ще раз
         </p>
       </header>
 
@@ -308,7 +312,7 @@
     <div *ngSwitchCase="views.afterCreate">
 
       <header class="title">
-        <h4 class="title__main title__main--withborder">Майже все</h4>
+        <h4 class="title__main title__main--withborder">Майже готово</h4>
         <p class="title__secondary">
           Було надіслано електронний лист на адресу
           <span class="bold-and-underline">samoran4ez@gmail.com</span>

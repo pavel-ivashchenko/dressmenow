@@ -1,7 +1,7 @@
 
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
 import { tap, scan, map, shareReplay, startWith, distinctUntilChanged, first } from 'rxjs/operators';
@@ -21,29 +21,10 @@ export class UserModalComponent implements OnInit {
   private preventDefault$ = preventDefault$;
   private afterLoginURL = '/user'; // TODO change to appropriate name
 
-  public signInForm = new FormGroup({
-    login: new FormControl(''),
-    password: new FormControl('')
-  });
-  public remindPasswordForm = new FormGroup({
-    email: new FormControl('')
-  });
-  public createAccountForm = new FormGroup({
-    email: new FormGroup({
-      email_1: new FormControl(''),
-      email_2: new FormControl(''),
-      sendnews: new FormControl('true')
-    }),
-    name: new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl('')
-    }),
-    createPassword: new FormControl('')
-  });
-  public hidePassword$: Observable<any> = new Subject().pipe(
-    distinctUntilChanged(),
-    scan((acc) => acc = !acc, false)
-  );
+  public signInForm: FormGroup;
+  public remindPasswordForm: FormGroup;
+  public createAccountForm: FormGroup;
+
   public views: { [key: string]: string } = {
     default: 'DEFAULT',
     remindPassword: 'REMIND_PASSWORD',
@@ -53,6 +34,11 @@ export class UserModalComponent implements OnInit {
     notExists: 'NOT_EXISTS',
     afterCreate: 'AFTER_CREATE'
   };
+  public regSteps: string[] = ['email', 'name', 'password'];
+  public hidePassword$: Observable<any> = new Subject().pipe(
+    distinctUntilChanged(),
+    scan((acc) => acc = !acc, false)
+  );
   public currView$: any = new Subject()
     .pipe(
       distinctUntilChanged(),
@@ -60,15 +46,8 @@ export class UserModalComponent implements OnInit {
       scan((acc, viewName) => acc = viewName, this.views.default),
       shareReplay()
     );
-  public regSteps: string[] = ['email', 'name', 'password'];
   public currRegIdx = 0;
-  public passwordErrors$: Observable<{ [ key: string ]: string }> =
-    this.createAccountForm.controls.createPassword.statusChanges
-      .pipe(
-        startWith(''),
-        map(_ => this.createAccountForm.controls.createPassword.errors || {}),
-        shareReplay(1)
-      );
+  public passwordErrors$: Observable<{ [ key: string ]: string }>;
 
   constructor(
     private dialogRef: MatDialogRef<UserModalComponent>,
@@ -77,7 +56,12 @@ export class UserModalComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.signInForm = this.getSignInForm();
+    this.createAccountForm = this.getCreateAccountForm();
+    this.remindPasswordForm = new FormGroup({ email: new FormControl('') });
+    this.passwordErrors$ = this.getErrorsObservable(this.createAccountForm.controls.createPassword);
+  }
 
   public onCloseModal(): void {
     this.dialogRef.close();
@@ -87,9 +71,7 @@ export class UserModalComponent implements OnInit {
     if (this.signInForm.invalid) { return; }
     this.authenticationService.login(this.signInForm.value.login, this.signInForm.value.password)
       .pipe(first())
-      .subscribe(
-        (res: User | null) => { res ? this.router.navigate([ this.afterLoginURL ]) : null; }
-      );
+      .subscribe( (res: User | null) => { if (res) { this.router.navigate([ this.afterLoginURL ]); } } );
   }
 
   public onRemindPassword(event: MouseEvent): void {
@@ -109,7 +91,14 @@ export class UserModalComponent implements OnInit {
     stopEvent(event);
     if (this.createAccountForm.invalid) { return; }
     this.authenticationService.createAccount(this.createAccountForm.value)
-      .subscribe((res: User | null) => { if (res) { this.currView$.next([this.views.afterCreate]); } });
+      .subscribe((res: User | null) => {
+        if (res) {
+          this.currView$.next([this.views.afterCreate]);
+          this.createAccountForm = this.getCreateAccountForm();
+          this.passwordErrors$ = this.getErrorsObservable(this.createAccountForm.controls.createPassword);
+          this.currRegIdx = 0;
+        }
+      });
   }
 
   public gotoRegStep(event: MouseEvent, stepIdx: number): void {
@@ -133,5 +122,37 @@ export class UserModalComponent implements OnInit {
               this.gotoRegStep(event, 1)
       );
   }
+
+  private getCreateAccountForm(): FormGroup {
+    return new FormGroup({
+      email: new FormGroup({
+        email_1: new FormControl(''),
+        email_2: new FormControl(''),
+        sendnews: new FormControl('true')
+      }),
+      name: new FormGroup({
+        firstName: new FormControl(''),
+        lastName: new FormControl('')
+      }),
+      createPassword: new FormControl('')
+    });
+  }
+
+  private getSignInForm(): FormGroup {
+    return new FormGroup({
+      login: new FormControl(''),
+      password: new FormControl('')
+    });
+  }
+
+  private getErrorsObservable(ctrl: AbstractControl):
+    Observable<{ [ key: string ]: string }> {
+      return ctrl.statusChanges
+        .pipe(
+          startWith(''),
+          map(_ => ctrl.errors || {}),
+          shareReplay(1)
+        );
+    }
 
 }

@@ -33,13 +33,13 @@
           <mat-label>Password</mat-label>
           <input
             matInput
-            [type]="(hidePassword$ | async) ? 'password' : 'text'" formControlName="password"
+            [type]="hidePassword ? 'password' : 'text'" formControlName="password"
             required placeholder="Введіть пароль">
           <button
-            mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword$ | async"
-            (click)="hidePassword$.next()">
-              <i *ngIf="!(hidePassword$ | async)" class="hide-password fa fa-eye"></i>
-              <i *ngIf="hidePassword$ | async" class="hide-password fa fa-eye-slash"></i>
+            mat-icon-button matSuffix [attr.aria-label]="'Show password'" [attr.aria-pressed]="hidePassword"
+            (click)="hidePassword = !hidePassword">
+              <i *ngIf="!hidePassword" class="eye-password fa fa-eye"></i>
+              <i *ngIf="hidePassword" class="eye-password fa fa-eye-slash"></i>
           </button>
           <mat-error align="end">
             <app-form-error [control]="signInForm.controls.password"></app-form-error>
@@ -66,7 +66,7 @@
     <form *ngSwitchCase="views.remindPassword"
       [formGroup]="remindPasswordForm"
       (ngSubmit)="onRemindPassword($event)">
-      
+
       <header class="title">
         <h4 class="title__main title__main--withborder">Не можете згадати пароль?</h4>
         <p class="title__secondary">Введіть свою електронну адресу, і ми надішлемо вам посилання для скидання пароля</p>
@@ -91,22 +91,8 @@
 
     </form>
 
-    <div *ngSwitchCase="views.checkEmail">
-
-      <header class="title">
-        <h4 class="title__main title__main--withborder">Перевірте свій email</h4>
-        <p class="title__secondary">
-          Ми надіслали електронний лист на електронну скриньку
-          <span class="bold-and-underline">samoran4ez@gmail.com</span>
-          з інструкціями щодо відновлення пароля
-        </p>
-      </header>
-
-      <a mat-stroked-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
-
-    </div>
-
-    <form *ngSwitchCase="views.createAccount" [formGroup]="createAccountForm">
+    <form *ngSwitchCase="views.createAccount"
+      [formGroup]="createAccountForm">
 
       <header class="title">
         <h4 class="title__main">Створити акаунт</h4>
@@ -117,7 +103,7 @@
         <button
           type="submit" class="reg__step"
           [ngClass]="{ 'reg__step--active': currRegIdx === 0 }"
-          (click)="checkEmail($event)"
+          (click)="gotoRegStep($event, 0)"
         >{{ regSteps[0] }}</button>
         <button
           type="submit" class="reg__step"
@@ -164,14 +150,14 @@
           </div>
     
           <div class="checkbox-container">
-            <mat-checkbox formControlName="sendnews" color="primary">Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
+            <mat-checkbox formControlName="sendNews" color="primary">Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
           </div>
     
-          <button mat-stroked-button (click)="checkEmail($event)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
+          <button mat-stroked-button (click)="gotoRegStep($event, 1)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
     
           <p class="footer-info">
             Уже маєте акаунт?
-            <a class="footer-info__btn" (click)="currView$.next([views.default, $event])">УВІЙТИ</a>
+            <a class="footer-info__btn" (click)="backToDefaultView($event, createAccountForm.controls.email)">УВІЙТИ</a>
           </p>
 
         </div>
@@ -216,7 +202,7 @@
               <mat-label>Password</mat-label>
               <input
                 matInput
-                [type]="(hidePassword$ | async) ? 'password' : 'text'" formControlName="createPassword"
+                [type]="hidePassword ? 'password' : 'text'" formControlName="password"
                 appHasCapitalCase
                 appHasSmallCase
                 appHasNumber
@@ -224,10 +210,10 @@
                 minlength="8"
                 required placeholder="Введіть пароль">
               <button
-                mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword$ | async"
-                (click)="hidePassword$.next($event)">
-                  <i *ngIf="!(hidePassword$ | async)" class="hide-password fa fa-eye"></i>
-                  <i *ngIf="hidePassword$ | async" class="hide-password fa fa-eye-slash"></i>
+                mat-icon-button matSuffix [attr.aria-label]="'Show password'" [attr.aria-pressed]="hidePassword"
+                (click)="hidePassword = !hidePassword">
+                  <i *ngIf="!hidePassword" class="eye-password fa fa-eye"></i>
+                  <i *ngIf="hidePassword" class="eye-password fa fa-eye-slash"></i>
               </button>
             </mat-form-field>
           </div>
@@ -280,49 +266,52 @@
     </form>
 
     <div *ngSwitchCase="views.alreadyExists">
-
       <header class="title">
         <h4 class="title__main title__main--withborder">Існуючий email</h4>
         <p class="title__secondary">
           У нас уже зареєстрований такий email:
-          <span class="bold-and-underline">samoran4ez@gmail.com</span>
+          <span class="bold-and-underline">{{ createAccountForm.value.email.email_1 }}</span>
           Спробуйте увійти з ним, або введіть інший email
         </p>
       </header>
-
-      <a mat-stroked-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
-
-    </div>
-
-    <div *ngSwitchCase="views.notExists">
-
-      <header class="title">
-        <h4 class="title__main title__main--withborder">Email не зареєстрований</h4>
-        <p class="title__secondary">
-          Не знайдено жодного email:
-          <span class="bold-and-underline">samoran4ez@gmail.com</span>
-          Будь ласка, перевірте і спробуйте ще раз
-        </p>
-      </header>
-
-      <a mat-stroked-button (click)="currView$.next([views.remindPassword, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
-
+      <a mat-stroked-button (click)="backToDefaultView($event, createAccountForm.controls.email)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
     </div>
 
     <div *ngSwitchCase="views.afterCreate">
-
       <header class="title">
         <h4 class="title__main title__main--withborder">Майже готово</h4>
         <p class="title__secondary">
           Було надіслано електронний лист на адресу
-          <span class="bold-and-underline">samoran4ez@gmail.com</span>
+          <span class="bold-and-underline">{{ currUser.email }}</span>
           Будь ласка, перевірте email і перейдіть за посиланням у листі<br>
           для завершення регістрації
         </p>
       </header>
+      <a mat-stroked-button (click)="backToDefaultView($event, createAccountForm)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+    </div>
 
-      <a mat-stroked-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+    <div *ngSwitchCase="views.notExists">
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Email не зареєстрований</h4>
+        <p class="title__secondary">
+          Не знайдено жодного email:
+          <span class="bold-and-underline">{{ remindPasswordForm.value.email }}</span>
+          Будь ласка, перевірте і спробуйте ще раз
+        </p>
+      </header>
+      <a mat-stroked-button (click)="backToDefaultView($event, remindPasswordForm)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+    </div>
 
+    <div *ngSwitchCase="views.checkEmail">
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Перевірте свій email</h4>
+        <p class="title__secondary">
+          Ми надіслали електронний лист на електронну скриньку
+          <span class="bold-and-underline">{{ remindPasswordForm.value.email }}</span>
+          з інструкціями щодо відновлення пароля
+        </p>
+      </header>
+      <a mat-stroked-button (click)="backToDefaultView($event, remindPasswordForm)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
     </div>
 
   </ng-container>

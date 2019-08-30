@@ -129,7 +129,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
   private remindPassword(email: string):
     Observable<HttpResponse<{ status: 200, body: any }>> {
-      return this.ok(false);
+      return this.ok(true);
   }
 
 }

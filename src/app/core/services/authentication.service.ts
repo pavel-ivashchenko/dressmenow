@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { MAT_SNACKBAR_CONSTANTS } from '@app/shared/constants';
-import { User } from '@app/shared/interfaces';
+import { User, NewUser } from '@app/shared/interfaces';
 
 @Injectable({ providedIn: 'root' }) export class AuthenticationService {
 
@@ -61,7 +61,7 @@ import { User } from '@app/shared/interfaces';
     return this.http.post<any>(`${environment.baseURL}/users/checkLogin`, { email });
   }
 
-  public createAccount(newUser: User): Observable<any> {
+  public createAccount(newUser: NewUser): Observable<any> {
     return this.http.post<any>(`${environment.baseURL}/users/createAccount`, newUser)
       .pipe(
         catchError((err: { error: { message: string } }) => {

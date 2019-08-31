@@ -34,8 +34,6 @@ export class UserModalComponent implements OnInit {
     notExists: 'NOT_EXISTS',
     afterCreate: 'AFTER_CREATE'
   };
-  public regSteps: string[] = ['email', 'name', 'password'];
-  public hidePassword = true;
   public currView$: any = new Subject()
     .pipe(
       distinctUntilChanged(),
@@ -43,23 +41,21 @@ export class UserModalComponent implements OnInit {
       scan((acc, viewName) => acc = viewName, this.views.default),
       shareReplay()
     );
-  public currRegIdx = 0;
-  public passwordErrors$: Observable<{ [ key: string ]: string }>;
+  public hidePassword = true;
   public currUser: User;
+  public isEmailExists$: Subject<boolean> = new Subject();
 
   constructor(
     private dialogRef: MatDialogRef<UserModalComponent>,
     private authenticationService: AuthenticationService,
     private fb: FormBuilder,
-    private router: Router,
-    private cdr: ChangeDetectorRef
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.createAccountForm = this.getCreateAccountForm();
     this.signInForm = this.fb.group({ login: '', password: '' });
     this.remindPasswordForm = this.fb.group({ email: '' });
-    this.passwordErrors$ = this.getErrorsObservable(this.createAccountForm.controls.password);
   }
 
   // PUBLIC METHODS
@@ -99,24 +95,10 @@ export class UserModalComponent implements OnInit {
       .subscribe((res: User | null) => {
         if (res) {
           this.currView$.next([this.views.afterCreate]);
-          this.resetCreateAccountForm();
-          this.currRegIdx = 0;
+          this.onResetCreateAccountForm();
           this.currUser = res;
         }
       });
-  }
-
-  public gotoRegStep(event: MouseEvent, stepIdx: number): void {
-    stopEvent(event);
-    const currForm = this.createAccountForm.controls[ this.regSteps[this.currRegIdx] ];
-    currForm.valid && this.currRegIdx === 0 ?
-      this.checkEmail(stepIdx) : ((this.currRegIdx - stepIdx < 0) && currForm.valid) || this.currRegIdx - stepIdx > 0 ?
-          this.changeCurrRegIdx(stepIdx) : null;
-  }
-
-  public resetCreateAccountForm(): void {
-    this.createAccountForm = this.getCreateAccountForm();
-    this.passwordErrors$ = this.getErrorsObservable(this.createAccountForm.controls.password);
   }
 
   public backToDefaultView(event: Event, form: FormGroup): void {
@@ -124,24 +106,22 @@ export class UserModalComponent implements OnInit {
     this.currView$.next([this.views.default, event]);
   }
 
-  // PRIVATE METHODS
+  public onResetCreateAccountForm(): void {
+    this.createAccountForm.reset();
+    (this.createAccountForm.controls.email as FormGroup).controls.sendNews.setValue(true);
+  }
 
-  private checkEmail(stepIdx: number): void {
+  public onCheckIfEmailExists(): void {
     this.authenticationService.checkLogin(this.createAccountForm.value.email.email_1)
       .pipe(first())
-      .subscribe(
-        (res: boolean) => {
-          res ?
-            this.currView$.next([this.views.alreadyExists]) :
-              this.changeCurrRegIdx(stepIdx);
-        }
-      );
+      .subscribe(res => this.isEmailExists$.next(res));
   }
 
-  private changeCurrRegIdx(stepIdx: number): void {
-    this.currRegIdx = stepIdx;
-    this.cdr.detectChanges();
+  public onChangeCurrView(value) {
+    this.currView$.next(value);
   }
+
+  // PRIVATE METHODS
 
   private getCreateAccountForm(): FormGroup {
     return this.fb.group({
@@ -157,15 +137,5 @@ export class UserModalComponent implements OnInit {
       password: ''
     });
   }
-
-  private getErrorsObservable(ctrl: AbstractControl):
-    Observable<{ [ key: string ]: string }> {
-      return ctrl.statusChanges
-        .pipe(
-          startWith(''),
-          map(_ => ctrl.errors || {}),
-          shareReplay(1)
-        );
-    }
 
 }

@@ -91,205 +91,6 @@
 
     </form>
 
-    <form *ngSwitchCase="views.createAccount"
-      [formGroup]="createAccountForm">
-
-      <header class="title">
-        <h4 class="title__main">Створити акаунт</h4>
-        <p class="title__secondary title__secondary--bold">Лише декілька простих кроків</p>
-      </header>
-
-      <div class="reg">
-        <button
-          type="submit" class="reg__step"
-          [ngClass]="{ 'reg__step--active': currRegIdx === 0 }"
-          (click)="gotoRegStep($event, 0)"
-        >{{ regSteps[0] }}</button>
-        <button
-          type="submit" class="reg__step"
-          [ngClass]="{ 'reg__step--active': currRegIdx === 1 }"
-          (click)="gotoRegStep($event, 1)"
-        >{{ regSteps[1] }}</button>
-        <button
-          type="submit" class="reg__step reg__step--last"
-          [ngClass]="{ 'reg__step--active': currRegIdx === 2 }"
-          (click)="gotoRegStep($event, 2)"
-        >{{ regSteps[2] }}</button>
-      </div>
-
-      <ng-container [ngSwitch]="regSteps[currRegIdx]">
-
-        <div *ngSwitchCase="regSteps[0]"
-          formGroupName="email"
-          [appCheckIfEqual]="['email_1', 'email_2', 'Email адреси повинні співпадати']">
-
-          <div class="input-container">
-            <mat-form-field appearance="outline">
-              <mat-label>Email</mat-label>
-              <input
-                matInput
-                formControlName="email_1" email
-                type="email" required>
-              <mat-error align="end">
-                <app-form-error [control]="createAccountForm.controls.email.controls.email_1"></app-form-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-    
-          <div class="input-container">
-            <mat-form-field appearance="outline">
-              <mat-label>Підтвердіть Email</mat-label>
-              <input
-                matInput
-                formControlName="email_2" email
-                type="email" required>
-              <mat-error align="end">
-                <app-form-error [control]="createAccountForm.controls.email.controls.email_2"></app-form-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-    
-          <div class="checkbox-container">
-            <mat-checkbox formControlName="sendNews" color="primary">Так! Хочу отримувати новини від DressMeNow!</mat-checkbox>
-          </div>
-    
-          <button mat-stroked-button (click)="gotoRegStep($event, 1)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
-    
-          <p class="footer-info">
-            Уже маєте акаунт?
-            <a class="footer-info__btn" (click)="backToDefaultView($event, createAccountForm.controls.email)">УВІЙТИ</a>
-          </p>
-
-        </div>
-
-        <div *ngSwitchCase="regSteps[1]"
-          formGroupName="name">
-
-          <div class="input-container">
-            <mat-form-field appearance="outline">
-              <mat-label>First name</mat-label>
-              <input
-                matInput
-                formControlName="firstName" minlength="2"
-                required>
-              <mat-error align="end">
-                <app-form-error [control]="createAccountForm.controls.name.controls.firstName"></app-form-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="input-container">
-            <mat-form-field appearance="outline">
-              <mat-label>Last name</mat-label>
-              <input
-                matInput
-                formControlName="lastName" minlength="2"
-                required>
-              <mat-error align="end">
-                <app-form-error [control]="createAccountForm.controls.name.controls.lastName"></app-form-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <button mat-stroked-button (click)="gotoRegStep($event, 2)" type="submit" class="ctrl-btn ctrl-btn--submit">ДАЛІ</button>
-
-        </div>
-
-        <div *ngSwitchCase="regSteps[2]">
-          
-          <div class="input-container">
-            <mat-form-field appearance="outline">
-              <mat-label>Password</mat-label>
-              <input
-                matInput
-                [type]="hidePassword ? 'password' : 'text'" formControlName="password"
-                appHasCapitalCase
-                appHasSmallCase
-                appHasNumber
-                appHasSpecialChar
-                minlength="8"
-                required placeholder="Введіть пароль">
-              <button
-                mat-icon-button matSuffix [attr.aria-label]="'Show password'" [attr.aria-pressed]="hidePassword"
-                (click)="hidePassword = !hidePassword">
-                  <i *ngIf="!hidePassword" class="eye-password fa fa-eye"></i>
-                  <i *ngIf="hidePassword" class="eye-password fa fa-eye-slash"></i>
-              </button>
-            </mat-form-field>
-          </div>
-
-          <p
-            class="info info--password"
-            [ngClass]="{ 'error': (passwordErrors$ | async)?.minlength }"
-            >Повинен складатись з 8 символів та містити наступне</p>
-
-          <div class="pass-chkbx">
-
-            <div class="pass-chkbx__wrap">
-              <mat-checkbox
-                [disableRipple]="true" color="primary"
-                [checked]="!(passwordErrors$ | async)?.hasCapitalCase"
-                (click)="$event.preventDefault()">Велика літера</mat-checkbox>
-              <mat-checkbox
-                [disableRipple]="true"
-                [checked]="!(passwordErrors$ | async)?.hasSmallCase"
-                (click)="$event.preventDefault()"
-                color="primary">Мала літера</mat-checkbox>
-            </div>
-
-            <div class="pass-chkbx__wrap">
-              <mat-checkbox
-                [disableRipple]="true"
-                [checked]="!(passwordErrors$ | async)?.hasNumber"
-                (click)="$event.preventDefault()"
-                color="primary">Цифра</mat-checkbox>
-              <mat-checkbox
-                [disableRipple]="true"
-                [checked]="!(passwordErrors$ | async)?.hasSpecialChar"
-                (click)="$event.preventDefault()"
-                color="primary">Символ ( <u>!@#$%</u> )</mat-checkbox>
-            </div>
-
-          </div>
-
-          <button mat-stroked-button (click)="onCreateAccount($event)" type="submit" class="ctrl-btn ctrl-btn--submit">СТВОРИТИ АКАУНТ</button>
-
-          <footer class="footer-info">
-            Створюючи акаунт, Ви приймаєте <br>
-            <a class="footer-info__btn" (click)="currView$.next([views.default, $event])">Правила та Політику конфіденційності</a>
-          </footer>
-  
-        </div>
-
-      </ng-container>
-
-    </form>
-
-    <div *ngSwitchCase="views.alreadyExists">
-      <header class="title">
-        <h4 class="title__main title__main--withborder">Існуючий email</h4>
-        <p class="title__secondary">
-          У нас уже зареєстрований такий email:
-          <span class="bold-and-underline">{{ createAccountForm.value.email.email_1 }}</span>
-          Спробуйте увійти з ним, або введіть інший email
-        </p>
-      </header>
-      <a mat-stroked-button (click)="backToDefaultView($event, createAccountForm.controls.email)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
-    </div>
-
-    <div *ngSwitchCase="views.afterCreate">
-      <header class="title">
-        <h4 class="title__main title__main--withborder">Майже готово</h4>
-        <p class="title__secondary">
-          Було надіслано електронний лист на адресу
-          <span class="bold-and-underline">{{ currUser.email }}</span>
-          Будь ласка, перевірте email і перейдіть за посиланням у листі<br>
-          для завершення регістрації
-        </p>
-      </header>
-      <a mat-stroked-button (click)="backToDefaultView($event, createAccountForm)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
-    </div>
-
     <div *ngSwitchCase="views.notExists">
       <header class="title">
         <h4 class="title__main title__main--withborder">Email не зареєстрований</h4>
@@ -313,6 +114,17 @@
       </header>
       <a mat-stroked-button (click)="backToDefaultView($event, remindPasswordForm)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
     </div>
+
+    <app-create-account
+      [createAccountForm]="createAccountForm"
+      [views]="views"
+      [currView]="currView$ | async"
+      [isEmailExists$]="isEmailExists$"
+      (createAccount)="onCreateAccount($event)"
+      (changeCurrView)="onChangeCurrView($event)"
+      (checkIfEmailExists)="onCheckIfEmailExists($event)"
+      (resetCreateAccountForm)="onResetCreateAccountForm($event)"
+    ></app-create-account>
 
   </ng-container>
 

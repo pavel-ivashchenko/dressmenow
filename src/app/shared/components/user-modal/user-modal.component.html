@@ -48,7 +48,7 @@
       </div>
 
       <p class="info">
-        <a (click)="currView$.next([views.remindPassword, $event])" class="info__link">Не можете згадати пароль?</a>
+        <a (click)="onChangeCurrView(views.remindPassword, $event)" class="info__link">Не можете згадати пароль?</a>
       </p>
     
       <button
@@ -59,7 +59,7 @@
     
       <p class="question">ще немає акаунту?</p>
     
-      <a mat-stroked-button (click)="currView$.next([views.createAccount, $event])" class="ctrl-btn ctrl-btn--regular">СТВОРИТИ АКАУНТ</a>
+      <a mat-stroked-button (click)="onChangeCurrView(views.createAccount, $event)" class="ctrl-btn ctrl-btn--regular">СТВОРИТИ АКАУНТ</a>
     
     </form>
   
@@ -87,7 +87,7 @@
 
       <button mat-stroked-button type="submit" class="ctrl-btn ctrl-btn--submit">НАДІСЛАТИ ПАРОЛЬ</button>
 
-      <a mat-button (click)="currView$.next([views.default, $event])" class="ctrl-btn ctrl-btn--regular">До попередньої форми</a>
+      <a mat-button (click)="onChangeCurrView(views.default, $event)" class="ctrl-btn ctrl-btn--regular">До попередньої форми</a>
 
     </form>
 
@@ -100,7 +100,7 @@
           Будь ласка, перевірте і спробуйте ще раз
         </p>
       </header>
-      <a mat-stroked-button (click)="backToDefaultView($event, remindPasswordForm)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+      <a mat-stroked-button (click)="backToDefaultView(remindPasswordForm, $event)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
     </div>
 
     <div *ngSwitchCase="views.checkEmail">
@@ -112,7 +112,7 @@
           з інструкціями щодо відновлення пароля
         </p>
       </header>
-      <a mat-stroked-button (click)="backToDefaultView($event, remindPasswordForm)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+      <a mat-stroked-button (click)="backToDefaultView(remindPasswordForm, $event)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
     </div>
 
     <app-create-account *ngSwitchCase="views.createAccount"
@@ -123,6 +123,7 @@
       (createAccount)="onCreateAccount($event)"
       (changeCurrView)="onChangeCurrView($event)"
       (checkIfEmailExists)="onCheckIfEmailExists($event)"
+      (goToDefault)="backToDefaultView(createAccountForm.controls.email, $event)"
     ></app-create-account>
 
     <div *ngSwitchCase="views.alreadyExists">
@@ -134,7 +135,7 @@
           Спробуйте увійти з ним, або введіть інший email
         </p>
       </header>
-      <a mat-stroked-button (click)="backToDefaultView($event, createAccountForm.controls.email)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+      <a mat-stroked-button (click)="backToDefaultView(createAccountForm.controls.email, $event)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
     </div>
     
     <div *ngSwitchCase="views.afterCreate">
@@ -147,7 +148,7 @@
           для завершення регістрації
         </p>
       </header>
-      <a mat-stroked-button (click)="backToDefaultView($event, createAccountForm.controls.email)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+      <a mat-stroked-button (click)="backToDefaultView(createAccountForm.controls.email, $event)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
     </div>
 
   </ng-container>

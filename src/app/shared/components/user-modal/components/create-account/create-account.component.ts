@@ -9,7 +9,7 @@ import { stopEvent } from '@app/shared/helpers';
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.component.html',
-  styleUrls: ['./create-account.component.scss'],
+  styleUrls: ['./../../user-modal.component.scss', './create-account.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateAccountComponent implements OnInit {
@@ -20,8 +20,9 @@ export class CreateAccountComponent implements OnInit {
   @Input() isEmailExists$: Observable<boolean>;
 
   @Output() checkIfEmailExists: EventEmitter<string> = new EventEmitter();
-  @Output() changeCurrView: EventEmitter<(string | MouseEvent)[]> = new EventEmitter();
+  @Output() changeCurrView: EventEmitter<string> = new EventEmitter();
   @Output() createAccount: EventEmitter<any> = new EventEmitter();
+  @Output() goToDefault: EventEmitter<any> = new EventEmitter();
 
   public regSteps: string[] = ['email', 'name', 'password'];
   public currRegIdx = 0;
@@ -54,19 +55,19 @@ export class CreateAccountComponent implements OnInit {
       .subscribe(
         (res: boolean) => {
           res ?
-            this.onChangeCurrView([this.views.alreadyExists]) :
+            this.onChangeCurrView(this.views.alreadyExists) :
               this.onChangeCurrRegIdx(stepIdx);
         }
       );
   }
 
-  public onChangeCurrView(newView: (string | MouseEvent)[], resetForm: boolean = false): void { // TODO refactor
-    if (resetForm) {
-      this.createAccountForm.reset();
-      this.createAccountForm.controls.sendNews.setValue(true);
-    }
+  public onChangeCurrView(viewName: string): void {
     this.currRegIdx = 0;
-    this.changeCurrView.emit(newView);
+    this.changeCurrView.emit(viewName);
+  }
+
+  public onGoToDefaultView(event: MouseEvent): void {
+    this.goToDefault.emit(event);
   }
 
   public onCreate(event: MouseEvent): void {

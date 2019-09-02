@@ -1,10 +1,10 @@
 
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, AbstractControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
-import { tap, scan, map, shareReplay, startWith, distinctUntilChanged, first } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { scan, shareReplay, distinctUntilChanged, first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/core/services';
 import { preventDefault$, stopEvent } from '@app/shared/helpers';
@@ -39,7 +39,7 @@ export class UserModalComponent implements OnInit {
       distinctUntilChanged(),
       this.preventDefault$,
       scan((acc, viewName) => acc = viewName, this.views.default),
-      shareReplay()
+      shareReplay(1)
     );
   public hidePassword = true;
   public currUser: User;
@@ -58,15 +58,13 @@ export class UserModalComponent implements OnInit {
     this.remindPasswordForm = this.fb.group({ email: '' });
   }
 
-  // PUBLIC METHODS
-
   public onCloseModal(): void { this.dialogRef.close(); }
 
   public onSignIn(): void {
     if (this.signInForm.invalid) { return; }
     this.authenticationService.login(this.signInForm.value.login, this.signInForm.value.password)
       .pipe(first())
-      .subscribe( (res: User | null) => { if (res) { this.router.navigate([ this.afterLoginURL ]); } } );
+      .subscribe( (res: User | null) => { if (res) { this.router.navigate([ this.afterLoginURL ]); } } ); // TODO save in state
   }
 
   public onRemindPassword(event: MouseEvent): void {
@@ -76,8 +74,8 @@ export class UserModalComponent implements OnInit {
       .subscribe(
         (res: boolean) => {
           res ?
-            this.currView$.next([this.views.checkEmail, event]) :
-              this.currView$.next([this.views.notExists, event]);
+            this.onChangeCurrView(this.views.checkEmail, event) :
+              this.onChangeCurrView(this.views.notExists, event);
         }
       );
   }
@@ -94,7 +92,7 @@ export class UserModalComponent implements OnInit {
     this.authenticationService.createAccount(newUser)
       .subscribe((res: User | null) => {
         if (res) {
-          this.currView$.next([this.views.afterCreate]);
+          this.onChangeCurrView(this.views.afterCreate);
           this.createAccountForm.reset();
           this.createAccountForm.controls.sendNews.setValue(true);
           this.currUser = res;
@@ -102,9 +100,9 @@ export class UserModalComponent implements OnInit {
       });
   }
 
-  public backToDefaultView(event: Event, form: FormGroup): void {
+  public backToDefaultView(form: FormGroup, event: Event | null = null): void {
     form.reset();
-    this.currView$.next([this.views.default, event]);
+    this.onChangeCurrView(this.views.default, event);
   }
 
   public onCheckIfEmailExists(): void {
@@ -113,11 +111,9 @@ export class UserModalComponent implements OnInit {
       .subscribe(res => this.isEmailExists$.next(res));
   }
 
-  public onChangeCurrView(value) {
-    this.currView$.next(value);
+  public onChangeCurrView(viewName: string, event: Event | any = null): void {
+    this.currView$.next([ viewName, event ]);
   }
-
-  // PRIVATE METHODS
 
   private getCreateAccountForm(): FormGroup {
     return this.fb.group({

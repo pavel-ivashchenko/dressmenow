@@ -19,7 +19,6 @@ export class CreateAccountComponent implements OnInit {
   @Input() currView: string;
   @Input() isEmailExists$: Observable<boolean>;
 
-  @Output() resetCreateAccountForm: EventEmitter<any> = new EventEmitter();
   @Output() checkIfEmailExists: EventEmitter<string> = new EventEmitter();
   @Output() changeCurrView: EventEmitter<(string | MouseEvent)[]> = new EventEmitter();
   @Output() createAccount: EventEmitter<any> = new EventEmitter();
@@ -55,21 +54,22 @@ export class CreateAccountComponent implements OnInit {
       .subscribe(
         (res: boolean) => {
           res ?
-            this.onChangeCurrView([this.views.createAccount]) :
+            this.onChangeCurrView([this.views.alreadyExists]) :
               this.onChangeCurrRegIdx(stepIdx);
         }
       );
   }
 
-  public onChangeCurrView(value: (string | MouseEvent)[]) {
-    this.changeCurrView.emit(value);
+  public onChangeCurrView(newView: (string | MouseEvent)[], resetForm: boolean = false): void { // TODO refactor
+    if (resetForm) {
+      this.createAccountForm.reset();
+      this.createAccountForm.controls.sendNews.setValue(true);
+    }
+    this.currRegIdx = 0;
+    this.changeCurrView.emit(newView);
   }
 
-  public onReset() {
-    this.resetCreateAccountForm.emit();
-  }
-
-  public onCreate(event: MouseEvent) {
+  public onCreate(event: MouseEvent): void {
     this.createAccount.emit(event);
   }
 

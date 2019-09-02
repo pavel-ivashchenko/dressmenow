@@ -27,5 +27,6 @@ export const COMPONENTS = [
 
 export const ENTRY_COMPONENTS = [
   CartModalComponent,
-  UserModalComponent
+  UserModalComponent,
+  CreateAccountComponent
 ];

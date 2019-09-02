@@ -45,6 +45,12 @@
   }
 }
 
+@mixin center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 // BEM methodology
 
 @mixin e($element) {

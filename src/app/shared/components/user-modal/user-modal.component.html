@@ -20,7 +20,7 @@
           <mat-label>Email</mat-label>
           <input
             matInput
-            formControlName="login" email
+            formControlName="login" email autocomplete="off"
             type="email" required placeholder="Введіть email">
           <mat-error align="end">
             <app-form-error [control]="signInForm.controls.login"></app-form-error>
@@ -34,7 +34,7 @@
           <input
             matInput
             [type]="hidePassword ? 'password' : 'text'" formControlName="password"
-            required placeholder="Введіть пароль">
+            required placeholder="Введіть пароль" autocomplete="off">
           <button
             mat-icon-button matSuffix [attr.aria-label]="'Show password'" [attr.aria-pressed]="hidePassword"
             (click)="hidePassword = !hidePassword">
@@ -115,7 +115,7 @@
       <a mat-stroked-button (click)="backToDefaultView($event, remindPasswordForm)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
     </div>
 
-    <app-create-account
+    <app-create-account *ngSwitchCase="views.createAccount"
       [createAccountForm]="createAccountForm"
       [views]="views"
       [currView]="currView$ | async"
@@ -123,8 +123,32 @@
       (createAccount)="onCreateAccount($event)"
       (changeCurrView)="onChangeCurrView($event)"
       (checkIfEmailExists)="onCheckIfEmailExists($event)"
-      (resetCreateAccountForm)="onResetCreateAccountForm($event)"
     ></app-create-account>
+
+    <div *ngSwitchCase="views.alreadyExists">
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Існуючий email</h4>
+        <p class="title__secondary">
+          У нас уже зареєстрований такий email:
+          <span class="bold-and-underline">{{ createAccountForm.value.email.email_1 }}</span>
+          Спробуйте увійти з ним, або введіть інший email
+        </p>
+      </header>
+      <a mat-stroked-button (click)="backToDefaultView($event, createAccountForm.controls.email)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+    </div>
+    
+    <div *ngSwitchCase="views.afterCreate">
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Майже готово</h4>
+        <p class="title__secondary">
+          Було надіслано електронний лист на адресу
+          <span class="bold-and-underline">{{ currUser.email }}</span>
+          Будь ласка, перевірте email і перейдіть за посиланням у листі<br>
+          для завершення регістрації
+        </p>
+      </header>
+      <a mat-stroked-button (click)="backToDefaultView($event, createAccountForm.controls.email)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+    </div>
 
   </ng-container>
 

@@ -95,7 +95,8 @@ export class UserModalComponent implements OnInit {
       .subscribe((res: User | null) => {
         if (res) {
           this.currView$.next([this.views.afterCreate]);
-          this.onResetCreateAccountForm();
+          this.createAccountForm.reset();
+          this.createAccountForm.controls.sendNews.setValue(true);
           this.currUser = res;
         }
       });
@@ -104,11 +105,6 @@ export class UserModalComponent implements OnInit {
   public backToDefaultView(event: Event, form: FormGroup): void {
     form.reset();
     this.currView$.next([this.views.default, event]);
-  }
-
-  public onResetCreateAccountForm(): void {
-    this.createAccountForm.reset();
-    (this.createAccountForm.controls.email as FormGroup).controls.sendNews.setValue(true);
   }
 
   public onCheckIfEmailExists(): void {
@@ -127,13 +123,13 @@ export class UserModalComponent implements OnInit {
     return this.fb.group({
       email: this.fb.group({
         email_1: '',
-        email_2: '',
-        sendNews: 'true'
+        email_2: ''
       }),
       name: this.fb.group({
         firstName: '',
         lastName: ''
       }),
+      sendNews: 'true',
       password: ''
     });
   }

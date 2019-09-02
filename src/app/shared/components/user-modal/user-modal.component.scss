@@ -2,14 +2,6 @@
 @import 'mixins';
 @import 'colors';
 
-$hover-black: rgba(0,0,0,.6);
-
-@mixin center-flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .user-modal-container {
   width: 100%;
   position: relative;

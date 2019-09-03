@@ -15,7 +15,7 @@ import { CartModalComponent } from '@app/shared/components/cart-modal/cart-modal
 import { UserModalComponent } from '@app/shared/components/user-modal/user-modal.component';
 
 import { Store } from '@ngrx/store';
-import { SetCurrency } from '@app/core/store/actions';
+import { SetCurrency } from '@app/core/store/actions'; // TODO move to currency service
 import { IAppState } from '@app/core/store/state';
 
 @Component({
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       width: '400px',
       data: {},
       autoFocus: false
-    })
+    });
   }
 
   public onCartClick(): void {
@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  public onCurrencyChange(newCurrency: string):void {
+  public onCurrencyChange(newCurrency: string): void {
     this.store.dispatch(new SetCurrency(newCurrency));
   }
 

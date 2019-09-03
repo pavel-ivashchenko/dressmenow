@@ -29,7 +29,7 @@ export class SetCustomCurrency implements Action {
   constructor(public payload: GlobalCurrency) {}
 }
 
-export type CurrencyActions = 
+export type CurrencyActions =
   SetCurrency |
   SetCurrencySuccess |
   SetCurrencyFailure |

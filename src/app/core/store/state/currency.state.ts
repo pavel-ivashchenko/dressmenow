@@ -7,7 +7,7 @@ export interface ICurrencyState extends GlobalCurrency {
 }
 
 export const initialCurrencyState: ICurrencyState = {
-  name:  CURRENCY_CONSTANTS.DEFAULT_CURRENCY,
+  name: CURRENCY_CONSTANTS.DEFAULT_CURRENCY,
   index: CURRENCY_CONSTANTS.DEFAULT_CURRENCY_INDEX,
   isSwitchAvailable: true
 };

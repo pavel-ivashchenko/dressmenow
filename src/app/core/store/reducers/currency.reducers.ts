@@ -20,7 +20,6 @@ export function currencyReducers (
         isSwitchAvailable: false
       };
     }
-    default:
-      return state;
+    default: return state;
   }
-};
+}

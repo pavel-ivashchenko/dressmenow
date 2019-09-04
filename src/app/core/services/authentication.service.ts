@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, shareReplay } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { MAT_SNACKBAR_CONSTANTS } from '@app/shared/constants';
 import { User, NewUser } from '@app/shared/interfaces';
-import { UserService } from '@app/core/services';
+import { UserService } from '@app/core/services/user.service';
+import { TOKEN_KEY } from '@app/shared/constants';
 
 @Injectable({ providedIn: 'root' }) export class AuthenticationService {
 
@@ -34,7 +35,9 @@ import { UserService } from '@app/core/services';
       .pipe(
         map(user => {
           if (user && user.token) {
+            // TODO remove the line and uncomment when server is ready
             localStorage.setItem('currentUser', JSON.stringify(user));
+            // localStorage.setItem(TOKEN_KEY, user.token);
             this.userService.setCurrentUser(user);
           }
           return user;
@@ -42,23 +45,27 @@ import { UserService } from '@app/core/services';
         catchError((err: { error: { message: string } }) => {
           this.errorHandler({ error: { message: this.errorMsgs.login } });
           return of(null);
-        })
-      );
-  }
-
-  public register(newUser: NewUser): Observable<any> {
-    return this.http.post<any>(`${environment.baseURL}/users/createAccount`, newUser)
-      .pipe(
-        catchError((err: { error: { message: string } }) => {
-          this.errorHandler({ error: { message: this.errorMsgs.register } });
-          return of(null);
-        })
+        }),
+        shareReplay()
       );
   }
 
   public logout(): void {
+    // TODO remove the line and uncomment when server is ready
     localStorage.removeItem('currentUser');
+    // localStorage.removeItem(TOKEN_KEY);
     this.userService.setCurrentUser(null);
+  }
+
+  public register(newUser: NewUser): Observable<any> {
+    return this.http.post<any>(`${environment.baseURL}/users/register`, newUser)
+      .pipe(
+        catchError((err: { error: { message: string } }) => {
+          this.errorHandler({ error: { message: this.errorMsgs.register } });
+          return of(null);
+        }),
+        shareReplay()
+      );
   }
 
   public remindPassword(email: string): Observable<any> {

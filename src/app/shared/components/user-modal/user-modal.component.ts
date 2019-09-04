@@ -1,4 +1,6 @@
 
+// TODO consider moving to the separetely hosted app
+
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -89,7 +91,7 @@ export class UserModalComponent implements OnInit {
       sendNews: this.createAccountForm.value.email.sendNews,
       password: this.createAccountForm.value.password
     };
-    this.authenticationService.createAccount(newUser)
+    this.authenticationService.register(newUser)
       .subscribe((res: User | null) => {
         if (res) {
           this.onChangeCurrView(this.views.afterCreate);

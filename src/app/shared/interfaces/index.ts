@@ -6,3 +6,4 @@ export * from './global-currency-obj.interface';
 export * from './user.interface';
 export * from './new-user.interface';
 export * from './env.interface';
+export * from './auth-response.interface';

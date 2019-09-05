@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Subject } from 'rxjs';
-import { scan, shareReplay, distinctUntilChanged, first } from 'rxjs/operators';
+import { scan, shareReplay, distinctUntilChanged, first, filter } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/core/services';
 import { preventDefault$, stopEvent } from '@app/shared/helpers';
@@ -44,7 +44,7 @@ export class UserModalComponent implements OnInit {
       shareReplay(1)
     );
   public hidePassword = true;
-  public currUser: User;
+  public registrationEmail: string;
   public isEmailExists$: Subject<boolean> = new Subject();
 
   constructor(
@@ -66,7 +66,7 @@ export class UserModalComponent implements OnInit {
     if (this.signInForm.invalid) { return; }
     this.authenticationService.login(this.signInForm.value.login, this.signInForm.value.password)
       .pipe(first())
-      .subscribe( (res: User | null) => { if (res) { this.router.navigate([ this.afterLoginURL ]); } } ); // TODO save in state
+      .subscribe( (res: User | null) => { if (res) { this.router.navigate([ this.afterLoginURL ]); } } );
   }
 
   public onRemindPassword(event: MouseEvent): void {
@@ -92,13 +92,12 @@ export class UserModalComponent implements OnInit {
       password: this.createAccountForm.value.password
     };
     this.authenticationService.register(newUser)
-      .subscribe((res: User | null) => {
-        if (res) {
-          this.onChangeCurrView(this.views.afterCreate);
-          this.createAccountForm.reset();
-          this.createAccountForm.controls.sendNews.setValue(true);
-          this.currUser = res;
-        }
+      .pipe(filter((res: User | null) => !!res))
+      .subscribe((res: User) => {
+        this.onChangeCurrView(this.views.afterCreate);
+        this.createAccountForm.reset();
+        this.createAccountForm.controls.sendNews.setValue(true);
+        this.registrationEmail = res.email;
       });
   }
 

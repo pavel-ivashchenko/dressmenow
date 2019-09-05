@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Observable, of } from 'rxjs';
-import { map, catchError, shareReplay } from 'rxjs/operators';
+import { map, catchError, shareReplay, switchMap } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { MAT_SNACKBAR_CONSTANTS } from '@app/shared/constants';
-import { User, NewUser } from '@app/shared/interfaces';
+import { User, NewUser, AuthResponse } from '@app/shared/interfaces';
 import { UserService } from '@app/core/services/user.service';
-import { TOKEN_KEY } from '@app/shared/constants';
+import { TOKEN_KEY, TOKEN_EXPIRES_KEY } from '@app/shared/constants';
 
 @Injectable({ providedIn: 'root' }) export class AuthenticationService {
 
@@ -30,16 +30,22 @@ import { TOKEN_KEY } from '@app/shared/constants';
     private snackBar: MatSnackBar
   ) { }
 
+  // TODO remove the line and uncomment when server is ready
+
   public login(login: string, password: string): Observable<User | null> {
-    return this.http.post<any>(`${environment.baseURL}/users/login`, { login, password })
+    return this.http.post<AuthResponse>(`${environment.baseURL}/users/login`, { login, password })
       .pipe(
-        map(user => {
-          if (user && user.token) {
-            // TODO remove the line and uncomment when server is ready
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            // localStorage.setItem(TOKEN_KEY, user.token);
-            this.userService.setCurrentUser(user);
+        switchMap(
+          (res: AuthResponse | null) => {
+            if (res) {
+              localStorage.setItem(TOKEN_KEY, res.token);
+              localStorage.setItem(TOKEN_EXPIRES_KEY, res.expiresIn);
+              return this.userService.getUser();
+            }
           }
+        ),
+        map((user: User | null) => {
+          if (user) { this.userService.setCurrentUser(user); }
           return user;
         }),
         catchError((err: { error: { message: string } }) => {
@@ -51,14 +57,13 @@ import { TOKEN_KEY } from '@app/shared/constants';
   }
 
   public logout(): void {
-    // TODO remove the line and uncomment when server is ready
     localStorage.removeItem('currentUser');
     // localStorage.removeItem(TOKEN_KEY);
     this.userService.setCurrentUser(null);
   }
 
-  public register(newUser: NewUser): Observable<any> {
-    return this.http.post<any>(`${environment.baseURL}/users/register`, newUser)
+  public register(newUser: NewUser): Observable<User> {
+    return this.http.post<User>(`${environment.baseURL}/users/register`, newUser)
       .pipe(
         catchError((err: { error: { message: string } }) => {
           this.errorHandler({ error: { message: this.errorMsgs.register } });
@@ -68,12 +73,12 @@ import { TOKEN_KEY } from '@app/shared/constants';
       );
   }
 
-  public remindPassword(email: string): Observable<any> {
-    return this.http.post<any>(`${environment.baseURL}/users/remind`, { email });
+  public remindPassword(email: string): Observable<boolean> {
+    return this.http.post<boolean>(`${environment.baseURL}/users/remind`, { email });
   }
 
-  public checkLogin(email: string): Observable<any> {
-    return this.http.post<any>(`${environment.baseURL}/users/checkLogin`, { email });
+  public checkLogin(email: string): Observable<boolean> {
+    return this.http.post<boolean>(`${environment.baseURL}/users/checkLogin`, { email });
   }
 
 }

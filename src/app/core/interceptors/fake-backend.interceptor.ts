@@ -15,6 +15,13 @@ type errorRes = Observable<never>;
 export class FakeBackendInterceptor implements HttpInterceptor {
 
   private users = JSON.parse(localStorage.getItem('users')) || [];
+  private TOKEN_EXPIRES_IN = 20000000;
+  private FAKE_TOKEN = 'fake-jwt-token';
+
+  // id: user.id,
+  // email: user.email,
+  // firstName: user.firstName,
+  // lastName: user.lastName,
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     return of(null)
@@ -52,7 +59,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     };
   }
 
-  // METHODS TO BE REFACTORED AFTER SERVER IS READY
+  private login(body: { login: string; password: string }): commonRes {
+    const { login, password } = body;
+    const user = this.users.find(x => x.email === login && x.password === password);
+    return !user ?
+      this.error('User was not authenticated') :
+      this.ok({
+        // TODO in testing purposes token is an id of a user
+        token: `${user.id}`,
+        expiresIn: this.TOKEN_EXPIRES_IN
+      });
+  }
 
   private register(body: User): commonRes {
     const user = body;
@@ -65,34 +82,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         this.error('User was not created');
   }
 
-  private getUser(headers): commonRes {
+  private remind(email: string): successRes {
+    return this.ok(true);
+  }
+
+  private getUser(headers: HttpHeaders): commonRes {
     return !this.isLoggedIn(headers) ?
       this.unauthorized() :
       this.ok(JSON.parse(localStorage.getItem('currentUser')));
   }
 
-  private login(body: { login: string; password: string }): commonRes {
-    const { login, password } = body;
-    const user = this.users.find(x => x.email === login && x.password === password);
-    return !user ?
-      this.error('User was not authenticated') :
-      this.ok({
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        token: 'fake-jwt-token'
-      });
-  }
-
-  private remind(email: string): successRes {
-    return this.ok(true);
-  }
-
   private checkLogin(body: { email: string }): successRes {
-    return this.ok(
-      this.users.find(x => x.email === body.email)
-    );
+    return this.ok(this.users.find(x => x.email === body.email));
   }
 
   private getUsers(headers: HttpHeaders): commonRes {
@@ -102,25 +103,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   }
 
   private getUserById(headers: HttpHeaders, url: string): commonRes {
-    if (!this.isLoggedIn(headers)) {
-      return this.unauthorized();
-    } else {
-      const user = this.users.find(x => x.id === this.idFromUrl(url));
-      return this.ok(user);
-    }
+    return this.isLoggedIn(headers) ?
+      this.ok(this.users.find(x => x.id === this.idFromUrl(url))) :
+        this.unauthorized();
   }
 
   private deleteUser(url: string, headers: HttpHeaders): commonRes {
-    if (!this.isLoggedIn(headers)) {
-      return this.unauthorized();
-    } else {
-      this.users = this.users.filter(x => x.id !== this.idFromUrl(url));
-      localStorage.setItem('users', JSON.stringify(this.users));
-      return this.ok();
-    }
+    return this.isLoggedIn(headers) ?
+      this.ok( localStorage.setItem('users', JSON.stringify( this.users = this.users.filter(x => x.id !== this.idFromUrl(url) ))) ) :
+        this.unauthorized();
   }
 
-  private ok(bodyParam?): successRes {
+  private ok(bodyParam: any = null): successRes {
     return of(new HttpResponse({ status: 200, body: bodyParam }));
   }
 

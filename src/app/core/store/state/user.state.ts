@@ -5,7 +5,6 @@ export interface IUserState { // TODO consider combining with the interface in s
   password: string;
   firstName: string;
   lastName: string;
-  token: string;
 }
 
 export const initUserState: IUserState = {
@@ -13,6 +12,5 @@ export const initUserState: IUserState = {
   email: null,
   password: null,
   firstName: null,
-  lastName: null,
-  token: null
+  lastName: null
 };

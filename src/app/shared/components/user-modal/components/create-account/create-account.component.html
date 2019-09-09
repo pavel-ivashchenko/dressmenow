@@ -28,10 +28,9 @@
   
     <ng-container [ngSwitch]="regSteps[currRegIdx]">
   
-      <div *ngSwitchCase="regSteps[0]"
-        [appCheckIfEqual]="['email_1', 'email_2', 'Email адреси повинні співпадати']">
+      <div *ngSwitchCase="regSteps[0]">
       
-        <div formGroupName="email">
+        <div formGroupName="email" [appCheckIfEqual]="['email_1', 'email_2', 'Email адреси повинні співпадати']">
 
           <div class="input-container">
             <mat-form-field appearance="outline">

@@ -1,16 +1,13 @@
 
-// TODO consider moving to the separetely hosted app
-
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Subject } from 'rxjs';
-import { scan, shareReplay, distinctUntilChanged, first, filter } from 'rxjs/operators';
+import { scan, shareReplay, distinctUntilChanged, first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/core/services';
 import { preventDefault$, stopEvent } from '@app/shared/helpers';
-import { User } from '@app/shared/interfaces';
 
 @Component({
   selector: 'app-user-modal',
@@ -21,7 +18,7 @@ import { User } from '@app/shared/interfaces';
 export class UserModalComponent implements OnInit {
 
   private preventDefault$ = preventDefault$;
-  private afterLoginURL = '/user'; // TODO change to appropriate name
+  private afterLoginURL = '/no user page yet';
 
   public signInForm: FormGroup;
   public remindPasswordForm: FormGroup;
@@ -34,7 +31,9 @@ export class UserModalComponent implements OnInit {
     checkEmail: 'CHECK_EMAIL',
     alreadyExists: 'ALREADY_EXISTS',
     notExists: 'NOT_EXISTS',
-    afterCreate: 'AFTER_CREATE'
+    afterCreate: 'AFTER_CREATE',
+    failLogin: 'FAIL_LOGIN',
+    failRegister: 'FAIL_REGISTER'
   };
   public currView$: any = new Subject()
     .pipe(
@@ -45,7 +44,7 @@ export class UserModalComponent implements OnInit {
     );
   public hidePassword = true;
   public registrationEmail: string;
-  public isEmailExists$: Subject<boolean> = new Subject();
+  public isUserExists$: Subject<boolean> = new Subject();
 
   constructor(
     private dialogRef: MatDialogRef<UserModalComponent>,
@@ -66,7 +65,11 @@ export class UserModalComponent implements OnInit {
     if (this.signInForm.invalid) { return; }
     this.authenticationService.login(this.signInForm.value.login, this.signInForm.value.password)
       .pipe(first())
-      .subscribe( (res: User | null) => { if (res) { this.router.navigate([ this.afterLoginURL ]); } } );
+      .subscribe((res: boolean) => {
+        res ?
+          this.router.navigate([ this.afterLoginURL ]) :
+            this.onChangeCurrView(this.views.failLogin);
+      });
   }
 
   public onRemindPassword(event: MouseEvent): void {
@@ -92,12 +95,15 @@ export class UserModalComponent implements OnInit {
       password: this.createAccountForm.value.password
     };
     this.authenticationService.register(newUser)
-      .pipe(filter((res: User | null) => !!res))
-      .subscribe((res: User) => {
-        this.onChangeCurrView(this.views.afterCreate);
-        this.createAccountForm.reset();
-        this.createAccountForm.controls.sendNews.setValue(true);
-        this.registrationEmail = res.email;
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.onChangeCurrView(this.views.afterCreate);
+          this.createAccountForm.reset();
+          this.createAccountForm.controls.sendNews.setValue(true);
+          this.registrationEmail = newUser.email;
+        } else {
+          this.onChangeCurrView(this.views.failRegister);
+        }
       });
   }
 
@@ -106,10 +112,10 @@ export class UserModalComponent implements OnInit {
     this.onChangeCurrView(this.views.default, event);
   }
 
-  public onCheckIfEmailExists(): void {
-    this.authenticationService.checkLogin(this.createAccountForm.value.email.email_1)
+  public onCheckIfUserExists(): void {
+    this.authenticationService.checkIfUserExists(this.createAccountForm.value.email.email_1)
       .pipe(first())
-      .subscribe(res => this.isEmailExists$.next(res));
+      .subscribe(res => this.isUserExists$.next(res));
   }
 
   public onChangeCurrView(viewName: string, event: Event | any = null): void {

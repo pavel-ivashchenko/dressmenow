@@ -119,10 +119,10 @@
       [createAccountForm]="createAccountForm"
       [views]="views"
       [currView]="currView$ | async"
-      [isEmailExists$]="isEmailExists$"
+      [isUserExists$]="isUserExists$"
       (createAccount)="onCreateAccount($event)"
       (changeCurrView)="onChangeCurrView($event)"
-      (checkIfEmailExists)="onCheckIfEmailExists($event)"
+      (checkIfUserExists)="onCheckIfUserExists($event)"
       (goToDefault)="backToDefaultView(createAccountForm.controls.email, $event)"
     ></app-create-account>
 
@@ -149,6 +149,22 @@
         </p>
       </header>
       <a mat-stroked-button (click)="backToDefaultView(createAccountForm.controls.email, $event)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+    </div>
+
+    <div *ngSwitchCase="views.failLogin">
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Некорректний логін або пароль</h4>
+        <p class="title__secondary">Будь ласка, перевірте корректність введених даних</p>
+      </header>
+      <a mat-stroked-button (click)="onChangeCurrView(views.default)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
+    </div>
+
+    <div *ngSwitchCase="views.failRegister">
+      <header class="title">
+        <h4 class="title__main title__main--withborder">Помилка обробки даних</h4>
+        <p class="title__secondary">Ми будемо вдячні, якщо ви зв'яжетесь з нами з приводу цієї помилки</p>
+      </header>
+      <a mat-stroked-button (click)="backToDefaultView(signInForm, $event)" class="ctrl-btn ctrl-btn--submit">ДЯКУЮ</a>
     </div>
 
   </ng-container>

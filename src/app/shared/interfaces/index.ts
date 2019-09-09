@@ -7,3 +7,4 @@ export * from './user.interface';
 export * from './new-user.interface';
 export * from './env.interface';
 export * from './auth-response.interface';
+export * from './response-error.interface';

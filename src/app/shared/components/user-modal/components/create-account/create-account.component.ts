@@ -17,9 +17,9 @@ export class CreateAccountComponent implements OnInit {
   @Input() createAccountForm: FormGroup;
   @Input() views: { [key: string]: string };
   @Input() currView: string;
-  @Input() isEmailExists$: Observable<boolean>;
+  @Input() isUserExists$: Observable<boolean>;
 
-  @Output() checkIfEmailExists: EventEmitter<string> = new EventEmitter();
+  @Output() checkIfUserExists: EventEmitter<string> = new EventEmitter();
   @Output() changeCurrView: EventEmitter<string> = new EventEmitter();
   @Output() createAccount: EventEmitter<any> = new EventEmitter();
   @Output() goToDefault: EventEmitter<any> = new EventEmitter();
@@ -49,8 +49,8 @@ export class CreateAccountComponent implements OnInit {
   }
 
   private checkEmail(stepIdx: number): void {
-    this.checkIfEmailExists.emit(this.createAccountForm.value.email.email_1);
-    this.isEmailExists$
+    this.checkIfUserExists.emit(this.createAccountForm.value.email.email_1);
+    this.isUserExists$
       .pipe(first())
       .subscribe(
         (res: boolean) => {

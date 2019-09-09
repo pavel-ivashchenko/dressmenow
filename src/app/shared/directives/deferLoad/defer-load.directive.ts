@@ -33,7 +33,7 @@ export class DeferLoadDirective implements AfterViewInit {
         this.intersectionObserver.disconnect();
       }
     });
-    
+
   }
 
   private checkIfIntersecting (entry: IntersectionObserverEntry) {

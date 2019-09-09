@@ -45,6 +45,7 @@ export class UserModalComponent implements OnInit {
   public hidePassword = true;
   public registrationEmail: string;
   public isUserExists$: Subject<boolean> = new Subject();
+  public isLoading = false;
 
   constructor(
     private dialogRef: MatDialogRef<UserModalComponent>,
@@ -63,9 +64,11 @@ export class UserModalComponent implements OnInit {
 
   public onSignIn(): void {
     if (this.signInForm.invalid) { return; }
+    this.isLoading = true;
     this.authenticationService.login(this.signInForm.value.login, this.signInForm.value.password)
       .pipe(first())
       .subscribe((res: boolean) => {
+        this.isLoading = false;
         res ?
           this.router.navigate([ this.afterLoginURL ]) :
             this.onChangeCurrView(this.views.failLogin);

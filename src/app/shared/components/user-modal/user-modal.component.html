@@ -53,6 +53,7 @@
     
       <button
         mat-stroked-button
+        [appBtnSpinner]="isLoading"
         appDelayClick (delayClick)="onSignIn()"
         class="ctrl-btn ctrl-btn--submit" type="submit"
       >ВХІД</button>
@@ -87,7 +88,12 @@
 
       <button mat-stroked-button type="submit" class="ctrl-btn ctrl-btn--submit">НАДІСЛАТИ ПАРОЛЬ</button>
 
-      <a mat-button (click)="onChangeCurrView(views.default, $event)" class="ctrl-btn ctrl-btn--regular">До попередньої форми</a>
+      <a
+        mat-button
+        [appBtnSpinner]="isLoading"
+        appDelayClick (delayClick)="onSignIn()"
+        (click)="onChangeCurrView(views.default, $event)"
+        class="ctrl-btn ctrl-btn--regular">До попередньої форми</a>
 
     </form>
 

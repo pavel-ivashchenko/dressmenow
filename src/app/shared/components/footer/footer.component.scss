@@ -64,9 +64,8 @@
   }
 }
 
-.social {
+.social-bar {
   margin: 35px 0;
-  @include social;
   @include e('link') {
     color: $grey-regular;
   }

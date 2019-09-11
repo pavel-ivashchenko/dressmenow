@@ -1,5 +1,11 @@
 
-<div class="row justify-content-center no-gutters">
+<div class="modal-container row no-gutters">
+
+  <i (click)="onCloseModal()" class="modal-x-btn x-btn fa fa-times"></i>
+
+  <header class="logo">
+    <img src="./assets/img/logo.jpg" class="logo__img" alt="Logo">
+  </header>
 
   <div class="cart-items-container col-12">
     <div
@@ -14,24 +20,22 @@
           <span>{{ item.qty }}</span>
           <pre> x </pre>
           <span>
-            {{
-              (item.price / 100 / (currency$ | async)?.index) | currency:(currency$ | async)?.name:'symbol-narrow':'1.2-2'
-            }}
+            {{ (item.price / 100 / (currency$ | async)?.index) | currency:(currency$ | async)?.name:'symbol-narrow':'1.2-2' }}
           </span>
         </div>
       </div>
     </div>
   </div>
 
-  <p class="cart-items-total col-12 mt-3">
+  <p class="cart-items-total col-12">
     Загальна сума:
     <span>
-      {{
-        (totalAmount / 100 / (currency$ | async)?.index) | currency:(currency$ | async)?.name:'symbol-narrow':'1.2-2'
-      }}
+      {{ (totalAmount / 100 / (currency$ | async)?.index) | currency:(currency$ | async)?.name:'symbol-narrow':'1.2-2' }}
     </span>
   </p>
 
-  <button mat-flat-button class="mt-4">ДО СПЛАТИ</button>
+  <div class="w-100 d-flex justify-content-end mt-4">
+    <button mat-flat-button>ДО СПЛАТИ</button>
+  </div>
 
 </div>

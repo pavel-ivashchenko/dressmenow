@@ -52,7 +52,7 @@ export class BtnSpinnerDirective implements AfterViewInit, OnChanges {
   }
 
   private setLoadingState(): void {
-    this.renderer.addClass(this.elementRef.nativeElement, 'loading');
+    this.renderer.addClass(this.elementRef.nativeElement, 'is-loading');
 
     if (this.clear) {
       this.elementRef.nativeElement.innerHTML = '';
@@ -66,7 +66,7 @@ export class BtnSpinnerDirective implements AfterViewInit, OnChanges {
   }
 
   private setDefaultState(): void {
-    this.renderer.removeClass(this.elementRef.nativeElement, 'loading');
+    this.renderer.removeClass(this.elementRef.nativeElement, 'is-loading');
 
     if (this.clear) {
       this.elementRef.nativeElement.innerHTML = this.innerHtml;

@@ -1,5 +1,6 @@
 
 @import 'colors';
+@import 'mixins';
 
 a {
   color: #000;
@@ -15,8 +16,11 @@ button {
   }
 }
 
+.logo { @include logo-img; }
+
 .cart-items-container {
-  max-height: 200px;
+  max-height: 400px;
+  margin: 20px 0;
   overflow-y: auto;
   border: 1px solid $grey-lighter;
 }

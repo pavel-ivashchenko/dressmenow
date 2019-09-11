@@ -33,7 +33,6 @@ main {
     align-self: center;
   }
   @include e('close') {
-    @include close-btn;
     top: -4px; right: 0;
     font-size: 12px;
     color: #fff;
@@ -155,7 +154,6 @@ main {
   @include media-breakpoint-up(lg) {
     border-top: 0;
   }
-  @include social;
   @include e('link') {
     color: $grey-regular;
     &:hover {

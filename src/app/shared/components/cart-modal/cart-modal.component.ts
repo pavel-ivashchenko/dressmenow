@@ -30,7 +30,7 @@ export class CartModalComponent implements OnInit {
     this.totalAmount = this.cartData.reduce((acc, item) => acc + item.price * item.qty, 0);
   }
 
-  onNoClick(): void {
+  onCloseModal(): void {
     this.dialogRef.close();
   }
 

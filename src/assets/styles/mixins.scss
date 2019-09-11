@@ -1,56 +1,4 @@
 
-@mixin logo-line {
-  font-family: 'Homemade Apple';
-  transform: rotate(-5deg);
-  color: $main-orange;
-}
-
-@mixin logo-line-last {
-  transform: rotate(-15deg);
-  text-align: right;
-}
-
-@mixin social {
-  li {
-    display: inline-block;
-  }
-  a {
-    padding: 10px;
-    display: block;
-    font-size: 16px;
-    transition: color .3s;
-    &:hover {
-      color: $main-orange;
-    }
-  }
-}
-
-@mixin close-btn {
-  position: absolute;
-  opacity: 0.7;
-  padding: 20px;
-  cursor: pointer;
-  &:before {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    cursor: pointer;
-  }
-  &:hover {
-    opacity: 1;
-    &:before {
-      background-color: rgba(0,0,0,.1);
-    }
-  }
-}
-
-@mixin center-flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 // BEM methodology
 
 @mixin e($element) {
@@ -65,7 +13,7 @@
   }
 }
 
-// custom breakpoint
+// custom breakpoints
 
 $breakpoints: (
   'xs': 320px,
@@ -85,4 +33,31 @@ $breakpoints: (
     @warn 'Unfortunately, no value could be retrieved from `#{ $breakpoint }`. '
       + 'Available breakpoints are: #{ map-keys($breakpoints) }.';
   }
+}
+
+// general
+
+@mixin logo-line {
+  font-family: 'Homemade Apple';
+  transform: rotate(-5deg);
+  color: $main-orange;
+}
+
+@mixin logo-line-last {
+  transform: rotate(-15deg);
+  text-align: right;
+}
+
+@mixin logo-img {
+  position: relative;
+  width: 90px;
+  @include e('img') {
+    width: 100%;
+  }
+}
+
+@mixin center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

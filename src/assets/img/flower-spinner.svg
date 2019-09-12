@@ -1,0 +1,59 @@
+
+<svg
+  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+  width="40px" height="40px" viewBox="0 0 40 33" enable-background="new 0 0 40 33" xml:space="preserve">
+  <style type="text/css">
+    .leaf {
+      fill: #fff;
+      -webkit-animation: opacityAnimation .8s infinite; /* Safari 4+ */
+      -moz-animation:    opacityAnimation .8s infinite; /* Fx 5+ */
+      -o-animation:      opacityAnimation .8s infinite; /* Opera 12+ */
+      animation:         opacityAnimation .8s infinite; /* IE 10+, Fx 29+ */
+    }
+    .leaf-2 {
+      animation-delay: .2s;
+    }
+    .leaf-3 {
+      animation-delay: .4s;
+    }
+    .leaf-4 {
+      animation-delay: .6s;
+    }
+    @-webkit-keyframes opacityAnimation {
+      0%, 100%   { opacity: 0; }
+      6% { opacity: 1; }
+    }
+    @-moz-keyframes opacityAnimation {
+      0%, 100%   { opacity: 0; }
+      6% { opacity: 1; }
+    }
+    @-o-keyframes opacityAnimation {
+      0%, 100%   { opacity: 0; }
+      6% { opacity: 1; }
+    }
+    @keyframes opacityAnimation {
+      0%, 100%   { opacity: 0; }
+      6% { opacity: 1; }
+    }
+  </style>
+  <switch>
+    <g>
+      <g>
+        <path class="leaf leaf-1" d="M11.529,16.199c1.857-0.628,3.72-0.987,5.725-1.308l0.037-0.004l0.494-0.049c0,0-1.911,8.862-7.26,13.153
+          c-5.348,4.292-10.964-0.24-8.649-5.165C3.432,19.509,7.429,17.454,11.529,16.199z"/>
+      </g>
+      <g>
+        <path class="leaf leaf-2" d="M17.262,13.788l-0.037,0.001c-2.029-0.075-3.921-0.202-5.841-0.601c-4.222-0.746-8.44-2.299-10.39-5.4
+          C-1.904,3.18,3.117-2.002,8.949,1.605c5.832,3.608,8.809,12.171,8.809,12.171l-0.471,0.012L17.262,13.788z"/>
+      </g>
+      <g>
+        <path class="leaf leaf-3" d="M25.459,13.112c-1.896,0.498-3.78,0.725-5.802,0.906l-0.037,0.001l-0.496,0.015c0,0,2.525-8.708,8.16-12.616
+          c5.635-3.908,10.92,1.004,8.267,5.758C33.768,10.374,29.637,12.146,25.459,13.112z"/>
+      </g>
+      <g>
+        <path class="leaf leaf-4" d="M23.431,18.779h0.036c2.019,0.218,3.896,0.475,5.784,1.007c4.16,1.04,8.26,2.884,9.988,6.111
+          c2.569,4.798-2.801,9.619-8.366,5.61c-5.566-4.004-7.938-12.752-7.938-12.752l0.47,0.02L23.431,18.779z"/>
+      </g>
+    </g>
+  </switch>
+</svg>

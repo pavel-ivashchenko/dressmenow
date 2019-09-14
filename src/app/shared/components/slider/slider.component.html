@@ -1,15 +1,17 @@
 
 <div class="main-container">
-  <ul (mouseleave)="setInitSlide()">
-    <li *ngFor="let slide of sliderConf"
-      class="block"
+  <ul class="slider" (mouseleave)="setInitSlide()">
+
+    <li class="item"
+      *ngFor="let slide of sliderConf"
       (mouseenter)="this.currSlide = slide"
-      [ngClass]="{'active': slide === currSlide}"
-      [ngStyle]="slide.ngStyle">
-      <div class="content">
-        <h2>{{ slide.title }}</h2>
-        <h3>{{ slide.subTitle }}</h3>
-      </div>
+      [ngClass]="{'active': slide === currSlide}">
+        <img [src]="slide.src" class="item__bg">
+        <div class="item__content" [ngClass]="{'active': slide === currSlide}">
+          <h2 class="title">{{ slide.title }}</h2>
+          <h3 class="sub-title">{{ slide.subTitle }}</h3>
+        </div>
     </li>
+
   </ul>
 </div>

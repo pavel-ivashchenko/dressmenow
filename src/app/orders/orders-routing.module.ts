@@ -2,12 +2,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SHOP_DRESSES_ROUTES } from './constants';
+import { ORDERS_ROUTES } from './constants';
 
 @NgModule({
-  imports: [ RouterModule.forChild(SHOP_DRESSES_ROUTES) ],
+  imports: [ RouterModule.forChild(ORDERS_ROUTES) ],
   providers: [],
   exports: [ RouterModule ]
 })
-export class ShopDressesRoutingModule {
-}
+export class OrdersRoutingModule { }

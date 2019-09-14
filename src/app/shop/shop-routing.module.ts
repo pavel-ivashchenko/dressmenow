@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SHOP_ROUTES } from './constants/shop-routes';
+import { SHOP_ROUTES } from './constants';
 
 @NgModule({
   imports: [ RouterModule.forChild(SHOP_ROUTES) ],

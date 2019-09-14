@@ -1,10 +1,15 @@
 
 import { Routes } from '@angular/router';
 
-import { ShopDressesPageComponent } from '../pages/shop-dresses-page/shop-dresses-page.component';
+import { ShopDressesComponent, ShopDressesHomeComponent } from '../pages';
 
 export const SHOP_DRESSES_ROUTES: Routes = [{
   path: '',
-  component: ShopDressesPageComponent,
-  pathMatch: 'full'
+  component: ShopDressesComponent,
+  children: [
+    {
+      path: '',
+      component: ShopDressesHomeComponent
+    }
+  ]
 }];

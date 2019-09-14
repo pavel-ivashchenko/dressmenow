@@ -1,7 +1,7 @@
 
 import { Routes } from '@angular/router';
 
-import { ShopPageComponent } from '../pages/shop-page/shop-page.component';
+import { ShopComponent, ShopHomeComponent } from '../pages';
 
 export enum SHOP_ROUTE_NAMES {
   DRESSES = 'dresses',
@@ -10,9 +10,14 @@ export enum SHOP_ROUTE_NAMES {
 
 export const SHOP_ROUTES: Routes = [{
   path: '',
-  component: ShopPageComponent,
-  children: [{
-    path: SHOP_ROUTE_NAMES.DRESSES,
-    loadChildren: '@app/shop-dresses/shop-dresses.module#ShopDressesModule'
-  }]
+  component: ShopComponent,
+  children: [
+    {
+      path: SHOP_ROUTE_NAMES.DRESSES,
+      loadChildren: '@app/shop-dresses/shop-dresses.module#ShopDressesModule'
+    }, {
+      path: '',
+      component: ShopHomeComponent
+    }
+  ]
 }];

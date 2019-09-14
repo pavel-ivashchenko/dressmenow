@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '@app/shared/shared.module';
 import { ShopRoutingModule } from '@app/shop/shop-routing.module';
 
-import { ShopPageComponent } from './pages/shop-page/shop-page.component';
+import { ShopComponent, ShopHomeComponent } from './pages';
 
 @NgModule({
   declarations: [
-    ShopPageComponent
+    ShopComponent,
+    ShopHomeComponent
   ],
   imports: [
     CommonModule,

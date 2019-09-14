@@ -4,10 +4,13 @@ import { CommonModule } from '@angular/common';
 
 import { ShopDressesRoutingModule } from './shop-dresses-routing.module';
 
-import { ShopDressesPageComponent } from './pages/shop-dresses-page/shop-dresses-page.component';
+import { ShopDressesComponent, ShopDressesHomeComponent } from './pages';
 
 @NgModule({
-  declarations: [ShopDressesPageComponent],
+  declarations: [
+    ShopDressesComponent,
+    ShopDressesHomeComponent
+  ],
   imports: [
     CommonModule,
     ShopDressesRoutingModule

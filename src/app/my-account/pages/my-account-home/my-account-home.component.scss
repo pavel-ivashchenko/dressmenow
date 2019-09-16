@@ -1,10 +1,25 @@
 
+@import 'colors';
+@import 'mixins';
+
 .wrapper {
-  padding: 20px 5px;
+  padding: 30px 10px;
+}
+
+.hover-opacity {
+  &:hover { opacity: .6; }
 }
 
 .menu {
-  border-left: 1px solid #000;
+  border-right: 1px solid $main-orange;
+}
+
+.menu-item {
+  padding: 15px 0;
+  font-size: 14px;
+  @include m('small') {
+    padding: 5px 0;
+  }
 }
 
 .main-info {

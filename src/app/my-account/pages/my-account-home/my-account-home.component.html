@@ -1,11 +1,11 @@
 
 <section class="wrapper container-fluid">
 
-  <div class="row">
+  <div class="row no-gutters">
 
     <nav class="col-sm-12 col-md-4">
       <ul class="menu">
-        <li class="menu-item">
+        <li class="menu-item menu-item--first">
           <a href="" class="hover-opacity">ОГЛЯД АКАУНТУ</a>
         </li>
         <li class="menu-item">
@@ -40,7 +40,34 @@
       </ul>
     </nav>
 
-    <div class="main-info col-sm-12 col-md-8">
+    <div class="main-info col-sm-12 col-md-8" style="border: 1px solid grey">
+
+      <div class="info-block" style="border: 1px solid green">
+
+        <header>
+          <a class="info-block__header" href="#">ЗАМОВЛЕННЯ</a>
+        </header>
+
+        <p class="info-block__main">Поки що немає замовлень!</p>
+
+        <button
+          mat-button
+          [appBtnSpinner]="isLoading"
+          appDelayClick (delayClick)="test()"
+          (click)="test()"
+          class="ctrl-btn ctrl-btn--submit">ДО ПОКУПОК</button>
+
+      </div>
+
+      <div class="recently-viewed">
+
+        <header>
+          <h5 class="recently-viewed__header">ПЕРЕГЛЯНУТІ ТОВАРИ І БІЛЬШЕ</h5>
+        </header>
+
+        <!-- one more slider goes here -->
+
+      </div>
 
     </div>
 

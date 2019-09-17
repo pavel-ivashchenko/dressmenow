@@ -9,9 +9,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class MyAccountHomeComponent implements OnInit {
 
+  public isLoading = false;
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  public test() { }
 
 }

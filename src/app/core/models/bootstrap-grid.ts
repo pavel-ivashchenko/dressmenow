@@ -1,7 +1,7 @@
 
 export const bootstrapGrid = {
-  small: 576,
-  medium: 768,
-  large: 992,
-  extraLarge: 1200
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200
 };

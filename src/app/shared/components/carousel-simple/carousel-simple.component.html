@@ -1,27 +1,30 @@
 
-<div id="slides" style="border: 1px solid red">
-  <input checked type="radio" name="slider" id="slide1" class="set" />
-  <input type="radio" name="slider" id="slide2" class="set" />
-  <input type="radio" name="slider" id="slide3" class="set" />
-  <input type="radio" name="slider" id="slide4" class="set" />  
-      
-  <div class="mask">
-    <div class="overflow">
+<section class="wrapper" style="border: 1px solid red">
 
-      <div class="slide" style="border: 1px solid green">1</div>
-      <div class="slide" style="border: 1px solid green">2</div>
-      <div class="slide" style="border: 1px solid green">3</div>
-      <div class="slide" style="border: 1px solid green">4</div>
+  <div class="slider row no-gutters" #slider>
 
-    </div>
+    <figure
+      #singleSlide
+      class="slide slide--is-active col-6 col-sm-4 col-lg-3"
+      style="border: 1px solid green">
+        <!-- <img class="slide__img" [src]="slides[lastIdx].src" alt="first item"> -->
+        <figcaption>{{ slides[firstIdx].title }}</figcaption>
+    </figure>
+
+    <figure
+      class="slide slide--is-active col-6 col-sm-4 col-lg-3"
+      style="border: 1px solid green"
+      *ngFor="let activeIdx of (activeIdxs || [])">
+        <!-- <img class="slide__img" [src]="slide.src" alt="first item"> -->
+        <figcaption>{{ slides[activeIdx].title }}</figcaption>
+    </figure>
+
   </div>
 
-  <div id="controls" onclick="">  
-    <label for="slide1"></label>
-    <label for="slide2"></label>
-    <label for="slide3"></label>
-    <label for="slide4"></label>    
+  <div class="ctrsl">
+    <button (click)="onPrev()">prev</button>
+    <button (click)="onNext()">next</button>
   </div>
-  
-</div>
+
+</section>
         

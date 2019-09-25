@@ -70,7 +70,7 @@ export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
     fromEvent(this.carousel.nativeElement, 'mouseenter')
       .pipe(
         takeUntil(this.componentDestroyed$),
-        tap(_ => { this.cancelShiftInterval$.next() }),
+        tap(_ => { this.cancelShiftInterval$.next(); }),
         switchMap(_ => this.carouselMouseLeave$)
       )
       .subscribe();
@@ -80,7 +80,7 @@ export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
     return fromEvent(this.carousel.nativeElement, 'mouseleave')
       .pipe(
         take(1),
-        tap(_ => { this.startShiftInterval() })
+        tap(_ => { this.startShiftInterval(); })
       );
   }
 

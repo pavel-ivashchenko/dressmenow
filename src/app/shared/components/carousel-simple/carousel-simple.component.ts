@@ -1,8 +1,8 @@
 
 import {
   Component, OnInit, ChangeDetectionStrategy, AfterViewInit,
-  ViewChild, ElementRef, Renderer2, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { fromEvent, Observable, Subject } from 'rxjs';
+  ViewChild, ElementRef, Renderer2, ChangeDetectorRef, OnDestroy, Input } from '@angular/core';
+import { fromEvent, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 
 import { BreakpointsService } from '@app/core/services/breakpoints.service';
@@ -16,9 +16,7 @@ import { BreakpointsService } from '@app/core/services/breakpoints.service';
 export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('slider') slider: ElementRef;
-  private el: HTMLElement;
-
-  public slides = [
+  @Input() slides: { src: string; title: number }[] = [
     {
       src: 'https://www.lulus.com/images/product/medium/2589152_498232.jpg',
       title: 1
@@ -36,12 +34,13 @@ export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy
       title: 5
     }
   ];
-
-  public currIdx = 0;
-  public lastSlideIdx = this.slides.length - 1;
-  public firstIdx = this.lastSlideIdx;
-  public activeIdxs;
+  private el: HTMLElement;
+  private currIdx = 0;
+  private lastSlideIdx = this.slides.length - 1;
   private componentDestroyed$: Subject<void> = new Subject();
+  
+  public firstIdx = this.lastSlideIdx;
+  public activeIdxs: number[] = [];
 
   constructor(
     private renderer: Renderer2,
@@ -53,8 +52,9 @@ export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy
     this.el = this.slider.nativeElement;
     this.breakpointsService.getCurrWidthTier()
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(res => {
-        debugger;
+      .subscribe(_ => {
+        this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx, this.currIdx);
+        this.cdr.detectChanges();
       });
   }
 
@@ -64,53 +64,35 @@ export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   public onNext(): void {
-
     fromEvent(this.el, 'transitionend')
       .pipe(first())
       .subscribe(_ => {
-
-        this.renderer.removeStyle(this.el, 'left');
-
+        this.firstIdx = this.activeIdxs[0];
+        this.resetPositionLeft(this.el);
         this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx, this.currIdx);
-
+        this.turnOffTransition(this.el);
         this.cdr.detectChanges();
-
-        this.renderer.removeClass(this.el, 'transition-on');
-
       });
 
     this.currIdx = this.currIdx + 1 > this.lastSlideIdx ? 0 : this.currIdx + 1;
-
-    this.renderer.addClass(this.el, 'transition-on');
-
-    this.renderer.setStyle(this.el, 'left', `-${this.getSingleSlideWidth(this.el)}px`);
-
+    this.turnOnTransition(this.el);
+    this.shiftLeft(this.el, this.getSingleSlideWidth(this.el));
   }
 
   public onPrev(): void {
-
     fromEvent(this.el, 'transitionend')
       .pipe(first())
       .subscribe(_ => {
-
-        this.firstIdx = this.activeIdxs[0];
-
-        this.renderer.removeStyle(this.el, 'left');
-
+        this.firstIdx = this.firstIdx ? this.firstIdx - 1 : this.lastSlideIdx;
+        this.resetPositionLeft(this.el);
         this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx, this.currIdx);
-
+        this.turnOffTransition(this.el);
         this.cdr.detectChanges();
-
-        this.renderer.removeClass(this.el, 'transition-on');
-
       });
 
     this.currIdx = this.currIdx - 1 < 0 ? this.lastSlideIdx : this.currIdx - 1;
-
-    this.renderer.addClass(this.el, 'transition-on');
-
-    this.renderer.setStyle(this.el, 'left', `${this.getSingleSlideWidth(this.el)}px`);
-
+    this.turnOnTransition(this.el);
+    this.shiftRight(this.el, this.getSingleSlideWidth(this.el));
   }
 
   // PRIVATE METHODS
@@ -119,16 +101,24 @@ export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy
     return (slider.children[0] as HTMLElement).offsetWidth;
   }
 
-  private getActiveSlides(slider: HTMLElement): number[] {
-    return Array.from({ length: (slider.offsetWidth / this.getSingleSlideWidth(this.el)) + 2 }, (_, idx) => idx);
+  private resetPositionLeft(el: HTMLElement): void {
+    this.renderer.removeStyle(el, 'left');
   }
 
-  private moveSlider(slider: HTMLElement, shift: number): void {
-    this.renderer.setStyle(slider, 'left', `-${shift}px`);
+  private shiftLeft(el: HTMLElement, shift: number): void {
+    this.renderer.setStyle(el, 'left', `-${shift}px`);
   }
 
-  private moveSliderRight(slider: HTMLElement, shift: number): void {
-    this.renderer.setStyle(slider, 'left', `${shift}px`);
+  private shiftRight(el: HTMLElement, shift: number): void {
+    this.renderer.setStyle(el, 'left', `${shift}px`);
+  }
+
+  private turnOnTransition(el: HTMLElement): void {
+    this.renderer.addClass(el, 'transition-on');
+  }
+
+  private turnOffTransition(el: HTMLElement): void {
+    this.renderer.removeClass(el, 'transition-on');
   }
 
   private getQtyOfVisibleSlides(slider: HTMLElement): number {

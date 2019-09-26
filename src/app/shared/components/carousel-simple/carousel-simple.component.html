@@ -3,28 +3,24 @@
 
   <div class="slider row no-gutters" #slider>
 
-    <figure
-      #singleSlide
-      class="slide slide--is-active col-6 col-sm-4 col-lg-3"
-      style="border: 1px solid green">
-        <!-- <img class="slide__img" [src]="slides[lastIdx].src" alt="first item"> -->
-        <figcaption>{{ slides[firstIdx].title }}</figcaption>
-    </figure>
+    <a href="#" class="slide slide--is-active col-6 col-sm-4 col-lg-3">
+      <figure class="slide__img-container" style="border: 1px solid green">
+        <img class="slide__img" [src]="slides[firstIdx].src" alt="first item">
+        <figcaption class="slide__title">{{ slides[firstIdx].title }}</figcaption>
+      </figure>
+    </a>
 
-    <figure
-      class="slide slide--is-active col-6 col-sm-4 col-lg-3"
-      style="border: 1px solid green"
-      *ngFor="let activeIdx of (activeIdxs || [])">
-        <!-- <img class="slide__img" [src]="slide.src" alt="first item"> -->
-        <figcaption>{{ slides[activeIdx].title }}</figcaption>
-    </figure>
+    <a href="#" class="slide slide--is-active col-6 col-sm-4 col-lg-3" *ngFor="let idx of activeIdxs">
+      <figure class="slide__img-container" style="border: 1px solid green">
+        <img class="slide__img" [src]="slides[idx].src" alt="item #{{ idx }}">
+        <figcaption class="slide__title">{{ slides[idx].title }}</figcaption>
+      </figure>
+    </a>
 
   </div>
 
-  <div class="ctrsl">
-    <button (click)="onPrev()">prev</button>
-    <button (click)="onNext()">next</button>
-  </div>
+  <button class="ctrl ctrl--prev" (click)="onPrev(false)">prev</button>
+  <button class="ctrl ctrl--next" (click)="onNext(true)">next</button>
 
 </section>
         

@@ -3,7 +3,7 @@
 
 .wrapper {
   width: 100%;
-  min-height: 200px;
+  min-height: 300px;
   position: relative;
   overflow: hidden;
 }
@@ -21,17 +21,35 @@
   height: 100%;
   transform: translateX(-100%);
   display: none;
+  position: relative;
   @include m('is-active') {
     display: flex;
   }
-  @include e('img') {
+  @include e('img-container') {
+    height: 100%;
     width: 100%;
-    height: auto;
+    text-align: center;
+  }
+  @include e('img') {
+    width: auto;
+    height: 100%;
+  }
+  @include e('title') {
+    width: 100%;
+    position: absolute; bottom: 0;
+    background-color: #fff;
   }
 }
 
-.ctrsl {
-  position: absolute; bottom: 0; left: 50%;
+.ctrl {
+  position: absolute; bottom: 50%;
+  transform: translateY(50%);
+  @include m('prev') {
+    left: 0;
+  }
+  @include m('next') {
+    right: 0;
+  }
 }
 
 .transition-on {

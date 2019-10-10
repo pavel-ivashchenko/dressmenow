@@ -16,21 +16,16 @@ import { BreakpointsService } from '@app/core/services/breakpoints.service';
 export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('slider') slider: ElementRef;
-  @Input() slides: { src: string; title: number }[] = [
-    {
-      src: 'https://www.lulus.com/images/product/medium/2589152_498232.jpg',
+  @Input() slides: { src: string; title: number; order?: number }[] = [
+    { src: 'https://upload.wikimedia.org/wikipedia/commons/0/02/Cat_IMG_0799.jpg',
       title: 1
-    }, {
-      src: 'https://www.lulus.com/images/product/medium/2589152_498232.jpg',
+    }, { src: 'http://www.armadalekennel.com/wp-content/uploads/2017/09/cat-img.jpg',
       title: 2
-    }, {
-      src: 'https://www.lulus.com/images/product/medium/2589152_498232.jpg',
+    }, { src: 'https://seresto.com.au/static/media/images/welcome-cat-mob-img.jpg',
       title: 3
-    }, {
-      src: 'https://www.lulus.com/images/product/medium/2589152_498232.jpg',
+    }, { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPQYpM-_mBGrKSIDnZ-xjWV4_PuOrF7V7qR44plcbqjQ1f3wT',
       title: 4
-    }, {
-      src: 'https://www.lulus.com/images/product/medium/2589152_498232.jpg',
+    }, { src: 'https://cdn.images.express.co.uk/img/dynamic/128/590x/secondary/1441354.jpg?r=1533045611820',
       title: 5
     }
   ];
@@ -38,9 +33,12 @@ export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy
   private currIdx = 0;
   private lastSlideIdx = this.slides.length - 1;
   private componentDestroyed$: Subject<void> = new Subject();
-  
+
   public firstIdx = this.lastSlideIdx;
+  public lastIdx = 0;
   public activeIdxs: number[] = [];
+
+  private qtyOfActiveSlides: number;
 
   constructor(
     private renderer: Renderer2,
@@ -59,7 +57,14 @@ export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit() {
-    this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx);
+    this.qtyOfActiveSlides = this.getQtyOfVisibleSlides(this.el);
+
+    this.firstIdx = this.qtyOfActiveSlides < this.lastSlideIdx ? this.qtyOfActiveSlides + 1 : this.lastSlideIdx;
+
+    this.activeIdxs = this.getArrOfActiveIdxs(this.qtyOfActiveSlides, this.lastSlideIdx);
+    this.slides.forEach((slide, idx) => {
+      slide.order = this.activeIdxs.includes(idx) ? this.activeIdxs.indexOf(idx) + 1 : null;
+    });
     this.cdr.detectChanges();
   }
 
@@ -70,6 +75,9 @@ export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy
         this.firstIdx = this.activeIdxs[0];
         this.resetPositionLeft(this.el);
         this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx, this.currIdx);
+        this.slides.forEach((slide, idx) => {
+          slide.order = this.activeIdxs.includes(idx) ? this.activeIdxs.indexOf(idx) + 1 : null;
+        });
         this.turnOffTransition(this.el);
         this.cdr.detectChanges();
       });
@@ -80,19 +88,19 @@ export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   public onPrev(): void {
-    fromEvent(this.el, 'transitionend')
-      .pipe(first())
-      .subscribe(_ => {
-        this.firstIdx = this.firstIdx ? this.firstIdx - 1 : this.lastSlideIdx;
-        this.resetPositionLeft(this.el);
-        this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx, this.currIdx);
-        this.turnOffTransition(this.el);
-        this.cdr.detectChanges();
-      });
+    // fromEvent(this.el, 'transitionend')
+    //   .pipe(first())
+    //   .subscribe(_ => {
+    //     this.firstIdx = this.firstIdx ? this.firstIdx - 1 : this.lastSlideIdx;
+    //     this.resetPositionLeft(this.el);
+    //     this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx, this.currIdx);
+    //     this.turnOffTransition(this.el);
+    //     this.cdr.detectChanges();
+    //   });
 
-    this.currIdx = this.currIdx - 1 < 0 ? this.lastSlideIdx : this.currIdx - 1;
-    this.turnOnTransition(this.el);
-    this.shiftRight(this.el, this.getSingleSlideWidth(this.el));
+    // this.currIdx = this.currIdx - 1 < 0 ? this.lastSlideIdx : this.currIdx - 1;
+    // this.turnOnTransition(this.el);
+    // this.shiftRight(this.el, this.getSingleSlideWidth(this.el));
   }
 
   // PRIVATE METHODS
@@ -127,7 +135,7 @@ export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy
 
   private getArrOfActiveIdxs(length: number, maxIdx: number, currIdx: number = 0): number[] {
     let startFromZero = 0;
-    return Array.from(Array(length + 1), (_, idx) => idx + currIdx > maxIdx ? startFromZero++ : idx + currIdx);
+    return Array.from(Array(length), (_, idx) => idx + currIdx > maxIdx ? startFromZero++ : idx + currIdx);
   }
 
   ngOnDestroy(): void {

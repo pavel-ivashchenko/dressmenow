@@ -12,15 +12,31 @@
         </header>
 
         <div class="info-block__main">
-          <p class="no-data">Поки що немає замовлень!</p>
+          <p *ngIf="!orders.length" class="no-data">Поки що немає замовлень!</p>
         </div>
+
+        <ul class="info-list row no-gutters">
+          <ng-container *ngFor="let orderItem of orders; let idx = index;">
+            <li *ngIf="idx < 6" class="info-list__item info-list__item--small col-sm-3">
+              <a [href]="orderItem.href">
+                <figure>
+                  <img class="info-list__image" [src]="orderItem.src" alt="wish #{{ idx }}">
+                  <figcaption *ngIf="orderItem.title" class="info-list__title">{{ orderItem.title }}</figcaption>
+                </figure>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
 
         <button
           mat-button
           [appBtnSpinner]="isLoading"
           appDelayClick (delayClick)="test()"
           (click)="test()"
-          class="ctrl-btn ctrl-btn--submit">ДО ПОКУПОК</button>
+          class="ctrl-btn ctrl-btn--submit">
+            <span *ngIf="orders.length">ПЕРЕГЛЯНУТИ ЗАМОВЛЕННЯ</span>
+            <span *ngIf="!orders.length">ДО КАТАЛОГУ</span>
+        </button>
 
       </div>
 
@@ -42,17 +58,17 @@
 
         <div class="info-block__main info-block__main row no-gutters">
           
-          <div class="inner-block col-sm-12 col-lg-4 pb-sm-3 pb-lg-0">
+          <div class="inner-block justify-content-lg-center col-sm-12 col-lg-4 pb-sm-3 pb-lg-0">
             <p class="inner-block__header">ІМ'Я</p>
             <p>Huan Samoran4ez</p>
           </div>
 
-          <div class="inner-block col-sm-12 col-lg-4 pb-sm-3 pb-lg-0">
+          <div class="inner-block justify-content-lg-center col-sm-12 col-lg-4 pb-sm-3 pb-lg-0">
             <p class="inner-block__header">ТЕЛЕФОН</p>
             <p>+380982738463</p>
           </div>
 
-          <div class="inner-block col-sm-12 col-lg-4 pb-sm-3 pb-lg-0">
+          <div class="inner-block justify-content-lg-center col-sm-12 col-lg-4 pb-sm-3 pb-lg-0">
             <p class="inner-block__header">ЕЛЕКТРОННА АДРЕСА</p>
             <p>samoran4ez@gmail.com</p>
           </div>
@@ -77,8 +93,8 @@
         <div class="info-block__main info-block__main row no-gutters">
           
           <div class="inner-block col-sm-12">
-            <p class="inner-block__header inner-block__header--text-center">ПОТОЧНИЙ БАЛАНС</p>
-            <p class="inner-block__header inner-block__header--text-center">0.00$</p>
+            <p class="inner-block__header justify-content-center">ПОТОЧНИЙ БАЛАНС</p>
+            <p class="inner-block__header justify-content-center inner-block__header--price">0.00$</p>
           </div>
 
         </div>
@@ -98,9 +114,29 @@
           <a class="info-block__header" href="#">ПОКУПКИ</a>
         </header>
 
-        <div class="info-block__main row no-gutters">
+        <div *ngIf="!purchases.length" class="info-block__main row no-gutters">
           <p class="no-data">Товари, що ви придбали будуть доступні тут для перегляду</p>
         </div>
+
+        <ul class="info-list row no-gutters">
+          <ng-container *ngFor="let purchaseItem of purchases; let idx = index;">
+            <li *ngIf="idx < 6" class="info-list__item info-list__item--small col-sm-2">
+              <a [href]="purchaseItem.href">
+                <figure>
+                  <img class="info-list__image" [src]="purchaseItem.src" alt="wish #{{ idx }}">
+                </figure>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+
+        <button
+          mat-button
+          *ngIf="purchases.length"
+          [appBtnSpinner]="isLoading"
+          appDelayClick (delayClick)="test()"
+          (click)="test()"
+          class="ctrl-btn ctrl-btn--submit">ПЕРЕГЛЯНУТИ ПОКУПКИ</button>
 
       </div>
 
@@ -110,9 +146,30 @@
           <a class="info-block__header" href="#">УПОДОБАННЯ</a>
         </header>
 
-        <div class="info-block__main row no-gutters">
+        <div *ngIf="!loves.length" class="info-block__main row no-gutters">
           <p class="no-data">Тут можна буде переглянути товари, які були відзначені вами</p>
         </div>
+
+        <ul class="info-list row no-gutters">
+          <ng-container *ngFor="let loveItem of loves; let idx = index;">
+            <li *ngIf="idx < 6" class="info-list__item info-list__item--big col-sm-3">
+              <a class="info-list__link" [href]="loveItem.href">
+                <figure>
+                  <img class="info-list__image" [src]="loveItem.src" alt="loveItem #{{ idx }}">
+                  <figcaption *ngIf="loveItem.title" class="info-list__title">{{ loveItem.title }}</figcaption>
+                </figure>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+
+        <button
+          mat-button
+          *ngIf="loves.length"
+          [appBtnSpinner]="isLoading"
+          appDelayClick (delayClick)="test()"
+          (click)="test()"
+          class="ctrl-btn ctrl-btn--submit">ПЕРЕГЛЯНУТИ УПОДОБАННЯ</button>
 
       </div>
 
@@ -122,12 +179,29 @@
           <a class="info-block__header" href="#">ОБРАНЕ</a>
         </header>
 
-        <div class="info-block__main row no-gutters">
+        <ul class="info-list row no-gutters">
+          <ng-container *ngFor="let wish of wishes; let idx = index;">
+            <li *ngIf="idx < 6" class="info-list__item info-list__item--small col-sm-2">
+              <a [href]="wish.href">
+                <figure>
+                  <img class="info-list__image" [src]="wish.src" alt="wish #{{ idx }}">
+                  <figcaption *ngIf="wish.title" class="info-list__title">{{ wish.title }}</figcaption>
+                </figure>
+              </a>
+            </li>
+          </ng-container>
+          <li class="info-list__item col-sm-2">
+            <a class="info-list__create" href="#">СТВОРИТИ НОВИЙ СПИСОК</a>
+          </li>
+        </ul>
+
+        <div *ngIf="!wishes.length" class="info-block__main row no-gutters">
           <p class="no-data">Уподобали щось? Тисніть 'Додати до уподобань' щоб створити новий список! Створюйте скільки завгодно списків, заповнюйте їх товарами та діліться з друзями!</p>
         </div>
 
         <button
           mat-button
+          *ngIf="wishes.length"
           [appBtnSpinner]="isLoading"
           appDelayClick (delayClick)="test()"
           (click)="test()"

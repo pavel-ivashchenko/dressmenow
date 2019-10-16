@@ -69,9 +69,41 @@
 .inner-block {
   @include font-size-smaller;
   @include e('header') {
+    display: flex;
     font-weight: bold;
-    @include m('text-center') {
+    @include m('price') {
+      font-size: 18px;
       text-align: center;
+    }
+  }
+}
+
+.info-list {
+  padding: 10px 0;
+  display: flex;
+  @include e('item') {
+    width: 100%;
+    padding-left: 10px;
+    flex-direction: column;
+    @include center-flex;
+  }
+  @include e('link') {
+    width: 100%;
+  }
+  @include e('image') {
+    width: 100%;
+    height: auto;
+    @include font-size-smaller;
+  }
+  @include e('title') {
+    text-align: center;
+    @include font-size-smaller;
+  }
+  @include e('create') {
+    text-align: center;
+    font-size: 12px;
+    &:hover {
+      color: $hover-black;
     }
   }
 }

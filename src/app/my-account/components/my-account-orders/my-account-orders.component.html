@@ -1,0 +1,35 @@
+
+<div class="info-block" style="border: 1px solid green">
+
+  <header>
+    <a class="info-block__header" href="#">ЗАМОВЛЕННЯ</a>
+  </header>
+
+  <div class="info-block__main">
+    <p *ngIf="!orders.length" class="no-data">Поки що немає замовлень!</p>
+  </div>
+
+  <ul class="info-list row no-gutters">
+    <ng-container *ngFor="let orderItem of orders; let idx = index;">
+      <li *ngIf="idx < 6" class="info-list__item info-list__item--small col-sm-3">
+        <a [href]="orderItem.href">
+          <figure>
+            <img class="info-list__image" [src]="orderItem.src" alt="wish #{{ idx }}">
+            <figcaption *ngIf="orderItem.title" class="info-list__title">{{ orderItem.title }}</figcaption>
+          </figure>
+        </a>
+      </li>
+    </ng-container>
+  </ul>
+
+  <button
+    mat-button
+    [appBtnSpinner]="isLoading"
+    appDelayClick (delayClick)="test()"
+    (click)="test()"
+    class="ctrl-btn ctrl-btn--submit">
+      <span *ngIf="orders.length">ПЕРЕГЛЯНУТИ ЗАМОВЛЕННЯ</span>
+      <span *ngIf="!orders.length">ДО КАТАЛОГУ</span>
+  </button>
+
+</div>

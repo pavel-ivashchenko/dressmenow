@@ -1,42 +1,40 @@
 
-<section class="wrapper" style="border: 1px solid red">
+<section class="wrapper">
 
   <div class="slider row no-gutters" #slider>
 
-    <a href="#" class="slide col-6 col-sm-4 col-lg-3">
-      <figure class="slide__img-container" style="border: 1px solid green">
-        <img class="slide__img" [src]="slides[firstIdx].src" alt="first item">
-        <figcaption class="slide__title">{{ slides[firstIdx].title }}</figcaption>
-      </figure>
-    </a>
-
-    <a href="#"
-      class="slide col-6 col-sm-4 col-lg-3"
+    <a class="slide col-6 col-sm-4 col-lg-3"
       *ngFor="let slide of slides; let idx = index;"
+      [href]="slide.href"
       [ngClass]="{
-        'order-1': slide.order === 1,
-        'order-2': slide.order === 2,
-        'order-3': slide.order === 3,
-        'order-4': slide.order === 4,
-        'slide--not-active': slide.order === null
+        'order-0': slide.visual_order === 0,
+        'order-1': slide.visual_order === 1,
+        'order-2': slide.visual_order === 2,
+        'order-3': slide.visual_order === 3,
+        'order-4': slide.visual_order === 4,
+        'order-5': slide.visual_order === 5,
+        'slide--not-active': slide.visual_order === null
       }">
-        <figure class="slide__img-container" style="border: 1px solid green">
-          <img class="slide__img" [src]="slides[idx].src" alt="item #{{ idx }}">
-          <figcaption class="slide__title">{{ slides[idx].title }}</figcaption>
+        <figure class="slide__img-container">
+          <img class="slide__img" [src]="slide.img" [alt]="slide.title">
+          <!-- <figcaption class="slide__title">{{ slide.title }}</figcaption> -->
         </figure>
-    </a>
-
-    <a href="#" class="slide order-12 col-6 col-sm-4 col-lg-3">
-      <figure class="slide__img-container" style="border: 1px solid green">
-        <img class="slide__img" [src]="slides[lastIdx].src" alt="first item">
-        <figcaption class="slide__title">{{ slides[lastIdx].title }}</figcaption>
-      </figure>
     </a>
 
   </div>
 
-  <button class="ctrl ctrl--prev" (click)="onPrev(false)">prev</button>
-  <button class="ctrl ctrl--next" (click)="onNext(true)">next</button>
+  <a *ngIf="slides.length > 3"
+    class="slider-ctrl slider-ctrl--left"
+    appDelayClick="0.2"
+    (delayClick)="onCtrlClick(false)">
+      <i class="fa fa-angle-left"></i>
+  </a>
+
+  <a *ngIf="slides.length > 3"
+    class="slider-ctrl slider-ctrl--right"
+    appDelayClick="0.2"
+    (delayClick)="onCtrlClick(true)">
+      <i class="fa fa-angle-right"></i>
+  </a>
 
 </section>
-        

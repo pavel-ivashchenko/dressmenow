@@ -7,9 +7,7 @@ $btn-position-xs: 70px;
 $btn-position-sm: 120px;
 $btn-position-lg: 240px;
 
-:host {
-  z-index: $carousel-small;
-}
+:host { z-index: $carousel-small; }
 
 .carousel-wrapper {
   width: 100%; height: 350px;
@@ -26,9 +24,7 @@ $btn-position-lg: 240px;
     height: 800px;
   }
   &:hover {
-    .controls__btn {
-      background-color: rgba(0, 0, 0, 0.8);
-    }
+    .slider-ctrl { background-color: rgba(0, 0, 0, 0.8); }
   }
 }
 
@@ -101,46 +97,17 @@ $btn-position-lg: 240px;
 .controls {
   position: absolute; top: 0; left: 50%;
   width: 1px; height: 100%;
-  @include e('btn') {
-    width: 40px; height: 40px;
-    font-size: 19px;
-    position: absolute; top: 50%;
-    transform: translate(0, -50%);
-    z-index: 4;
-    text-align: center;
-    border-radius: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    color: #fff;
-    transition: all .3s ease-in-out;
-    cursor: pointer;
-    &:hover {
-      color: $main-orange;
-    }
+  .slider-ctrl {
+    z-index: 3;
     @include m('left') {
       right: $btn-position-xs;
-      @include breakpoint-up(sm) {
-        right: $btn-position-sm;
-      }
-      @include breakpoint-up(lg) {
-        right: $btn-position-lg;
-      }
+      @include breakpoint-up(sm) { right: $btn-position-sm; }
+      @include breakpoint-up(lg) { right: $btn-position-lg; }
     }
     @include m('right') {
       left: $btn-position-xs;
-      @include breakpoint-up(sm) {
-        left: $btn-position-sm;
-      }
-      @include breakpoint-up(lg) {
-        left: $btn-position-lg;
-      }
+      @include breakpoint-up(sm) { left: $btn-position-sm; }
+      @include breakpoint-up(lg) { left: $btn-position-lg; }
     }
   }
-}
-
-.fa-angle-left {
-  transform: translate(-1px, 8px)
-}
-
-.fa-angle-right {
-  transform: translate(1px, 8px)
 }

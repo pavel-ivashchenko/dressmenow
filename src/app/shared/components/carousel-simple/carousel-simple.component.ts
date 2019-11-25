@@ -1,11 +1,12 @@
 
 import {
-  Component, OnInit, ChangeDetectionStrategy, AfterViewInit,
-  ViewChild, ElementRef, Renderer2, ChangeDetectorRef, OnDestroy, Input } from '@angular/core';
-import { fromEvent, Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
-
-import { BreakpointsService } from '@app/core/services/breakpoints.service';
+  Component, OnInit, ChangeDetectionStrategy, Input,
+  ViewChild, ElementRef, Renderer2, ChangeDetectorRef
+} from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { pipe, shallowCopyArrOfObjects, repeatArrFlat } from '@app/shared/helpers';
+import { RawSlide, Slide } from './interfaces';
 
 @Component({
   selector: 'app-carousel-simple',
@@ -13,134 +14,150 @@ import { BreakpointsService } from '@app/core/services/breakpoints.service';
   styleUrls: ['./carousel-simple.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CarouselSimpleComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CarouselSimpleComponent implements OnInit {
 
   @ViewChild('slider') slider: ElementRef;
-  @Input() slides: { src: string; title: number; order?: number }[] = [
-    { src: 'https://upload.wikimedia.org/wikipedia/commons/0/02/Cat_IMG_0799.jpg',
-      title: 1
-    }, { src: 'http://www.armadalekennel.com/wp-content/uploads/2017/09/cat-img.jpg',
-      title: 2
-    }, { src: 'https://seresto.com.au/static/media/images/welcome-cat-mob-img.jpg',
-      title: 3
-    }, { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPQYpM-_mBGrKSIDnZ-xjWV4_PuOrF7V7qR44plcbqjQ1f3wT',
-      title: 4
-    }, { src: 'https://cdn.images.express.co.uk/img/dynamic/128/590x/secondary/1441354.jpg?r=1533045611820',
-      title: 5
+  @Input() rawSlides: RawSlide[] = [
+    { img: 'https://www.lulus.com/images/product/xlarge/2750772_541442.jpg?w=238',
+      title: '1',
+      href: '#'
+    }, { img: 'https://www.lulus.com/images/product/xlarge/3574160_691152.jpg?w=238',
+      title: '2',
+      href: '#'
+    }, { img: 'https://www.lulus.com/images/product/xlarge/4889291_888282.jpg?w=238',
+      title: '3',
+      href: '#'
+    }, { img: 'https://www.lulus.com/images/product/xlarge/3465350_670782.jpg?w=238',
+      title: '4',
+      href: '#'
+    }, { img: 'https://www.lulus.com/images/product/xlarge/2782620_541002.jpg?w=238',
+      title: '5',
+      href: '#'
+    }, { img: 'https://www.lulus.com/images/product/xlarge/4311290_852582.jpg?w=238',
+      title: '6',
+      href: '#'
+    }, { img: 'https://www.lulus.com/images/product/xlarge/4316830_856342.jpg?w=238',
+      title: '7',
+      href: '#'
+    }, { img: 'https://www.lulus.com/images/product/xlarge/4887490_907162.jpg?w=238',
+      title: '8',
+      href: '#'
     }
   ];
+
+  public slides: Slide[];
   private el: HTMLElement;
-  private currIdx = 0;
-  private lastSlideIdx = this.slides.length - 1;
-  private componentDestroyed$: Subject<void> = new Subject();
+  private initSlides: Function;
 
-  public firstIdx = this.lastSlideIdx;
-  public lastIdx = 0;
-  public activeIdxs: number[] = [];
+  private TRANSITION_END_EVENT_NAME = 'transitionend';
+  private TRANSITION_IS_ON_CSS_CLASS = 'transition-on';
 
-  private qtyOfActiveSlides: number;
+  private MIN_SLIDES_QTY = 2;
+  private ORDERED_SLIDES_QTY = 6;
+  private MAX_ORDER = 5;
 
-  constructor(
-    private renderer: Renderer2,
-    private cdr: ChangeDetectorRef,
-    private breakpointsService: BreakpointsService
-  ) { }
+  private firstOrderedSlideIdx: number;
+  private lastOrderedSlideIdx: number;
+
+  constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.el = this.slider.nativeElement;
-    this.breakpointsService.getCurrWidthTier()
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(_ => {
-        this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx, this.currIdx);
-        this.cdr.detectChanges();
-      });
+
+    this.initSlides = pipe(
+      shallowCopyArrOfObjects,
+      this.normalizeSlidesQty(this.MIN_SLIDES_QTY, this.ORDERED_SLIDES_QTY, repeatArrFlat),
+      this.getFormattedSlides(this.ORDERED_SLIDES_QTY, this.calcEdgeSlideIdx)
+    );
+
+    this.slides = this.initSlides(this.rawSlides);
+
+    this.firstOrderedSlideIdx = this.slides.length - 1;
+    this.lastOrderedSlideIdx = this.MAX_ORDER - 1;
   }
 
-  ngAfterViewInit() {
-    this.qtyOfActiveSlides = this.getQtyOfVisibleSlides(this.el);
-
-    this.firstIdx = this.qtyOfActiveSlides < this.lastSlideIdx ? this.qtyOfActiveSlides + 1 : this.lastSlideIdx;
-
-    this.activeIdxs = this.getArrOfActiveIdxs(this.qtyOfActiveSlides, this.lastSlideIdx);
-    this.slides.forEach((slide, idx) => {
-      slide.order = this.activeIdxs.includes(idx) ? this.activeIdxs.indexOf(idx) + 1 : null;
-    });
-    this.cdr.detectChanges();
-  }
-
-  public onNext(): void {
-    fromEvent(this.el, 'transitionend')
+  public onCtrlClick(onNext: boolean): void {
+    fromEvent(this.el, this.TRANSITION_END_EVENT_NAME)
       .pipe(first())
       .subscribe(_ => {
-        this.firstIdx = this.activeIdxs[0];
+
+        this.toggleTransition(this.el, false);
         this.resetPositionLeft(this.el);
-        this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx, this.currIdx);
-        this.slides.forEach((slide, idx) => {
-          slide.order = this.activeIdxs.includes(idx) ? this.activeIdxs.indexOf(idx) + 1 : null;
+
+        const direction = onNext ? 1 : -1;
+
+        this.changeSlidesOrder({
+          slides: this.slides,
+          direction,
+          startWithOrder: onNext ? 0 : this.MAX_ORDER,
+          startWithIdx: onNext ? this.firstOrderedSlideIdx : this.lastOrderedSlideIdx,
+          orderedSlidesQty: this.ORDERED_SLIDES_QTY
         });
-        this.turnOffTransition(this.el);
+
+        this.lastOrderedSlideIdx = this.calcEdgeSlideIdx(this.lastOrderedSlideIdx + direction, this.slides.length - 1);
+        this.firstOrderedSlideIdx = this.calcEdgeSlideIdx(this.firstOrderedSlideIdx + direction, this.slides.length - 1);
+
         this.cdr.detectChanges();
       });
-
-    this.currIdx = this.currIdx + 1 > this.lastSlideIdx ? 0 : this.currIdx + 1;
-    this.turnOnTransition(this.el);
-    this.shiftLeft(this.el, this.getSingleSlideWidth(this.el));
+    this.toggleTransition(this.el, true);
+    this.shiftElem(this.el, this.getSingleSlideWidth(this.el, this.firstOrderedSlideIdx), onNext);
   }
 
-  public onPrev(): void {
-    // fromEvent(this.el, 'transitionend')
-    //   .pipe(first())
-    //   .subscribe(_ => {
-    //     this.firstIdx = this.firstIdx ? this.firstIdx - 1 : this.lastSlideIdx;
-    //     this.resetPositionLeft(this.el);
-    //     this.activeIdxs = this.getArrOfActiveIdxs(this.getQtyOfVisibleSlides(this.el), this.lastSlideIdx, this.currIdx);
-    //     this.turnOffTransition(this.el);
-    //     this.cdr.detectChanges();
-    //   });
+  private normalizeSlidesQty = (minSlidesQty: number, orderedSlidesQty: number, repeatArr: Function) =>
+    (rawSlides: RawSlide[]): RawSlide[] => {
+      return rawSlides.length && rawSlides.length <= minSlidesQty ?
+        [ ...rawSlides, rawSlides[0] ] : rawSlides.length > minSlidesQty && rawSlides.length <= orderedSlidesQty ?
+          repeatArr(rawSlides, Math.ceil(orderedSlidesQty / rawSlides.length) + 1 ) : rawSlides;
+    }
 
-    // this.currIdx = this.currIdx - 1 < 0 ? this.lastSlideIdx : this.currIdx - 1;
-    // this.turnOnTransition(this.el);
-    // this.shiftRight(this.el, this.getSingleSlideWidth(this.el));
+  private getFormattedSlides = (orderedSlidesQty: number, calcEdgeSlideIdx: Function) =>
+    (slides: any[]): Slide[] => {
+      for (let idx = slides.length - 1, order = 0; order < slides.length; idx++, order++) {
+        idx = calcEdgeSlideIdx(idx, slides.length - 1);
+        slides[idx] = {
+          ...slides[idx],
+          visual_order: order >= orderedSlidesQty ? null : order,
+          slide_number: idx
+        };
+      }
+      return slides;
+    }
+
+  private changeSlidesOrder(
+    { slides, direction, startWithOrder, startWithIdx, orderedSlidesQty }:
+    { slides: any[], direction: number, startWithOrder: number, startWithIdx: number, orderedSlidesQty: number }
+  ): void {
+    let order = startWithOrder;
+    let idx = startWithIdx;
+    for (; order < orderedSlidesQty && order >= 0; idx += direction) {
+      idx = this.calcEdgeSlideIdx(idx, slides.length - 1);
+      slides[idx].visual_order = idx === startWithIdx ? null : order;
+      order = idx === startWithIdx ? order : direction + order;
+    }
   }
 
-  // PRIVATE METHODS
+  private calcEdgeSlideIdx(currIdx: number, lastSlideIdx: number): number {
+    return currIdx > lastSlideIdx ?
+      0 : currIdx < 0 ?
+        lastSlideIdx : currIdx;
+  }
 
-  private getSingleSlideWidth(slider: HTMLElement): number {
-    return (slider.children[0] as HTMLElement).offsetWidth;
+  private getSingleSlideWidth(slider: HTMLElement, firstVisibleSlideIdx): number {
+    return (slider.children[firstVisibleSlideIdx] as HTMLElement).offsetWidth;
   }
 
   private resetPositionLeft(el: HTMLElement): void {
     this.renderer.removeStyle(el, 'left');
   }
 
-  private shiftLeft(el: HTMLElement, shift: number): void {
-    this.renderer.setStyle(el, 'left', `-${shift}px`);
+  private shiftElem(el: HTMLElement, shift: number, toTheRight: boolean): void {
+    this.renderer.setStyle(el, 'left', `${ toTheRight ? '-' : '+' }${ shift }px`);
   }
 
-  private shiftRight(el: HTMLElement, shift: number): void {
-    this.renderer.setStyle(el, 'left', `${shift}px`);
-  }
-
-  private turnOnTransition(el: HTMLElement): void {
-    this.renderer.addClass(el, 'transition-on');
-  }
-
-  private turnOffTransition(el: HTMLElement): void {
-    this.renderer.removeClass(el, 'transition-on');
-  }
-
-  private getQtyOfVisibleSlides(slider: HTMLElement): number {
-    return Math.round(slider.offsetWidth / this.getSingleSlideWidth(slider));
-  }
-
-  private getArrOfActiveIdxs(length: number, maxIdx: number, currIdx: number = 0): number[] {
-    let startFromZero = 0;
-    return Array.from(Array(length), (_, idx) => idx + currIdx > maxIdx ? startFromZero++ : idx + currIdx);
-  }
-
-  ngOnDestroy(): void {
-    this.componentDestroyed$.next();
-    this.componentDestroyed$.unsubscribe();
+  private toggleTransition(el: HTMLElement, isOn: boolean): void {
+    isOn ?
+      this.renderer.addClass(el, this.TRANSITION_IS_ON_CSS_CLASS) :
+        this.renderer.removeClass(el, this.TRANSITION_IS_ON_CSS_CLASS);
   }
 
 }

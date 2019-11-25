@@ -1,11 +1,15 @@
 
 @import 'mixins';
+@import 'colors';
 
 .wrapper {
   width: 100%;
   min-height: 300px;
   position: relative;
   overflow: hidden;
+  &:hover {
+    .slider-ctrl { background-color: rgba(0, 0, 0, 0.8); }
+  }
 }
 
 .slider {
@@ -41,17 +45,9 @@
   }
 }
 
-.ctrl {
-  position: absolute; bottom: 50%;
-  transform: translateY(50%);
-  @include m('prev') {
-    left: 0;
-  }
-  @include m('next') {
-    right: 0;
-  }
-}
+.transition-on { transition: all .3s; }
 
-.transition-on {
-  transition: all .3s;
+.slider-ctrl {
+  @include m('left') { left: 10px; }
+  @include m('right') { right: 10px; }
 }

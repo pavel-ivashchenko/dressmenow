@@ -12,31 +12,31 @@ import { appReducers } from '@app/core/store/reducers';
 
 import { HeaderComponent } from './header.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+xdescribe('HeaderComponent', () => {
+  // let component: HeaderComponent;
+  // let fixture: ComponentFixture<HeaderComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        BrowserAnimationsModule,
-        StoreModule.forRoot(appReducers),
-        EffectsModule.forRoot([ CurrencyEffects ]),
-        SharedModule,
-      ],
-      declarations: [ HeaderComponent ]
-    })
-    .compileComponents();
-  }));
+  // beforeEach(async(() => {
+  //   TestBed.configureTestingModule({
+  //     imports: [
+  //       HttpClientModule,
+  //       BrowserAnimationsModule,
+  //       StoreModule.forRoot(appReducers),
+  //       EffectsModule.forRoot([ CurrencyEffects ]),
+  //       SharedModule,
+  //     ],
+  //     declarations: [ HeaderComponent ]
+  //   })
+  //   .compileComponents();
+  // }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  // beforeEach(() => {
+  //   fixture = TestBed.createComponent(HeaderComponent);
+  //   component = fixture.componentInstance;
+  //   fixture.detectChanges();
+  // });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  // it('should create', () => {
+  //   expect(component).toBeTruthy();
+  // });
 });

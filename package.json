@@ -6,8 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
+    "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "e2e": "run e2e -- --protractor-config=./e2e/protractor-ci.conf.js --progress=false",
     "analyze": "ng build --configuration=analyze && webpack-bundle-analyzer dist/mean2019/stats.json"
   },
   "private": true,
@@ -32,6 +33,7 @@
     "bootstrap-4-grid": "^2.4.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "node-sass": "^4.13.0",
     "rxjs": "~6.3.3",
     "sass-loader": "^6.0.7",
     "tar": "^4.4.8",

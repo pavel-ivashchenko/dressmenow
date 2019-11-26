@@ -8,7 +8,7 @@ import { map, catchError, switchMap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { MAT_SNACKBAR_CONSTANTS, TOKEN_KEY, TOKEN_EXPIRES_KEY } from '@app/shared/constants';
 import { User, NewUser, AuthResponse, ResponseError } from '@app/shared/interfaces';
-import { UserService } from '@app/core/services/user.service';
+import { UserService } from '@app/core/services/user-service/user.service';
 
 @Injectable({ providedIn: 'root' }) export class AuthenticationService {
 

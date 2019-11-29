@@ -79,7 +79,7 @@ $btn-position-lg: 240px;
   text-align: center;
   font-size: 14px;
   background-color: rgba(0,0,0,.4);
-  color: $grey-lighter;
+  color: $grey-2;
   opacity: 0;
   transition: 1s;
   @include breakpoint-up(lg) {

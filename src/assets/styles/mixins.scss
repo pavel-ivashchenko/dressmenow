@@ -35,6 +35,30 @@ $breakpoints: (
   }
 }
 
+@mixin sm {
+  @media only screen and (min-width: 320px) and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media only screen and (max-width: 992px) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media only screen and (min-width: 1201) {
+    @content;
+  }
+}
+
 // general
 
 @mixin logo-line {

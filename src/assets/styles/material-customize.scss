@@ -3,7 +3,7 @@ div.cdk-overlay-pane {
   div.ng-trigger-transformPanel {
     mat-option.mat-option {
       span.mat-option-text {
-        color: $grey-regular;
+        color: $grey-4;
       }
       &[aria-selected="true"] {
         span.mat-option-text {
@@ -25,7 +25,7 @@ app-header {
       border-top: 0;
       .mat-select-trigger {
         span, .mat-select-arrow {
-          color: $grey-regular;
+          color: $grey-4;
           @include media-breakpoint-up(lg) {
             color: #fff;
           }
@@ -42,7 +42,7 @@ app-footer {
   .mat-form-field {
     .mat-input-element {
       font-size: 12px;
-      color: $grey-regular;
+      color: $grey-4;
     }
     .mat-form-field-label {
       top: 50%;
@@ -53,7 +53,7 @@ app-footer {
     }
     &.mat-form-field-invalid {
       .mat-input-element {
-        caret-color: $grey-light;
+        caret-color: $grey-3;
       }
       .mat-form-field-label {
         color: $main-orange;
@@ -64,10 +64,10 @@ app-footer {
     }
     &.mat-focused {
       .mat-form-field-label {
-        color: $grey-light;
+        color: $grey-3;
       }
       .mat-form-field-ripple {
-        background-color: $grey-light;
+        background-color: $grey-3;
       }
     }
   }

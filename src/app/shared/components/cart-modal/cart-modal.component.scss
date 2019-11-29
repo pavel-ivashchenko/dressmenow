@@ -9,7 +9,7 @@ a {
 
 button {
   color: #fff;
-  background-color: $grey-dark;
+  background-color: $grey-6;
   transition: background-color 0.3s;
   &:hover {
     background-color: $main-orange;
@@ -22,11 +22,11 @@ button {
   max-height: 400px;
   margin: 20px 0;
   overflow-y: auto;
-  border: 1px solid $grey-lighter;
+  border: 1px solid $grey-2;
 }
 
 .cart-item {
-  border: 1px solid $grey-lighter;
+  border: 1px solid $grey-2;
   position: relative;
   div {
     flex: 1 0 40%;
@@ -35,7 +35,7 @@ button {
 
 .cart-item-close {
   position: absolute;
-  color: $grey-lighter;
+  color: $grey-2;
   top: 5px;
   right: 5px;
   cursor: pointer;
@@ -48,7 +48,7 @@ button {
   flex: 0 0 80px;
   height: 80px;
   width: 80px;
-  border-right: 1px solid $grey-lighter;
+  border-right: 1px solid $grey-2;
 }
 
 .cart-item-price {

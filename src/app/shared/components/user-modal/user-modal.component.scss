@@ -14,7 +14,7 @@
     text-transform: uppercase;
     @include m('withborder') {
       padding: 10px 0;
-      border-bottom: 1px solid $grey-dim;
+      border-bottom: 1px solid $grey-5;
     }
   }
   @include e('secondary') {
@@ -41,7 +41,7 @@
   @include m('regular') {
     margin-top: 10px;
     padding: 0;
-    color: $grey-dark;
+    color: $grey-6;
     @include center-flex;
     &:hover {
       color: #000;
@@ -77,7 +77,7 @@
     text-align: center;
   }
   @include e('link') {
-    color: $grey-dim;
+    color: $grey-5;
     cursor: pointer;
     &:hover {
       color: #000;

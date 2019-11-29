@@ -2,51 +2,29 @@
 @import 'colors';
 @import 'mixins';
 
-@mixin font-size-smaller {
-  font-size: 14px;
-}
-
-.wrapper {
-  padding: 30px 10px;
-}
-
-.hover-opacity {
-  &:hover { opacity: .6; }
-}
-
 .menu {
-  padding: 20px 0;
+  padding: 60px;
   border-right: 1px solid $main-orange;
+  background-color: $grey-1;
 }
 
 .menu-item {
   padding-top: 30px;
-  @include font-size-smaller;
-  @include m('small') {
-    padding: 2px 0;
-  }
-  @include m('first') {
-    padding-top: 0;
-  }
+  @include m('small') { padding: 2px 0; }
 }
 
-.main-info {
-  padding: 20px 20px 50px;
-}
+.main-info { padding: 60px 20px; }
 
 .info-block {
   padding-bottom: 40px;
   @include e('header') {
-    width: 100%;
     padding: 5px 0;
     border-bottom: 2px solid $main-orange;
-    display: block;
-    font-weight: bold;
     letter-spacing: 1px;
   }
   @include e('main') {
     padding: 30px;
-    background-color: $grey-lighter;
+    background-color: $grey-2;
   }
 }
 
@@ -59,52 +37,13 @@
   }
 }
 
-.no-data {
-  letter-spacing: 0.5px;
-  display: flex;
-  justify-content: center;
-  @include font-size-smaller;
-}
-
-.inner-block {
-  @include font-size-smaller;
-  @include e('header') {
-    display: flex;
-    font-weight: bold;
-    @include m('price') {
-      font-size: 18px;
-      text-align: center;
-    }
-  }
-}
+.no-data { letter-spacing: 0.5px; }
 
 .info-list {
   padding: 10px 0;
-  display: flex;
   @include e('item') {
-    width: 100%;
     padding-left: 10px;
-    flex-direction: column;
     @include center-flex;
-  }
-  @include e('link') {
-    width: 100%;
-  }
-  @include e('image') {
-    width: 100%;
-    height: auto;
-    @include font-size-smaller;
-  }
-  @include e('title') {
-    text-align: center;
-    @include font-size-smaller;
-  }
-  @include e('create') {
-    text-align: center;
-    font-size: 12px;
-    &:hover {
-      color: $hover-black;
-    }
   }
 }
 
@@ -121,7 +60,7 @@
   @include m('regular') {
     margin-top: 10px;
     padding: 0;
-    color: $grey-dark;
+    color: $grey-6;
     @include center-flex;
     &:hover {
       color: #000;

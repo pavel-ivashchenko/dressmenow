@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
-import { Env, User, UnauthorizedError } from '@app/shared/interfaces';
+import { User, UnauthorizedError } from '@app/shared/interfaces';
 
 import { IAppState, IUserState } from '@app/core/store/state';
 import { selectUserState } from '@app/core/store/selectors';

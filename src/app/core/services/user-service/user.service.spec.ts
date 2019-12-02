@@ -10,7 +10,7 @@ import { TestStore } from '@testing/test-store';
 import { UserService } from '@app/core/services';
 import { IAppState, IUserState, initialAppState } from '@app/core/store/state';
 
-describe('UserService', () => {
+fdescribe('UserService', () => {
 
   const BASE_URL: string = environment.baseURL;
   const TEST_USER_ID = 123;
@@ -47,45 +47,48 @@ describe('UserService', () => {
     });
   }));
 
-  it('should return an object in response', () => {
+  it('should retrieve a specific user with via the getUser() method', () => {
     userService.getUser()
       .subscribe(
-        (res: IUserState) => {
-          expect(res).toBeTruthy('No response from server on request for a user');
-          expect(res).toEqual(jasmine.any(Object), 'Server response is not an object');
-        }
+        (res: IUserState) => { expect(res.id).toBe(TEST_USER_ID, 'An id of the retrieved user is not correct'); }
       );
-
     const req = httpTestingController.expectOne(`${ BASE_URL }/user`);
+
     expect(req.request.method).toEqual('GET');
+
     req.flush({ status: 200, body: TEST_USER });
   });
 
-  it('should retrieve a user', () => {
+  it('should get an error with the 401 status via the getUser() method', () => {
     userService.getUser()
       .subscribe(
-        (res: IUserState) => {
-          expect(res.id).toBe(TEST_USER_ID, 'An id of a user is not correct');
-        }
+        (res: UnauthorizedError) => { expect(res.message).toBe(UNAUTHORIZED_ERROR_MSG); }
       );
-
     const req = httpTestingController.expectOne(`${ BASE_URL }/user`);
-    expect(req.request.method).toEqual('GET');
-    req.flush({ status: 200, body: TEST_USER });
-  });
 
-  it('should get an error with 401 status', () => {
-    userService.getUser()
-      .subscribe(
-        (res: UnauthorizedError) => {
-          console.log('asdfasdfa' + res.status);
-          expect(res.message).toBe(UNAUTHORIZED_ERROR_MSG);
-        }
-      );
-
-    const req = httpTestingController.expectOne(`${ BASE_URL }/user`);
     expect(req.request.method).toEqual('GET');
+
     req.flush({ status: 401, body: new Error('Unauthorised') });
+  });
+
+  it('should retrieve the current user from the store via the getCurrentUser() method', () => {
+
+    store.setState({
+      ...initialAppState,
+      user: { ...initialAppState.user, id: TEST_USER.id }
+    });
+
+    userService.getCurrentUser()
+      .subscribe(
+        (res: IUserState) => {
+          expect(res.id).toBe(TEST_USER_ID, 'An id of the retrieved user is not correct');
+        }
+      );
+
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
   });
 
 });

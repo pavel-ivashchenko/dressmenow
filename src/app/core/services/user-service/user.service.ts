@@ -1,7 +1,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -30,7 +30,7 @@ export class UserService {
   }
 
   public getCurrentUser(): Observable<User> {
-    return this.store.pipe(select(selectUserState));
+    return this.store.select(selectUserState);
   }
 
   public setCurrentUser(user: User): void {

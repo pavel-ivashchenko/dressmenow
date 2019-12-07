@@ -3,10 +3,12 @@
 @import '~bootstrap-4-grid/scss/grid.scss';
 
 @import 'dressmenow-theme.scss';
+
 @import 'colors';
-@import 'mixins';
-@import 'fonts';
 @import 'z-index';
+@import 'fonts';
+
+@import 'mixins/all';
 @import 'utils/_all';
 @import 'buttons/_all';
 

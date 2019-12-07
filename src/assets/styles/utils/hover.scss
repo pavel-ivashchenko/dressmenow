@@ -1,5 +1,5 @@
 
-@import 'mixins';
+@import 'mixins/_all';
 
 .hover-opacity { &:hover { opacity: .6; } }
 .hover-black { &:hover { color: rgba(0,0,0,.6); } }

@@ -1,0 +1,19 @@
+
+@mixin logo-line {
+  font-family: 'Homemade Apple';
+  transform: rotate(-5deg);
+  color: $main-orange;
+}
+
+@mixin logo-line-last {
+  transform: rotate(-15deg);
+  text-align: right;
+}
+
+@mixin logo-img {
+  position: relative;
+  width: 90px;
+  @include e('img') {
+    width: 100%;
+  }
+}

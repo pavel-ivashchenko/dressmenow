@@ -16,7 +16,6 @@ export class MyAccountOrdersComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

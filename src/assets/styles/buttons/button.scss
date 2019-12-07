@@ -1,0 +1,176 @@
+
+@import 'mixins';
+@import 'colors';
+
+@mixin btn {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-weight: bold;
+  transition: all .3s;
+}
+
+// BUTTON SIMPLE
+
+@mixin btn-simple {
+  @include btn;
+  color: $grey-6;
+  &:hover { color: #000; }
+}
+
+@mixin btn-simple--small {
+  @include btn-simple;
+  width: 100px;
+  height: 30px;
+}
+
+@mixin btn-simple--med {
+  @include btn-simple;
+  width: 150px;
+  height: 35px;
+}
+
+@mixin btn-simple--large {
+  @include btn-simple;
+  width: 200px;
+  height: 40px;
+}
+
+@mixin btn-simple--fluid {
+  @include btn-simple--large;
+  width: 100%;
+  height: 40px;
+}
+
+.btn-simple {
+  @include btn-simple;
+}
+
+.btn-simple--small {
+  @include btn-simple--small;
+}
+
+.btn-simple--med {
+  @include btn-simple--med;
+}
+
+.btn-simple--large {
+  @include btn-simple--large;
+}
+
+.btn-simple--fluid {
+  @include btn-simple--fluid;
+}
+
+// BUTTON SUBMIT
+
+@mixin btn-submit {
+  @include btn;
+  color: #fff;
+  background-color: $hover-black;
+  &:hover { background-color: #000; }
+}
+
+@mixin btn-submit--small {
+  @include btn-submit;
+  width: 100px;
+  height: 30px;
+}
+
+@mixin btn-submit--med {
+  @include btn-submit;
+  width: 150px;
+  height: 35px;
+}
+
+@mixin btn-submit--large {
+  @include btn-submit;
+  width: 200px;
+  height: 40px;
+}
+
+@mixin btn-submit--fluid {
+  @include btn-submit--large;
+  width: 100%;
+  height: 40px;
+}
+
+.btn-submit {
+  @include btn-submit;
+}
+
+.btn-submit--small {
+  @include btn-submit--small;
+}
+
+.btn-submit--med {
+  @include btn-submit--med;
+}
+
+.btn-submit--large {
+  @include btn-submit--large;
+}
+
+.btn-submit--fluid {
+  @include btn-submit--fluid;
+}
+
+// MEDIA QUERIES
+
+@include sm {
+  .btn-sm-simple { @include btn-simple; }
+  .btn-sm-simple--small { @include btn-simple--small; }
+  .btn-sm-simple--med { @include btn-simple--med; }
+  .btn-sm-simple--large { @include btn-simple--large; }
+  .btn-sm-simple--fluid { @include btn-simple--fluid; }
+
+  .btn-sm-submit { @include btn-submit; }
+  .btn-sm-submit--small { @include btn-submit--small; }
+  .btn-sm-submit--med { @include btn-submit--med; }
+  .btn-sm-submit--large { @include btn-submit--large; }
+  .btn-sm-submit--fluid { @include btn-submit--fluid; }
+}
+
+@include md {
+  .btn-md-simple { @include btn-simple; }
+  .btn-md-simple--small { @include btn-simple--small; }
+  .btn-md-simple--med { @include btn-simple--med; }
+  .btn-md-simple--large { @include btn-simple--large; }
+  .btn-md-simple--fluid { @include btn-simple--fluid; }
+
+  .btn-sm-submit { @include btn-submit; }
+  .btn-sm-submit--small { @include btn-submit--small; }
+  .btn-sm-submit--med { @include btn-submit--med; }
+  .btn-sm-submit--large { @include btn-submit--large; }
+  .btn-sm-submit--fluid { @include btn-submit--fluid; }
+}
+
+@include lg {
+  .btn-lg-simple { @include btn-simple; }
+  .btn-lg-simple--small { @include btn-simple--small; }
+  .btn-lg-simple--med { @include btn-simple--med; }
+  .btn-lg-simple--large { @include btn-simple--large; }
+  .btn-lg-simple--fluid { @include btn-simple--fluid; }
+
+  .btn-sm-submit { @include btn-submit; }
+  .btn-sm-submit--small { @include btn-submit--small; }
+  .btn-sm-submit--med { @include btn-submit--med; }
+  .btn-sm-submit--large { @include btn-submit--large; }
+  .btn-sm-submit--fluid { @include btn-submit--fluid; }
+}
+
+@include xl {
+  .btn-xl-simple { @include btn-simple; }
+  .btn-xl-simple--small { @include btn-simple--small; }
+  .btn-xl-simple--med { @include btn-simple--med; }
+  .btn-xl-simple--large { @include btn-simple--large; }
+  .btn-xl-simple--fluid { @include btn-simple--fluid; }
+
+  .btn-sm-submit { @include btn-submit; }
+  .btn-sm-submit--small { @include btn-submit--small; }
+  .btn-sm-submit--med { @include btn-submit--med; }
+  .btn-sm-submit--large { @include btn-submit--large; }
+  .btn-sm-submit--fluid { @include btn-submit--fluid; }
+}

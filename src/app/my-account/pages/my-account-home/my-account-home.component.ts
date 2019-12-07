@@ -56,8 +56,7 @@ export class MyAccountHomeComponent implements OnInit {
     { href: '#', uiName: 'УПОДОБАННЯ' },
     { href: '#', uiName: 'ОБРАНЕ' },
     { href: '#', uiName: 'РАХУНОК' },
-    { href: '#', uiName: 'ПРОФІЛЬ' },
-    { href: '#', uiName: '', subMenuItems: [
+    { href: '#', uiName: 'ПРОФІЛЬ', subMenuItems: [
       { href: '#', uiName: 'Дані користувача' },
       { href: '#', uiName: 'Розміри' },
       { href: '#', uiName: 'Змінити пароль' }
@@ -66,8 +65,7 @@ export class MyAccountHomeComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   public test() { }
 

@@ -1,0 +1,35 @@
+
+<div class="info-block">
+
+  <header>
+    <a class="info-block__header width-100 d-block font-weight-bold" href="#">ПЕРСОНАЛЬНА ІНФОРМАЦІЯ</a>
+  </header>
+
+  <div class="info-block__main info-block__main row no-gutters">
+    
+    <div class="inner-block font-14 justify-content-lg-center col-sm-12 col-lg-4 pb-3 pb-lg-0">
+      <p class="inner-block__header">ІМ'Я</p>
+      <p>Huan Samoran4ez</p>
+    </div>
+
+    <div class="inner-block font-14 justify-content-lg-center col-sm-12 col-lg-4 pb-3 pb-lg-0">
+      <p class="inner-block__header">ТЕЛЕФОН</p>
+      <p>+380982738463</p>
+    </div>
+
+    <div class="inner-block font-14 justify-content-lg-center col-sm-12 col-lg-4 pb-3 pb-lg-0">
+      <p class="inner-block__header">ЕЛЕКТРОННА АДРЕСА</p>
+      <p>samoran4ez@gmail.com</p>
+    </div>
+
+  </div>
+
+  <button
+    mat-button
+    [appBtnSpinner]="isLoading"
+    appDelayClick (delayClick)="test()"
+    (click)="test()"
+    class="btn-submit--fluid"
+  >РЕДАГУВАТИ</button>
+
+</div>

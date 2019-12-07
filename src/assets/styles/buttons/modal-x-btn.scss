@@ -1,0 +1,10 @@
+
+.modal-x-btn {
+  top: -30px; right: -20px;
+  font-size: 18px;
+  color: $main-orange;
+  &:before {
+    width: 30px;
+    height: 30px;
+  }
+}

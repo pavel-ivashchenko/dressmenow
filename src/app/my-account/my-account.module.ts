@@ -7,7 +7,10 @@ import { SharedModule } from '@app/shared/shared.module';
 import { MyAccountRoutingModule } from './my-account-routing.module';
 
 // components
-import { MyAccountOrdersComponent, MyAccountRecentlyViewedComponent } from './components';
+import {
+  MyAccountOrdersComponent, MyAccountRecentlyViewedComponent,
+  MyAccountPersonalInfoComponent, MyAccountBalanceComponent
+} from './components';
 import { MyAccountComponent, MyAccountHomeComponent } from './pages';
 
 @NgModule({
@@ -15,7 +18,9 @@ import { MyAccountComponent, MyAccountHomeComponent } from './pages';
     MyAccountRecentlyViewedComponent,
     MyAccountOrdersComponent,
     MyAccountComponent,
-    MyAccountHomeComponent
+    MyAccountHomeComponent,
+    MyAccountPersonalInfoComponent,
+    MyAccountBalanceComponent
   ],
   imports: [
     CommonModule,

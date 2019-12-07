@@ -3,81 +3,27 @@
 
   <div class="main-info col-sm-12 col-md-8 order-md-2">
 
-    <!-- <app-my-account-orders [orders]="orders"></app-my-account-orders> -->
+    <app-my-account-orders [orders]="orders"></app-my-account-orders>
     
-    <!-- <app-my-account-recently-viewed ></app-my-account-recently-viewed> -->
+    <app-my-account-recently-viewed></app-my-account-recently-viewed>
+
+    <app-my-account-personal-info></app-my-account-personal-info>
+
+    <app-my-account-balance></app-my-account-balance>
 
     <div class="info-block">
 
       <header>
-        <a class="info-block__header width-100 d-block font-weight-bold" href="#">ПЕРСОНАЛЬНА ІНФОРМАЦІЯ</a>
-      </header>
-
-      <div class="info-block__main info-block__main row no-gutters">
-        
-        <div class="inner-block font-14 justify-content-lg-center col-sm-12 col-lg-4 pb-sm-3 pb-lg-0">
-          <p class="inner-block__header">ІМ'Я</p>
-          <p>Huan Samoran4ez</p>
-        </div>
-
-        <div class="inner-block justify-content-lg-center col-sm-12 col-lg-4 pb-sm-3 pb-lg-0">
-          <p class="inner-block__header">ТЕЛЕФОН</p>
-          <p>+380982738463</p>
-        </div>
-
-        <div class="inner-block justify-content-lg-center col-sm-12 col-lg-4 pb-sm-3 pb-lg-0">
-          <p class="inner-block__header">ЕЛЕКТРОННА АДРЕСА</p>
-          <p>samoran4ez@gmail.com</p>
-        </div>
-
-      </div>
-
-      <button
-        mat-button
-        [appBtnSpinner]="isLoading"
-        appDelayClick (delayClick)="test()"
-        (click)="test()"
-        class="ctrl-btn ctrl-btn--submit">РЕДАГУВАТИ</button>
-
-    </div>
-
-    <div class="info-block" style="border: 1px solid green">
-
-      <header>
-        <a class="info-block__header" href="#">РАХУНОК</a>
-      </header>
-
-      <div class="info-block__main info-block__main row no-gutters">
-        
-        <div class="col-sm-12">
-          <p class="d-flex font-weight-bold justify-content-center">ПОТОЧНИЙ БАЛАНС</p>
-          <p class="d-flex font-weight-bold justify-content-center font-18 text-center">0.00$</p>
-        </div>
-
-      </div>
-
-      <button
-        mat-button
-        [appBtnSpinner]="isLoading"
-        appDelayClick (delayClick)="test()"
-        (click)="test()"
-        class="ctrl-btn ctrl-btn--submit">ПОПОВНИТИ</button>
-
-    </div>
-
-    <div class="info-block" style="border: 1px solid green">
-
-      <header>
-        <a class="info-block__header" href="#">ПОКУПКИ</a>
+        <a class="info-block__header width-100 d-block font-weight-bold" href="#">ПОКУПКИ</a>
       </header>
 
       <div *ngIf="!purchases.length" class="info-block__main row no-gutters">
         <p class="no-data font-14 d-flex justify-content-center">Товари, що ви придбали будуть доступні тут для перегляду</p>
       </div>
 
-      <ul class="info-list d-flex row no-gutters">
+      <ul class="info-list d-flex row">
         <ng-container *ngFor="let purchaseItem of purchases; let idx = index;">
-          <li *ngIf="idx < 6" class="info-list__item width-100 flex-column col-sm-2">
+          <li *ngIf="idx < 6" class="info-list__item col-6 col-sm-2">
             <a [href]="purchaseItem.href">
               <figure>
                 <img class="width-100 height-auto font-14" [src]="purchaseItem.src" alt="wish #{{ idx }}">
@@ -93,23 +39,24 @@
         [appBtnSpinner]="isLoading"
         appDelayClick (delayClick)="test()"
         (click)="test()"
-        class="ctrl-btn ctrl-btn--submit">ПЕРЕГЛЯНУТИ ПОКУПКИ</button>
+        class="btn-submit--fluid"
+      >ПЕРЕГЛЯНУТИ ПОКУПКИ</button>
 
     </div>
 
-    <div class="info-block" style="border: 1px solid green">
+    <div class="info-block">
 
       <header>
-        <a class="info-block__header" href="#">УПОДОБАННЯ</a>
+        <a class="info-block__header width-100 d-block font-weight-bold" href="#">УПОДОБАННЯ</a>
       </header>
 
       <div *ngIf="!loves.length" class="info-block__main row no-gutters">
         <p class="no-data">Тут можна буде переглянути товари, які були відзначені вами</p>
       </div>
 
-      <ul class="info-list d-flex row no-gutters">
+      <ul class="info-list d-flex row">
         <ng-container *ngFor="let loveItem of loves; let idx = index;">
-          <li *ngIf="idx < 6" class="info-list__item width-100 flex-column col-sm-3">
+          <li *ngIf="idx < 6" class="info-list__item col-6 col-sm-3">
             <a class="width-100" [href]="loveItem.href">
               <figure>
                 <img class="info-list__image" [src]="loveItem.src" alt="loveItem #{{ idx }}">
@@ -126,28 +73,29 @@
         [appBtnSpinner]="isLoading"
         appDelayClick (delayClick)="test()"
         (click)="test()"
-        class="ctrl-btn ctrl-btn--submit">ПЕРЕГЛЯНУТИ УПОДОБАННЯ</button>
+        class="btn-submit--fluid"
+      >ПЕРЕГЛЯНУТИ УПОДОБАННЯ</button>
 
     </div>
 
-    <div class="info-block" style="border: 1px solid green">
+    <div class="info-block p-0">
 
       <header>
-        <a class="info-block__header" href="#">ОБРАНЕ</a>
+        <a class="info-block__header width-100 d-block font-weight-bold" href="#">ОБРАНЕ</a>
       </header>
 
-      <ul class="info-list d-flex row no-gutters">
+      <ul class="info-list d-flex row">
         <ng-container *ngFor="let wish of wishes; let idx = index;">
-          <li *ngIf="idx < 6" class="info-list__item width-100 flex-column col-sm-2">
+          <li *ngIf="idx < 6" class="info-list__item col-6 col-sm-3">
             <a [href]="wish.href">
               <figure>
-                <img class="info-list__image" [src]="wish.src" alt="wish #{{ idx }}">
+                <img class="info-list__image" [src]="wish.src" alt="Wish #{{ idx }}">
                 <figcaption *ngIf="wish.title" class="info-list__title">{{ wish.title }}</figcaption>
               </figure>
             </a>
           </li>
         </ng-container>
-        <li class="info-list__item width-100 flex-column col-sm-2">
+        <li class="info-list__item width-100 d-flex-and-center flex-column col-sm-3">
           <a class="font-12 hover-black text-center" href="#">СТВОРИТИ НОВИЙ СПИСОК</a>
         </li>
       </ul>
@@ -162,26 +110,31 @@
         [appBtnSpinner]="isLoading"
         appDelayClick (delayClick)="test()"
         (click)="test()"
-        class="ctrl-btn ctrl-btn--submit">ПЕРЕГЛЯНУТИ ОБРАНЕ</button>
+        class="btn-submit--fluid"
+      >ПЕРЕГЛЯНУТИ ОБРАНЕ</button>
 
     </div>
 
   </div>
 
   <nav class="col-sm-12 col-md-4 order-md-1">
+
     <ul class="menu height-100">
-      <li 
+      <li
         *ngFor="let navMenuItem of navMenuItems; let first = first; let last = last;"
-        [ngClass]="{ 'p-t-0': first }"
-        class="menu-item font-14">
-          <a href="{{ navMenuItem.href }}" class="hover-opacity">{{ navMenuItem.uiName }}</a>
-          <ul *ngIf="navMenuItem.subMenuItems">
-            <li *ngFor="let navSubMenuItem of navMenuItem.subMenuItems" class="menu-item--small font-12 hover-opacity">
-              <a href="navSubMenuItem.href">{{ navSubMenuItem.uiName }}</a>
-            </li>
-          </ul>
+        [ngClass]="{ 'p-0': first }"
+        class="menu-item font-14 d-flex justify-content-center justify-content-md-start">
+          <div>
+            <a href="{{ navMenuItem.href }}" class="hover-opacity width-100 d-flex justify-content-center justify-content-md-start">{{ navMenuItem.uiName }}</a>
+            <ul *ngIf="navMenuItem.subMenuItems">
+              <li *ngFor="let navSubMenuItem of navMenuItem.subMenuItems" class="sub-menu-item font-12 hover-opacity d-flex justify-content-center justify-content-md-start">
+                <a href="navSubMenuItem.href">{{ navSubMenuItem.uiName }}</a>
+              </li>
+            </ul>
+          </div>
       </li>
     </ul>
+
   </nav>
 
 </section>

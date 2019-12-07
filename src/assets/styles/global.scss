@@ -5,10 +5,10 @@
 @import 'dressmenow-theme.scss';
 @import 'colors';
 @import 'mixins';
-@import 'buttons';
 @import 'fonts';
 @import 'z-index';
 @import 'utils/_all';
+@import 'buttons/_all';
 
 @import 'material-customize';
 
@@ -64,4 +64,10 @@ body {
     z-index: -1;
     background: url('assets/img/user-modal-bg.png');
   }
+}
+
+.is-loading {
+  background-image: url('assets/img/flower-spinner.svg');
+  background-repeat: no-repeat;
+  background-position: center;
 }

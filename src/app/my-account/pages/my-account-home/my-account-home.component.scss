@@ -10,15 +10,21 @@
 
 .menu-item {
   padding-top: 30px;
-  @include m('small') { padding: 2px 0; }
 }
 
-.main-info { padding: 60px 20px; }
+.sub-menu-item {
+  padding: 2px 0;
+}
+
+.main-info {
+  padding: 60px 20px;
+  background-color: #fff;
+}
 
 .info-block {
   padding-bottom: 40px;
   @include e('header') {
-    padding: 5px 0;
+    padding-bottom: 5px;
     border-bottom: 2px solid $main-orange;
     letter-spacing: 1px;
   }
@@ -37,41 +43,14 @@
   }
 }
 
-.no-data { letter-spacing: 0.5px; }
+.no-data {
+  letter-spacing: 0.5px;
+}
 
 .info-list {
   padding: 10px 0;
-  @include e('item') {
-    padding-left: 10px;
-    @include center-flex;
-  }
-}
-
-// consider moving to global styles sheet
-
-.ctrl-btn {
-  width: 100%; height: 50px;
-  margin: 0 auto;
-  overflow: hidden;
-  font-size: 14px;
-  letter-spacing: 3px;
-  font-weight: bold;
-  transition: all .3s;
-  @include m('regular') {
-    margin-top: 10px;
-    padding: 0;
-    color: $grey-6;
-    @include center-flex;
-    &:hover {
-      color: #000;
-    }
-  }
-  @include m('submit') {
-    color: #fff;
-    background-color: $hover-black;
-    @include center-flex;
-    &:hover {
-      background-color: #000;
-    }
+  @include e('image') {
+    height: auto;
+    width: 100%;
   }
 }

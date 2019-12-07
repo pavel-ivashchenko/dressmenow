@@ -1,0 +1,25 @@
+
+<div class="info-block">
+
+  <header>
+    <a class="info-block__header width-100 d-block font-weight-bold" href="#">РАХУНОК</a>
+  </header>
+
+  <div class="info-block__main font-14 info-block__main row no-gutters">
+    
+    <div class="col-sm-12">
+      <p class="d-flex font-weight-bold justify-content-center">ПОТОЧНИЙ БАЛАНС</p>
+      <p class="d-flex font-weight-bold justify-content-center font-18 text-center">0.00$</p>
+    </div>
+
+  </div>
+
+  <button
+    mat-button
+    [appBtnSpinner]="isLoading"
+    appDelayClick (delayClick)="test()"
+    (click)="test()"
+    class="btn-submit--fluid"
+  >ПОПОВНИТИ</button>
+
+</div>

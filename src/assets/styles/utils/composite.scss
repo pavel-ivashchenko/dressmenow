@@ -1,0 +1,26 @@
+
+@import 'mixins';
+
+@mixin d-flex-and-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-flex-and-center { @include d-flex-and-center; }
+
+@include sm {
+  .d-flex-and-center-sm { @include d-flex-and-center; }
+}
+
+@include md {
+  .d-flex-and-center-md { @include d-flex-and-center; }
+}
+
+@include lg {
+  .d-flex-and-center-lg { @include d-flex-and-center; }
+}
+
+@include xl {
+  .d-flex-and-center-xl { @include d-flex-and-center; }
+}

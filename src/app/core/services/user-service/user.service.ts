@@ -1,12 +1,12 @@
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
-import { User, UnauthorizedError } from '@app/shared/interfaces';
+import { User } from '@app/shared/interfaces';
 
 import { IAppState, IUserState } from '@app/core/store/state';
 import { selectUserState } from '@app/core/store/selectors';
@@ -24,9 +24,12 @@ export class UserService {
     private store: Store<IAppState>
   ) { }
 
-  public getUser(): Observable<IUserState | UnauthorizedError> {
-    return this.http.get<{ status: number; body: UnauthorizedError | IUserState }>(`${ this.BASE_URL }/user`)
-      .pipe( map(res => res.body) );
+  public getUser(): Observable<IUserState | HttpErrorResponse> {
+    return this.http.get<{ status: number; body: IUserState }>(`${ this.BASE_URL }/user`)
+      .pipe(
+        map(res => res.body),
+        catchError((err: HttpErrorResponse) => of(err))
+      );
   }
 
   public getCurrentUser(): Observable<User> {

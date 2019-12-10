@@ -1,22 +1,22 @@
 
 import { TestBed, inject } from '@angular/core/testing';
+import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Store } from '@ngrx/store';
 
 import { TestStore } from '@testing/store.fixture';
 import { environment } from '@env/environment';
 import { UserService } from '@app/core/services';
-import { UnauthorizedError } from '@app/shared/interfaces';
 import { IUserState, initialAppState } from '@app/core/store/state';
 import { SetUser } from '@app/core/store/actions';
 
-describe('UserService', () => {
+fdescribe('UserService', () => {
 
   const BASE_URL: string = environment.baseURL;
 
   const TEST_USER_ID = 123;
   const TEST_USER = { ...initialAppState.user, id: TEST_USER_ID };
-  const UNAUTHORIZED_ERROR_MSG = 'Unauthorised';
+  const TEST_UNAUTHORIZED_MSG = { status: 401, statusText: 'Unauthorised' };
 
   let userService: UserService,
       httpTestingController: HttpTestingController,
@@ -50,11 +50,15 @@ describe('UserService', () => {
     it('should get an error with the 401 status', () => {
       userService.getUser()
         .subscribe(
-          (res: UnauthorizedError) => { expect(res.message).toBe(UNAUTHORIZED_ERROR_MSG); }
+          _ => fail('should get an error with the 401 status'),
+          (res: HttpErrorResponse) => {
+            expect(res.status).toBe(TEST_UNAUTHORIZED_MSG.status);
+            expect(res.statusText).toBe(TEST_UNAUTHORIZED_MSG.statusText);
+          }
         );
       const req = httpTestingController.expectOne(`${ BASE_URL }/user`);
       expect(req.request.method).toEqual('GET');
-      req.flush({ status: 401, body: new Error('Unauthorised') });
+      req.flush(null, TEST_UNAUTHORIZED_MSG);
     });
 
   });

@@ -1,6 +1,8 @@
 
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
+import { MyAccountNavMenuItems, MockOrders, MockPurchases, MockWishes, MockLoves } from './models';
+
 @Component({
   selector: 'app-my-account-home',
   templateUrl: './my-account-home.component.html',
@@ -9,59 +11,29 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class MyAccountHomeComponent implements OnInit {
 
+  public navMenuItems = MyAccountNavMenuItems;
   public isLoading = false;
-  public wishes = [
-    {
-      href: '#',
-      src: 'https://www.lulus.com/images/product/small-medium/4287110_588472.jpg',
-      title: 'list #1'
-    }, {
-      href: '#',
-      src: 'https://www.lulus.com/images/product/small-medium/4287110_588472.jpg',
-      title: 'list #2'
-    }
-  ];
-  public loves = [
-    {
-      href: '#',
-      src: 'https://www.lulus.com/images/product/small-medium/4446470_390892.jpg'
-    }, {
-      href: '#',
-      src: 'https://www.lulus.com/images/product/small-medium/4196710_844002.jpg'
-    }
-  ];
-  public purchases = [
-    {
-      href: '#',
-      src: 'https://www.lulus.com/images/product/small-medium/4446470_390892.jpg'
-    }, {
-      href: '#',
-      src: 'https://www.lulus.com/images/product/small-medium/4196710_844002.jpg'
-    }
-  ];
-  public orders = [
-    {
-      href: '#',
-      src: 'https://www.lulus.com/images/product/small-medium/4446470_390892.jpg'
-    }, {
-      href: '#',
-      src: 'https://www.lulus.com/images/product/small-medium/4196710_844002.jpg'
-    }
-  ];
 
-  public navMenuItems = [
-    { href: '#', uiName: 'ОГЛЯД АКАУНТУ' },
-    { href: '#', uiName: 'ЗАМОВЛЕННЯ' },
-    { href: '#', uiName: 'ПОКУПКИ' },
-    { href: '#', uiName: 'УПОДОБАННЯ' },
-    { href: '#', uiName: 'ОБРАНЕ' },
-    { href: '#', uiName: 'РАХУНОК' },
-    { href: '#', uiName: 'ПРОФІЛЬ', subMenuItems: [
-      { href: '#', uiName: 'Дані користувача' },
-      { href: '#', uiName: 'Розміри' },
-      { href: '#', uiName: 'Змінити пароль' }
-    ] }
-  ]
+  public wishes = MockWishes;
+  public loves = MockLoves;
+  public ordersBlockData = {
+    items: MockOrders,
+    mainTitle: 'ЗАМОВЛЕННЯ',
+    noItemsTitle: 'Поки що немає замовлень!',
+    btnTitle: 'ПЕРЕГЛЯНУТИ ЗАМОВЛЕННЯ'
+  };
+  public purchasesBlockData = {
+    items: MockPurchases,
+    mainTitle: 'ПОКУПКИ',
+    noItemsTitle: 'Товари, що ви придбали будуть доступні тут для перегляду',
+    btnTitle: 'ПЕРЕГЛЯНУТИ ПОКУПКИ'
+  };
+  public lovesBlockData = {
+    items: MockLoves,
+    mainTitle: 'УПОДОБАННЯ',
+    noItemsTitle: 'Тут можна буде переглянути товари, які були уподобані вами',
+    btnTitle: 'ПЕРЕГЛЯНУТИ УПОДОБАННЯ'
+  };
 
   constructor() { }
 

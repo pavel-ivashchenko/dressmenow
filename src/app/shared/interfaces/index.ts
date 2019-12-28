@@ -8,4 +8,3 @@ export * from './new-user.interface';
 export * from './env.interface';
 export * from './auth-response.interface';
 export * from './response-error.interface';
-export * from './errors.interface';

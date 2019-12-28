@@ -6,21 +6,23 @@ import { SharedModule } from '@app/shared/shared.module';
 
 import { MyAccountRoutingModule } from './my-account-routing.module';
 
-// components
+// COMPONENTS
+
 import {
-  MyAccountOrdersComponent, MyAccountRecentlyViewedComponent,
-  MyAccountPersonalInfoComponent, MyAccountBalanceComponent
+  MyAccountRecentlyViewedComponent,
+  MyAccountPersonalInfoComponent, MyAccountBalanceComponent, MyAccountInfoBlockComponent
 } from './components';
+
 import { MyAccountComponent, MyAccountHomeComponent } from './pages';
 
 @NgModule({
   declarations: [
     MyAccountRecentlyViewedComponent,
-    MyAccountOrdersComponent,
     MyAccountComponent,
     MyAccountHomeComponent,
     MyAccountPersonalInfoComponent,
-    MyAccountBalanceComponent
+    MyAccountBalanceComponent,
+    MyAccountInfoBlockComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,35 @@
+
+<div class="info-block">
+
+  <header>
+    <a class="info-block__header width-100 d-block font-weight-bold" href="#">{{ mainTitle }}</a>
+  </header>
+
+  <div class="info-block__main">
+    <p *ngIf="!items.length" class="no-data">{{ noItemsTitle }}</p>
+  </div>
+
+  <ul class="info-list d-flex row">
+    <ng-container *ngFor="let item of items; let idx = index;">
+      <li *ngIf="idx < 6" class="info-list__item col-6 col-sm-3">
+        <a [href]="item.href">
+          <figure>
+            <img class="info-list__image" [src]="item.src" alt="wish #{{ idx }}">
+            <figcaption *ngIf="item.title" class="font-14 text-center">{{ item.title }}</figcaption>
+          </figure>
+        </a>
+      </li>
+    </ng-container>
+  </ul>
+
+  <button
+    mat-button
+    [appBtnSpinner]="isLoading"
+    appDelayClick (delayClick)="test()"
+    (click)="test()"
+    class="btn-submit--fluid">
+      <span *ngIf="items.length">{{ btnTitle }}</span>
+      <span *ngIf="!items.length">ДО КАТАЛОГУ</span>
+  </button>
+
+</div>

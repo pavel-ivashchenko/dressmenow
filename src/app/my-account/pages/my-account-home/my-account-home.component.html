@@ -3,7 +3,12 @@
 
   <div class="main-info col-sm-12 col-md-8 order-md-2">
 
-    <app-my-account-orders [orders]="orders"></app-my-account-orders>
+    <app-my-account-info-block
+      [items]="ordersBlockData.items"
+      [mainTitle]="ordersBlockData.mainTitle"
+      [noItemsTitle]="ordersBlockData.noItemsTitle"
+      [btnTitle]="ordersBlockData.btnTitle"
+    ></app-my-account-info-block>
     
     <app-my-account-recently-viewed></app-my-account-recently-viewed>
 
@@ -11,72 +16,19 @@
 
     <app-my-account-balance></app-my-account-balance>
 
-    <div class="info-block">
+    <app-my-account-info-block
+      [items]="purchasesBlockData.items"
+      [mainTitle]="purchasesBlockData.mainTitle"
+      [noItemsTitle]="purchasesBlockData.noItemsTitle"
+      [btnTitle]="purchasesBlockData.btnTitle"
+    ></app-my-account-info-block>
 
-      <header>
-        <a class="info-block__header width-100 d-block font-weight-bold" href="#">ПОКУПКИ</a>
-      </header>
-
-      <div *ngIf="!purchases.length" class="info-block__main row no-gutters">
-        <p class="no-data font-14 d-flex justify-content-center">Товари, що ви придбали будуть доступні тут для перегляду</p>
-      </div>
-
-      <ul class="info-list d-flex row">
-        <ng-container *ngFor="let purchaseItem of purchases; let idx = index;">
-          <li *ngIf="idx < 6" class="info-list__item col-6 col-sm-2">
-            <a [href]="purchaseItem.href">
-              <figure>
-                <img class="width-100 height-auto font-14" [src]="purchaseItem.src" alt="wish #{{ idx }}">
-              </figure>
-            </a>
-          </li>
-        </ng-container>
-      </ul>
-
-      <button
-        mat-button
-        *ngIf="purchases.length"
-        [appBtnSpinner]="isLoading"
-        appDelayClick (delayClick)="test()"
-        (click)="test()"
-        class="btn-submit--fluid"
-      >ПЕРЕГЛЯНУТИ ПОКУПКИ</button>
-
-    </div>
-
-    <div class="info-block">
-
-      <header>
-        <a class="info-block__header width-100 d-block font-weight-bold" href="#">УПОДОБАННЯ</a>
-      </header>
-
-      <div *ngIf="!loves.length" class="info-block__main row no-gutters">
-        <p class="no-data">Тут можна буде переглянути товари, які були відзначені вами</p>
-      </div>
-
-      <ul class="info-list d-flex row">
-        <ng-container *ngFor="let loveItem of loves; let idx = index;">
-          <li *ngIf="idx < 6" class="info-list__item col-6 col-sm-3">
-            <a class="width-100" [href]="loveItem.href">
-              <figure>
-                <img class="info-list__image" [src]="loveItem.src" alt="loveItem #{{ idx }}">
-                <figcaption *ngIf="loveItem.title" class="font-14 text-center">{{ loveItem.title }}</figcaption>
-              </figure>
-            </a>
-          </li>
-        </ng-container>
-      </ul>
-
-      <button
-        mat-button
-        *ngIf="loves.length"
-        [appBtnSpinner]="isLoading"
-        appDelayClick (delayClick)="test()"
-        (click)="test()"
-        class="btn-submit--fluid"
-      >ПЕРЕГЛЯНУТИ УПОДОБАННЯ</button>
-
-    </div>
+    <app-my-account-info-block
+      [items]="lovesBlockData.items"
+      [mainTitle]="lovesBlockData.mainTitle"
+      [noItemsTitle]="lovesBlockData.noItemsTitle"
+      [btnTitle]="lovesBlockData.btnTitle"
+    ></app-my-account-info-block>
 
     <div class="info-block p-0">
 

@@ -1,32 +1,30 @@
 
 @import 'z-index';
 @import 'mixins/_all';
+@import 'colors';
 
 .scroll-down {
-  position: absolute; bottom: 20px; left: 50%;
-  transform: translateX(-50%);
+  position: absolute; bottom: 40px; left: 40px;
   padding-top: 20px;
+  border: 0;
   z-index: $scroll-btn;
   display: inline-block;
-  color: #fff;
+  color: $main-orange;
   opacity: 0;
   transition: .3s;
-  cursor: pointer;
-  &:hover {
-    opacity: 1;
-  }
+  cursor: default;
   @include e('icon') {
     position: absolute; top: 0; left: 50%;
     width: 30px; height: 50px;
     margin-left: -15px;
-    border: 2px solid #fff;
+    border: 2px solid $main-orange;
     border-radius: 20px;
     box-sizing: border-box;
     &::before {
       position: absolute; top: 10px; left: 50%;
       width: 6px; height: 6px;
       margin-left: -3px;
-      background-color: #fff;
+      background-color: $main-orange;
       border-radius: 100%;
       animation: float 2s infinite;
       box-sizing: border-box;
@@ -36,6 +34,8 @@
   @include m('visible') {
     padding-top: 60px;
     opacity: .4;
+    cursor: pointer;
+    &:hover { opacity: 1; }
   }
 }
 

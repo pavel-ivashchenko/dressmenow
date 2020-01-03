@@ -10,7 +10,7 @@ import { UserService } from '@app/core/services';
 import { IUserState, initialAppState } from '@app/core/store/state';
 import { SetUser } from '@app/core/store/actions';
 
-fdescribe('UserService', () => {
+describe('UserService', () => {
 
   const BASE_URL: string = environment.baseURL;
 

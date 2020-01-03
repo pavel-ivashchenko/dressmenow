@@ -4,13 +4,6 @@
 @import 'mixins/_all';
 @import 'z-index';
 
-main {
-  height: auto;
-  @include media-breakpoint-up(lg) {
-    min-height: 100vh;
-  }
-}
-
 .top-ad {
   max-height: 50px;
   padding: 20px 0;

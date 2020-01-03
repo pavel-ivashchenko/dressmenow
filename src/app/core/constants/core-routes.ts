@@ -7,7 +7,7 @@ export enum CORE_ROUTE_NAMES {
   OTHER = '**',
   NOT_FOUND = '404',
   SHOP = 'shop',
-  MY_ACCOUNT = 'myaccount'
+  MY_ACCOUNT = 'my-account'
 }
 
 export const CORE_ROUTES: Routes = [

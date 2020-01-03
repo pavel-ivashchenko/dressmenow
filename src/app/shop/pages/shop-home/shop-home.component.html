@@ -1,36 +1,35 @@
 
-<header>
-  <app-slider class="d-none d-sm-block d-lg-none" [sliderConf]="mainPageSlides"></app-slider>
+<app-scroll-down class="d-none d-lg-flex"></app-scroll-down>
+
+<header class="shop-title d-none d-lg-flex">
+  <h1 class="shop-title__layer shop-title__layer--back">Title</h1>
+  <h5 class="shop-title__layer shop-title__layer--front">some sub title text...</h5>
 </header>
 
-<main>
+<section class="d-sm-block d-lg-none">
+  <app-slider [sliderConf]="mainPageSlides"></app-slider>
+</section>
+
+<section>
+
   <header class="collection">
-    
     <img class="collection-cover" src="https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw5763658b/melanie-lyne/2019/homepage/june-17/ml-trend-summer-dressing-1.jpg?yocs=D_&yoloc=eu" alt="New Collection">
-    
     <div class="collection-info">
       <p class="collection-info__name">Ocean Breeze</p>
       <p class="collection-info__ad">Елегантні візерунки та морські відтінки втілюють спокійну вишуканість</p>
       <a class="collection-info__btn" href="">Побачити колекцію</a>
     </div>
-
   </header>
 
-  <section class="sale row no-gutters" appDeferLoad (deferLoad)="showCarousel = true">
-    
+  <div class="sale row no-gutters" appDeferLoad (deferLoad)="showCarousel = true">
     <div class="sale-left col-2">
       <p class="sale-left__banner"></p>
     </div>
-
     <div class="sale-right col-10">
-
-      <!-- <p>Літній розпродаж</p>
-      <p>ціни вже знижено</p> -->
-
       <app-carousel-small *ngIf=showCarousel></app-carousel-small>
     </div>
+  </div>
 
-  </section>
-</main>
+</section>
 
 <router-outlet></router-outlet>

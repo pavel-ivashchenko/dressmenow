@@ -1,11 +1,10 @@
 
 import { Routes } from '@angular/router';
 
-import { ShopComponent, ShopHomeComponent } from '../pages';
+import { ShopComponent, ShopHomeComponent, ShowcaseComponent } from '../pages';
 
 export enum SHOP_ROUTE_NAMES {
-  DRESSES = 'dresses',
-  ACCESSORIES = 'accessories'
+  SHOWCASE = 'showcase'
 }
 
 export const SHOP_ROUTES: Routes = [{
@@ -13,8 +12,8 @@ export const SHOP_ROUTES: Routes = [{
   component: ShopComponent,
   children: [
     {
-      path: SHOP_ROUTE_NAMES.DRESSES,
-      loadChildren: '@app/shop-dresses/shop-dresses.module#ShopDressesModule'
+      path: SHOP_ROUTE_NAMES.SHOWCASE,
+      component: ShowcaseComponent
     }, {
       path: '',
       component: ShopHomeComponent

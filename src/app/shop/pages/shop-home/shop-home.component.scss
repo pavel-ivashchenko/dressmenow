@@ -3,6 +3,33 @@
 @import 'z-index';
 @import 'colors';
 
+.shop-title {
+  height: 100vh;
+  width: 100%;
+  perspective: 1px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { display: none; }
+  @include e('layer') {
+    position: absolute; top: 50%; left: 50%;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    @include m('front') {
+      height: 50%;
+      transform: translateX(-50%) translateY(25%) translateZ(0);
+      font-size: 42px;
+    }
+    @include m('back') {
+      height: 100%;
+      transform: translateX(-50%) translateY(-50%) translateZ(-1px) scale(2);
+      font-size: 350px;
+    }
+  }
+}
+
 .collection {
   position: relative;
   background-color: #fff;

@@ -1,0 +1,14 @@
+
+<section class="row">
+
+  <mat-select
+    class="col-sm-12 d-md-none"
+    [disabled]="types.length <= 1"
+    [value]="currTypeName"
+    (selectionChange)="onTypeChange($event)">
+      <mat-option *ngFor="let type of types" [value]="type.name">
+        {{ type.name }}
+      </mat-option>
+  </mat-select>
+
+</section>

@@ -1,10 +1,10 @@
 
 import { Routes } from '@angular/router';
 
-import { ShopComponent, ShopHomeComponent, ShowcaseComponent } from '../pages';
+import { ShopComponent, ShoesComponent } from '../pages';
 
 export enum SHOP_ROUTE_NAMES {
-  SHOWCASE = 'showcase'
+  SHOES = 'shoes'
 }
 
 export const SHOP_ROUTES: Routes = [{
@@ -12,11 +12,12 @@ export const SHOP_ROUTES: Routes = [{
   component: ShopComponent,
   children: [
     {
-      path: SHOP_ROUTE_NAMES.SHOWCASE,
-      component: ShowcaseComponent
+      path: SHOP_ROUTE_NAMES.SHOES,
+      component: ShoesComponent
     }, {
       path: '',
-      component: ShopHomeComponent
+      redirectTo: SHOP_ROUTE_NAMES.SHOES,
+      pathMatch: 'full'
     }
   ]
 }];

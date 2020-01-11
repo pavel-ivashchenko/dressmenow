@@ -1,0 +1,25 @@
+
+@import 'colors';
+@import 'mixins/_all';
+
+app-header {
+  mat-form-field.mat-form-field-appearance-legacy { // TODO refactor
+    width: 100%;
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+    .mat-form-field-infix {
+      padding: 0;
+      border-top: 0;
+      .mat-select-trigger {
+        span, .mat-select-arrow {
+          color: $grey-4;
+          @include breakpoint-up('lg') { color: #fff; }
+        }
+      }
+    }
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+}

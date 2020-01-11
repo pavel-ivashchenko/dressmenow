@@ -1,0 +1,23 @@
+
+@import
+'./showcase.scss',
+'./header.scss',
+'./footer.scss',
+'./user-modal.scss';
+
+div.cdk-overlay-pane {
+  div.ng-trigger-transformPanel {
+    mat-option.mat-option {
+      span.mat-option-text { color: $grey-4; }
+      &[aria-selected="true"] {
+        span.mat-option-text {
+          color: $main-orange;
+        }
+      }
+    }
+  }
+}
+
+button.mat-button {
+  line-height: normal;
+}

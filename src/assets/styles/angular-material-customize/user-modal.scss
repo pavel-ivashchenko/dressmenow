@@ -1,0 +1,43 @@
+
+app-user-modal {
+  .mat-form-field {
+    width: 100%;
+    .mat-input-element {
+      font-size: 14px;
+    }
+    .mat-form-field-label {
+      top: 50%;
+      transform: translateY(40%);
+      font-size: 14px;
+    }
+    .mat-form-field-wrapper {
+      margin: 0;
+      padding-bottom: 25px;
+    }
+    .mat-form-field-infix {
+      padding: 20px 0 16px;
+      border-top: 0;
+    }
+    .mat-form-field-outline-thick {
+      .mat-form-field-outline-start,
+      .mat-form-field-outline-gap,
+      .mat-form-field-outline-end {
+        border-width: 1px;
+      }
+    }
+    .mat-form-field-subscript-wrapper {
+      margin-top: 0;
+    }
+  }
+  .mat-form-field-appearance-outline .mat-form-field-prefix,
+  .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 50%; left: 5px;
+    transform: translateY(-1px);
+  }
+  .mat-icon-button {
+    line-height: 0;
+  }
+  .mat-checkbox-label {
+    font-size: 12px;
+  }
+}

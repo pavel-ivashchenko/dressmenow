@@ -1,5 +1,44 @@
 
+@import 'colors';
+@import 'mixins/_all';
+
+.dd-container {
+  display: flex;
+  position: relative;
+  background-color: $grey-1;
+}
+
+.open-trigger {
+  padding: 15px 0 15px 20px;
+  .fa-caret-down {
+    transition: transform 0.3s ease;
+  }
+  &.visible {
+    .fa-caret-down {
+      transform: rotate(180deg);
+    }
+  }
+}
+
 .dd-list {
+  width: 100%;
   position: absolute; top: 100%;
-  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  transform-origin: center top;
+  transform: scaleY(0);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 15px 0 rgba(33, 33, 33, 0.2);
+  background-color: $grey-1;
+  &.visible {
+    opacity: 1;
+    transform: scaleY(1);
+    visibility: visible;
+  }
+  @include e('item') {
+    padding: 15px 0 15px 20px;
+    background: transparent;
+    transition: background 0.5s ease;
+    &:hover { background: $grey-2; }
+  }
 }

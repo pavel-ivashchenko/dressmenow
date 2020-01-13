@@ -15,6 +15,7 @@ export class ShowcaseComponent implements OnInit {
   @Input() sortOptions: any[] = SortOptions;
 
   public currTypeName: string;
+  public isVisible = false;
 
   constructor() { }
 
@@ -26,6 +27,10 @@ export class ShowcaseComponent implements OnInit {
 
   public onTypeChange(): void {
 
+  }
+
+  public onTest(): void {
+    this.isVisible = !this.isVisible;
   }
 
 }

@@ -15,17 +15,14 @@ export class DeferLoadDirective implements AfterViewInit {
   ) { }
 
   ngAfterViewInit () {
-
     this.intersectionObserver = new IntersectionObserver(entries => {
       this.checkForIntersection(entries);
     }, {});
 
     this.intersectionObserver.observe(<Element>(this.element.nativeElement));
-
   }
 
   private checkForIntersection = (entries: Array<IntersectionObserverEntry>) => {
-
     entries.forEach((entry: IntersectionObserverEntry) => {
       if (this.checkIfIntersecting(entry)) {
         this.deferLoad.emit();
@@ -33,7 +30,6 @@ export class DeferLoadDirective implements AfterViewInit {
         this.intersectionObserver.disconnect();
       }
     });
-
   }
 
   private checkIfIntersecting (entry: IntersectionObserverEntry) {

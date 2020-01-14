@@ -9,13 +9,13 @@ import { CoreStoreModule } from './store/core-store.module';
 import { APP_SERVICE_PROVIDERS } from './services';
 import { APP_INTERCEPTORS } from './interceptors';
 
-import { CorePageComponent } from './pages/core-page/core-page.component';
-import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { CorePageComponent, NotFoundPageComponent, MainPageComponent } from './pages';
 
 @NgModule({
   declarations: [
     CorePageComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    MainPageComponent
   ],
   providers: [
     ...APP_SERVICE_PROVIDERS,

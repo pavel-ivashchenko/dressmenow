@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '@app/shared/shared.module';
 import { ShopRoutingModule } from '@app/shop/shop-routing.module';
 
-import { ShopComponent, ShopHomeComponent, ShowcaseComponent } from './pages';
+import { ShopComponent, ShoesComponent} from './pages';
+import { ShowcaseComponent } from './components';
 
 @NgModule({
   declarations: [
     ShopComponent,
-    ShopHomeComponent,
-    ShowcaseComponent
+    ShowcaseComponent,
+    ShoesComponent
   ],
   imports: [
     CommonModule,

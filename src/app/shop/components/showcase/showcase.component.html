@@ -1,0 +1,24 @@
+
+<section class="row">
+
+  <div (click)="onTest()" class="dd-container col-sm-12 d-md-none">
+    <div class="open-trigger d-flex justify-content-start align-items-center" [ngClass]="{ 'disabled': false, 'visible': isVisible }">
+      <h4 class="m-r-10">Boots</h4>
+      <i class="fa fa-caret-down"></i>
+    </div>
+    <ul class="dd-list" [ngClass]="{ 'visible': isVisible }">
+      <li class="dd-list__item" *ngFor="let type of types" (click)="onTypeChange($event)">{{ type.name }}</li>
+    </ul>
+  </div>
+  
+  <!-- <mat-select
+    class="col-sm-12 d-md-none"
+    [disabled]="types.length <= 1"
+    [value]="currTypeName"
+    (selectionChange)="onTypeChange($event)">
+      <mat-option *ngFor="let type of types" [value]="type.name">
+        {{ type.name }}
+      </mat-option>
+  </mat-select> -->
+
+</section>

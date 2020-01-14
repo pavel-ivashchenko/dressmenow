@@ -1,0 +1,20 @@
+
+@import 'mixins/_all';
+
+.pos-fixed { position: fixed; }
+
+@include sm {
+  .pos-sm-fixed { position: fixed; }
+}
+
+@include md {
+  .pos-md-fixed { position: fixed; }
+}
+
+@include lg {
+  .pos-lg-fixed { position: fixed; }
+}
+
+@include xl {
+  .pos-xl-fixed { position: fixed; }
+}

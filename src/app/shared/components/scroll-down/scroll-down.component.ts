@@ -13,6 +13,7 @@ import { IsShrinkedService } from '@app/core/services';
 export class ScrollDownComponent implements OnInit {
 
   @Input() scrollTo: number = null;
+  @Input() elem: HTMLElement;
 
   constructor(
     public isShrinkedService: IsShrinkedService,
@@ -22,7 +23,14 @@ export class ScrollDownComponent implements OnInit {
   ngOnInit() { }
 
   public onScrollDown(): void {
-    this.document.documentElement.scrollTo(0, this.scrollTo || this.document.documentElement.clientHeight);
+    this.scrollElem(
+      this.elem || this.document.documentElement,
+      this.scrollTo || this.document.documentElement.clientHeight
+    );
+  }
+
+  private scrollElem(elem: HTMLElement, scrollTo: number): void {
+    elem.scrollTo(0, scrollTo);
   }
 
 }

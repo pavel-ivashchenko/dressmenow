@@ -1,7 +1,6 @@
 
 import { Routes } from '@angular/router';
-import { CorePageComponent } from '@app/core/pages/core-page/core-page.component';
-import { NotFoundPageComponent } from '@app/core/pages/not-found-page/not-found-page.component';
+import { CorePageComponent, NotFoundPageComponent, MainPageComponent } from '@app/core/pages';
 
 export enum CORE_ROUTE_NAMES {
   OTHER = '**',
@@ -13,13 +12,13 @@ export enum CORE_ROUTE_NAMES {
 export const CORE_ROUTES: Routes = [
   {
     path: '',
+    component: MainPageComponent,
+    pathMatch: 'full'
+  }, {
+    path: CORE_ROUTE_NAMES.OTHER,
     component: CorePageComponent,
     children: [
       {
-        path: '',
-        redirectTo: CORE_ROUTE_NAMES.SHOP,
-        pathMatch: 'full'
-      }, {
         path: CORE_ROUTE_NAMES.SHOP,
         loadChildren: '@app/shop/shop.module#ShopModule'
       }, {

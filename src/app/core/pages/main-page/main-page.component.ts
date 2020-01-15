@@ -20,10 +20,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     this.video.nativeElement.controls = false;
     const videoPromise = this.video.nativeElement.play();
     if (videoPromise) {
-      videoPromise.then(_ => {
-        debugger;
-        // Autoplay started!
-      }).catch(_ => {
+      videoPromise.catch(_ => {
         this.showPlayOverlay = true;
         this.cdr.detectChanges();
       });
@@ -31,7 +28,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   }
 
   public onPlay(): void {
-    debugger;
+    this.showPlayOverlay = false;
     this.video.nativeElement.play();
   }
 

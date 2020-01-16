@@ -11,15 +11,20 @@
   </div>
 
   <div class="bg">
-    <div class="play-overlay" [ngClass]="{ 'play-overlay--show': showPlayOverlay }">
-      <div class='play-btn' (click)="onPlay()">
-        <i class="play-btn__triangle fa fa-caret-right"></i>
+    <ng-container *ngIf="showVideoBg">
+      <div class="play-overlay" [ngClass]="{ 'play-overlay--show': showPlayOverlay }">
+        <div class='play-btn' (click)="onPlay()">
+          <i class="play-btn__triangle fa fa-caret-right"></i>
+        </div>
       </div>
-    </div>
-    <video #video autoplay muted loop playsinline class="bg__video">
-      <source src="http://thenewcode.com/assets/videos/polina.webm" type="video/webm">
-      <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
-    </video>
+      <video #video autoplay muted loop playsinline class="bg__video">
+        <source src="http://thenewcode.com/assets/videos/polina.webm" type="video/webm">
+        <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
+      </video>
+    </ng-container>
+    <ng-container *ngIf="!showVideoBg">
+      <div class="bg__img"></div>
+    </ng-container>
   </div>
 
   <div class="cont z-index-2">

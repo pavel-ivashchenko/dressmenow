@@ -1,8 +1,8 @@
 
 <button 
   (click)="onScrollDown()"
-  class="scroll-down d-none d-lg-block"
-  [disabled]="isShrinkedService.check() | async"
-  [ngClass]="{ 'scroll-down--visible': !(isShrinkedService.check() | async) }">
+  class="scroll-down"
+  [disabled]="!(isVisible$ | async)"
+  [ngClass]="{ 'scroll-down--visible': isVisible$ | async }">
     <span class="scroll-down__icon"></span>
 </button>

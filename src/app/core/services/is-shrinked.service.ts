@@ -10,7 +10,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 export class IsShrinkedService {
 
   private $currScroll: BehaviorSubject<number>;
-  private IS_SHRINKED: number = 200;
+  private IS_SHRINKED = 200;
 
   constructor(@Inject(DOCUMENT) private document: Document) {
     this.$currScroll = new BehaviorSubject(this.document.documentElement.scrollTop);

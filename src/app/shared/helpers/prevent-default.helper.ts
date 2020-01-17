@@ -2,7 +2,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { stopEvent } from './stop-event';
+import { stopEvent } from './stop-event.helper';
 
 export const preventDefault$ = (source$: Observable<any[]>): Observable<string> => source$.pipe(
   map(([ value, event ]) => {

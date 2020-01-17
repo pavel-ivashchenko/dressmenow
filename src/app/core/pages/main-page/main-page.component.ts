@@ -23,7 +23,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.showVideoBg = this.document.documentElement.offsetWidth >= GRID_TIERS.LG;
-    debugger;
   }
 
   ngAfterViewInit() {

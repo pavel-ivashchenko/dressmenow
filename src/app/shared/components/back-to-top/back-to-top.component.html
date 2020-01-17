@@ -2,6 +2,6 @@
 <div
   class="back-to-top-btn"
   (click)="onBackToTopClick()"
-  [ngClass]="{'is-active': isShrinkedService.check() | async }">
-  <i class="fa fa-angle-double-up"></i>
+  [ngClass]="{'is-active': isVisible$ | async }">
+    <i class="fa fa-angle-double-up"></i>
 </div>

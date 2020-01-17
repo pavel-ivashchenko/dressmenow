@@ -2,7 +2,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject, Input } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
-import { IsShrinkedService } from '@app/core/services';
+import { Observable } from 'rxjs';
+
+import { toggleVisiblityOnScroll } from '@app/shared/helpers';
 
 @Component({
   selector: 'app-scroll-down',
@@ -14,13 +16,19 @@ export class ScrollDownComponent implements OnInit {
 
   @Input() scrollTo: number = null;
   @Input() elem: HTMLElement;
+  @Input() hideOnHeight = 200;
+
+  public isVisible$: Observable<boolean>;
 
   constructor(
-    public isShrinkedService: IsShrinkedService,
     @Inject(DOCUMENT) private document: Document
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isVisible$ = toggleVisiblityOnScroll(this.elem || this.document.documentElement, this.hideOnHeight, false);
+  }
+
+  // PUBLIC METHODS
 
   public onScrollDown(): void {
     this.scrollElem(
@@ -28,6 +36,8 @@ export class ScrollDownComponent implements OnInit {
       this.scrollTo || this.document.documentElement.clientHeight
     );
   }
+
+  // PRIVATE METHODS
 
   private scrollElem(elem: HTMLElement, scrollTo: number): void {
     elem.scrollTo(0, scrollTo);

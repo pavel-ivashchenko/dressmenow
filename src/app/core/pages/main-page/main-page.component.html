@@ -5,34 +5,56 @@
     <app-header></app-header>
   </header>
 
-  <div class="slogan">
+  <div class="slogan" [ngClass]="{ 'slogan--visible': isSloganVisible$ | async }">
     <h1>Some Big Title</h1>
     <h4>some long text smaller than the title</h4>
   </div>
 
-  <div class="bg">
-    <ng-container *ngIf="showVideoBg">
-      <div class="play-overlay" [ngClass]="{ 'play-overlay--show': showPlayOverlay }">
-        <div class='play-btn' (click)="onPlay()">
-          <i class="play-btn__triangle fa fa-caret-right"></i>
+  <div class="height-100">
+    <div class="bg">
+      <ng-container *ngIf="showVideoBg">
+        <div class="play-overlay" [ngClass]="{ 'play-overlay--show': showPlayOverlay }">
+          <div class='play-btn' (click)="onPlay()">
+            <i class="play-btn__triangle fa fa-caret-right"></i>
+          </div>
         </div>
-      </div>
-      <video #video autoplay muted loop playsinline class="bg__video">
-        <source src="http://thenewcode.com/assets/videos/polina.webm" type="video/webm">
-        <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
-      </video>
-    </ng-container>
-    <ng-container *ngIf="!showVideoBg">
-      <div class="bg__img"></div>
-    </ng-container>
+        <video #video autoplay muted loop playsinline class="bg__video">
+          <source src="http://thenewcode.com/assets/videos/polina.webm" type="video/webm">
+          <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
+        </video>
+      </ng-container>
+      <ng-container *ngIf="!showVideoBg">
+        <div class="bg__img"></div>
+      </ng-container>
+    </div>
   </div>
 
   <div class="cont z-index-2">
-    <h1>Lorem Ipsum</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et purus porta, porta dolor vel, pulvinar turpis. Suspendisse aliquam placerat turpis, sed ullamcorper nisl vestibulum eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod tempor elit a pulvinar. Integer vehicula purus ipsum, id ultricies risus placerat sit amet. Cras vel ante egestas diam egestas sagittis. Mauris facilisis, dolor pulvinar tempus vestibulum, elit lectus gravida sem, sed volutpat dui dolor vel purus. Praesent nec ligula ac mi faucibus hendrerit vitae sed felis. Nullam vehicula magna vitae ultrices dapibus. Pellentesque facilisis dui a diam scelerisque pharetra. Vestibulum dapibus imperdiet molestie. Fusce fringilla facilisis metus, in iaculis lectus fermentum eget. Ut tortor quam, imperdiet sit amet nisi in, fringilla porta sapien. Aenean a enim vestibulum, bibendum dolor sed, consequat mi.</p>
-    <p>Fusce faucibus nulla id iaculis sagittis. Duis ac arcu a ex elementum feugiat. Proin ut quam quis tortor vulputate semper a id nunc. Morbi rhoncus ultricies ultricies. Praesent semper id massa sed euismod. Fusce sagittis felis nec libero malesuada, in luctus enim aliquam. Aliquam sagittis, orci eget blandit vestibulum, mi dui blandit mauris, et tincidunt tellus nisi sagittis lacus. Sed dignissim, sapien vitae cursus imperdiet, augue massa tempor ex, non finibus risus metus ac enim. Mauris blandit eros nisi.</p>
-    <p>Sed bibendum ante ac metus hendrerit, nec commodo tortor venenatis. Pellentesque porta eros non eros cursus, vitae commodo sapien facilisis. Praesent sit amet volutpat lacus. Nullam sed quam ac dolor blandit lacinia. Ut euismod turpis sit amet libero pulvinar, non aliquet lacus bibendum. Nullam libero massa, facilisis sed neque id, porta fringilla eros. Curabitur vestibulum nisi nec tempor tempor. Sed fermentum mauris diam, eu volutpat magna tempus et. Ut semper dapibus purus eget ullamcorper. Aenean varius rutrum purus id congue. Mauris sit amet turpis ornare, pharetra ex et, porta lorem. In hac habitasse platea dictumst.</p>
-    <p>Nulla sed pellentesque nibh, eu consectetur neque. Curabitur eu risus at felis sagittis blandit. Nunc non massa non massa mattis semper. Curabitur dapibus tortor velit, id tincidunt ligula rutrum sed. Quisque feugiat consequat molestie. Curabitur lobortis neque ac porta imperdiet. Sed malesuada nibh sit amet magna commodo, sed bibendum turpis vestibulum. Suspendisse vel rutrum dolor, sed bibendum turpis. Morbi condimentum fermentum urna id venenatis.</p>
+    <header class="collection">
+      <img class="collection-cover" src="https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw5763658b/melanie-lyne/2019/homepage/june-17/ml-trend-summer-dressing-1.jpg?yocs=D_&yoloc=eu" alt="New Collection">
+      <div class="collection-info">
+        <p class="collection-info__name">Ocean Breeze</p>
+        <p class="collection-info__ad">Елегантні візерунки та морські відтінки втілюють спокійну вишуканість</p>
+        <a class="collection-info__btn" href="">Побачити колекцію</a>
+      </div>
+    </header>
+  </div>
+
+  <div class="height-100 overflow-hidden">
+    <div class="bg">
+      <div class="bg__img"></div>
+    </div>
+  </div>
+
+  <div class="cont z-index-2">
+    <div class="sale row no-gutters" appDeferLoad (deferLoad)="showCarousel = true">
+      <div class="sale-left col-2">
+        <p class="sale-left__banner"></p>
+      </div>
+      <div class="sale-right col-10">
+        <app-carousel-small *ngIf=showCarousel></app-carousel-small>
+      </div>
+    </div>
   </div>
 
   <footer>

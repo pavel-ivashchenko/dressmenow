@@ -3,6 +3,8 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, AfterVie
 import { DOCUMENT } from '@angular/common';
 
 import { GRID_TIERS } from '@app/shared/constants';
+import { toggleVisiblityOnScroll } from '@app/shared/helpers';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -13,8 +15,12 @@ import { GRID_TIERS } from '@app/shared/constants';
 export class MainPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('video') video;
+  @ViewChild('parallax') parallax;
   public showVideoBg = false;
   public showPlayOverlay = false;
+  public isSloganVisible$: Observable<boolean>;
+
+  private sloganVisibilityHeight = 500;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -23,6 +29,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.showVideoBg = this.document.documentElement.offsetWidth >= GRID_TIERS.LG;
+    this.isSloganVisible$ = toggleVisiblityOnScroll(this.parallax.nativeElement, this.sloganVisibilityHeight, false);
   }
 
   ngAfterViewInit() {

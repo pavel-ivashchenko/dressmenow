@@ -16,6 +16,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('video') video;
   @ViewChild('parallax') parallax;
+
   public showVideoBg = false;
   public showPlayOverlay = false;
   public isSloganVisible$: Observable<boolean>;

@@ -3,8 +3,15 @@
 @import 'colors';
 @import 'z-index';
 
+@mixin vendor-background-cover {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .parallax {
-  position: fixed;
+  position: absolute;
   width: 100%; height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -12,49 +19,42 @@
   perspective-origin: 0 0;
 }
 
+.block {
+  padding: 40px;
+  border-top: 2px solid $main-orange;
+  border-bottom: 2px solid $main-orange;
+  position: relative;
+  color: #fff;
+  background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+  background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
+}
+
 .slogan {
   width: 100%;
-  position: absolute; top: 150%;
+  position: absolute; top: 160%;
   transform-origin: 0;
   transform: translateZ(-2px) scale(3);
   font-size: 60px;
-  z-index: 1;
   text-align: center;
   color: #fff;
   opacity: 0;
-  transition: opacity .4s;
-  @include m('visible') { opacity: 1; }
+  transition: opacity 1s, top 2s;
+  z-index: 1;
+  @include m('visible') { opacity: 1; top: 150%; }
+  @include m('color-orange') { color: $main-orange; }
 }
 
 .bg {
   height: 100%;
   transform-origin: 0 0;
   transform: translateZ(-1px) scale(2);
-  @include e('video') {
-    min-width: 100%;
-    min-height: 100%;
-  }
+  @include e('video') { min-width: 100%; min-height: 100%; }
   @include e('img') {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     background: url('assets/img/main-bg.jpg') no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-}
-
-.bg-2 {
-  height: 100%;
-  @include e('img') {
-    width: 100%;
-    height: 100%;
-    background: url('assets/img/main-bg.jpg') no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    @include vendor-background-cover;
   }
 }
 
@@ -70,7 +70,7 @@
 
 .play-btn {
   width: 75px; height: 75px;
-  position: absolute; bottom: 20px; right: 20px;
+  position: absolute; bottom: 50px; right: 50px;
   border: 1px solid $main-orange;
   display: flex;
   justify-content: center;
@@ -79,8 +79,11 @@
   border-radius: 50%;
   box-shadow: 0 0 0 0 rgba(230, 85, 64, .5);
   animation: pulse 1.5s infinite;
+  opacity: 0;
+  transition: opacity .3s;
   cursor: pointer;
   &:hover { animation: none; }
+  @include m('visible') { opacity: 1; }
   @include e('triangle') {
     font-size: 40px;
     transform: translateX(3px);
@@ -89,83 +92,43 @@
 
 @keyframes pulse {
   0% { transform: scale(.9); }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 50px rgba($main-orange, 0);
-  }
-  100% {
-    transform: scale(.9);
-    box-shadow: 0 0 0 0 rgba($main-orange, 0);
-  }
+  70% { transform: scale(1); box-shadow: 0 0 0 50px rgba($main-orange, 0); }
+  100% { transform: scale(.9); box-shadow: 0 0 0 0 rgba($main-orange, 0); }
 }
-
-.cont {
-  position: relative;
-  // background: rgba(0, 0, 0, .8);
-  color: #fff;
-  background: -moz-linear-gradient(top,  rgba(170,170,170,0.05) 0%, rgba(128,128,128,0.8) 25%, rgba(85,85,85,0.9) 50%, rgba(43,43,43,1) 75%, rgba(0,0,0,1) 100%);
-background: -webkit-linear-gradient(top,  rgba(170,170,170,0.05) 0%,rgba(128,128,128,0.8) 25%,rgba(85,85,85,0.9) 50%,rgba(43,43,43,1) 75%,rgba(0,0,0,1) 100%);
-background: linear-gradient(to bottom,  rgba(170,170,170,0.05) 0%,rgba(128,128,128,0.8) 25%,rgba(85,85,85,0.9) 50%,rgba(43,43,43,1) 75%,rgba(0,0,0,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0daaaaaa', endColorstr='#000000',GradientType=0 );
-
-  & * {
-    max-width: 900px;
-  }
-}
-
-/*****************************************/
 
 .collection {
-  position: relative;
-  padding: 40px 0;
-  border-top: 2px solid $main-orange;
-}
-
-.collection-cover {
-  width: 100%;
-  margin: 0 auto;
-  display: block;
-  @include breakpoint-up(lg) {
-    width: 90%;
-  }
-}
-
-.collection-info {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 100%; height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   color: #fff;
+  background: url('https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw5763658b/melanie-lyne/2019/homepage/june-17/ml-trend-summer-dressing-1.jpg?yocs=D_&yoloc=eu') no-repeat center center;
+  @include vendor-background-cover;
   @include e('name') {
     font-family: 'Playfair Display SC', serif;
     font-size: 30px;
     margin-bottom: 30px;
     text-transform: uppercase;
     text-align: center;
-    @include breakpoint-up(sm) {
-      font-size: 35px;
-    }
-    @include breakpoint-up(md) {
-      font-size: 50px;
-      margin-bottom: 0;
-    }
-    @include breakpoint-up(lg) {
-      font-size: 60px;
-      margin-bottom: 0;
-    }
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 3s, transform 2s;
+    @include m('visible') { opacity: 1; transform: translateY(0); }
+    @include breakpoint-up(sm) { font-size: 35px; }
+    @include breakpoint-up(md) { margin-bottom: 0; font-size: 50px; }
+    @include breakpoint-up(lg) { margin-bottom: 0; font-size: 60px; }
   }
-  @include e('ad') {
+  @include e('slogan') {
     display: none;
     margin: 30px 0;
     font-size: 18px;
     text-align: center;
     font-family: Montserrat, sans-serif;
-    @include breakpoint-up(md) {
-      display: block;
-    }
+    opacity: 0;
+    transition: opacity 3s;
+    @include m('visible') { opacity: 1; }
+    @include breakpoint-up(md) { display: block; }
   }
   @include e('btn') {
     width: 100%;
@@ -177,32 +140,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0daaaaaa', e
     text-transform: uppercase;
     text-align: center;
     color: #fff;
-    transition: .3s;
-    @include breakpoint-up(md) {
-      font-size: 15px;
-    }
-    &:hover {
-      background-color: #000;
-    }
+    transition: all .3s;
+    @include breakpoint-up(md) { font-size: 15px; }
+    &:hover { background-color: #000; }
   }
 }
 
-.sale {
-  background-color: #fff;
-  border-top: 2px solid $main-orange;
-}
-
-.sale-right {
-  justify-content: flex-end;
-}
-
-.sale-left {
-  position: relative;
-  @include e('banner') {
-    width: 100%; height: 100%;
-    background-image: url('assets/img/sale.png');
-    background-size: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+.banner {
+  width: 100%; height: 100%;
+  background-image: url('assets/img/sale.png');
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }

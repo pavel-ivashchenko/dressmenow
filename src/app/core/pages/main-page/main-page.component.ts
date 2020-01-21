@@ -4,7 +4,8 @@ import { DOCUMENT } from '@angular/common';
 
 import { GRID_TIERS } from '@app/shared/constants';
 import { toggleVisiblityOnScroll } from '@app/shared/helpers';
-import { Observable } from 'rxjs';
+import { Observable, fromEvent } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-page',
@@ -23,6 +24,8 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
   private sloganVisibilityHeight = 500;
 
+  private videoEvents$: Observable<any>;
+
   constructor(
     private cdr: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: Document
@@ -34,13 +37,12 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.video.nativeElement.controls = false;
-    const videoPromise = this.video.nativeElement.play();
-    if (videoPromise) {
-      videoPromise.catch(_ => {
-        this.showPlayOverlay = true;
-        this.cdr.detectChanges();
-      });
+    if (this.video && this.video.nativeElement.play()) {
+      this.video.nativeElement.controls = false;
+      this.video.nativeElement.play()
+        .then(_ => this.showPlayOverlay = false)
+        .catch(_ => this.showPlayOverlay = true);
+      this.cdr.detectChanges();
     }
   }
 

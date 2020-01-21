@@ -1,19 +1,26 @@
 
+<app-scroll-down [elem]="parallax"></app-scroll-down>
+
 <section #parallax class="parallax">
 
   <header class="pos-fixed width-100 z-index-1">
     <app-header></app-header>
   </header>
 
-  <div class="slogan" [ngClass]="{ 'slogan--visible': isSloganVisible$ | async, 'slogan--color-orange': !showVideoBg }">
-    <h1>Some Big Title</h1>
-    <h6>some long text smaller than the title</h6>
+  <div
+    class="slogan"
+    [ngClass]="{
+      'slogan--visible': isSloganVisible$ | async,
+      'slogan--color-orange': !isVideoBgVisible
+    }">
+      <h1>Some Big Title</h1>
+      <h6>some long text smaller than the title</h6>
   </div>
 
   <div class="height-100">
     <div class="bg">
-      <ng-container *ngIf="showVideoBg">
-        <div class="play-overlay" [ngClass]="{ 'play-overlay--show': showPlayOverlay }">
+      <ng-container *ngIf="isVideoBgVisible">
+        <div class="play-overlay" [ngClass]="{ 'play-overlay--visible': isPlayOverlayVisible }">
           <div class='play-btn' (click)="onPlay()" [ngClass]="{ 'play-btn--visible': isSloganVisible$ | async }">
             <i class="play-btn__triangle fa fa-caret-right"></i>
           </div>
@@ -23,16 +30,16 @@
           <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
         </video>
       </ng-container>
-      <ng-container *ngIf="!showVideoBg">
+      <ng-container *ngIf="!isVideoBgVisible">
         <div class="bg__img"></div>
       </ng-container>
     </div>
   </div>
 
   <div class="block height-vh-100 z-index-2">
-    <div class="collection" appDeferLoad (deferLoad)="showCollection = $event">
-      <p class="collection__name" [ngClass]="{ 'collection__name--visible': showCollection }">Ocean Breeze</p>
-      <p class="collection__slogan" [ngClass]="{ 'collection__slogan--visible': showCollection }">Елегантні візерунки та морські відтінки втілюють спокійну вишуканість</p>
+    <div class="collection" appDeferLoad (deferLoad)="isCollectionVisible = $event">
+      <p class="collection__name" [ngClass]="{ 'collection__name--visible': isCollectionVisible }">Ocean Breeze</p>
+      <p class="collection__slogan" [ngClass]="{ 'collection__slogan--visible': isCollectionVisible }">Елегантні візерунки та морські відтінки втілюють спокійну вишуканість</p>
       <a class="collection__btn" href="">Побачити колекцію</a>
     </div>
   </div>
@@ -43,13 +50,19 @@
     </div>
   </div>
 
-  <div class="block z-index-2">
-    <div class="sale row no-gutters" appDeferLoad checkOnce="true" (deferLoad)="showCarousel = $event">
+  <ul class="ad-features row" [ngClass]="{ 'ad-features--visible': true }">
+    <li class="ad-features__item col-4" style="height: 200px; border: 1px solid red;"></li>
+    <li class="ad-features__item col-4" style="height: 200px; border: 1px solid red;"></li>
+    <li class="ad-features__item col-4" style="height: 200px; border: 1px solid red;"></li>
+  </ul>
+
+  <div class="block z-index-2" appDeferLoad (deferLoad)="isAdFeaturesVisible = !$event">
+    <div class="sale row no-gutters" appDeferLoad checkOnce="true" (deferLoad)="isCarouselVisible = $event">
       <div class="position-relative col-2">
         <p class="banner"></p>
       </div>
       <div class="justify-content-end col-10">
-        <app-carousel-small *ngIf=showCarousel></app-carousel-small>
+        <app-carousel-small *ngIf="isCarouselVisible"></app-carousel-small>
       </div>
     </div>
   </div>
@@ -59,5 +72,3 @@
   </footer>
 
 </section>
-
-<app-scroll-down [elem]="parallax"></app-scroll-down>

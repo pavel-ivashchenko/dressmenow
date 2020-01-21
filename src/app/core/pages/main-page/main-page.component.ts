@@ -4,8 +4,7 @@ import { DOCUMENT } from '@angular/common';
 
 import { GRID_TIERS } from '@app/shared/constants';
 import { toggleVisiblityOnScroll } from '@app/shared/helpers';
-import { Observable, fromEvent } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -18,13 +17,14 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   @ViewChild('video') video;
   @ViewChild('parallax') parallax;
 
-  public showVideoBg = false;
-  public showPlayOverlay = false;
+  public isVideoBgVisible = false;
+  public isPlayOverlayVisible = false;
+  public isCarouselVisible = false;
+  public isCollectionVisible = false;
+  public isAdFeaturesVisible = true;
   public isSloganVisible$: Observable<boolean>;
 
   private sloganVisibilityHeight = 500;
-
-  private videoEvents$: Observable<any>;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -32,7 +32,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.showVideoBg = this.document.documentElement.offsetWidth >= GRID_TIERS.LG;
+    this.isVideoBgVisible = this.document.documentElement.offsetWidth >= GRID_TIERS.LG;
     this.isSloganVisible$ = toggleVisiblityOnScroll(this.parallax.nativeElement, this.sloganVisibilityHeight, false);
   }
 
@@ -40,14 +40,14 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     if (this.video && this.video.nativeElement.play()) {
       this.video.nativeElement.controls = false;
       this.video.nativeElement.play()
-        .then(_ => this.showPlayOverlay = false)
-        .catch(_ => this.showPlayOverlay = true);
+        .then(_ => this.isPlayOverlayVisible = false)
+        .catch(_ => this.isPlayOverlayVisible = true);
       this.cdr.detectChanges();
     }
   }
 
   public onPlay(): void {
-    this.showPlayOverlay = false;
+    this.isPlayOverlayVisible = false;
     this.video.nativeElement.play();
   }
 

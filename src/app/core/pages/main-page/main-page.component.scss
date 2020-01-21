@@ -65,7 +65,7 @@
   transition: opacity .3s;
   background-color: $hover-black;
   z-index: 1;
-  @include m('show') { opacity: 1; }
+  @include m('visible') { opacity: 1; }
 }
 
 .play-btn {
@@ -152,4 +152,17 @@
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.ad-features {
+  width: 100%;
+  position: absolute; top: 360%; left: 15px;
+  transform-origin: 0;
+  transform: translateZ(-1px) scale(2);
+  opacity: 0;
+  transition: all .3s;
+  @include m('visible') { opacity: 1; top: 350%; }
+  @include e('item') {
+    background-color: $grey-2;
+  }
 }

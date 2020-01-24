@@ -1,5 +1,8 @@
 
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, ViewChild, Inject } from '@angular/core';
+import {
+  Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef,
+  AfterViewInit, ViewChild, Inject
+} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { GRID_TIERS } from '@app/shared/constants';
@@ -37,12 +40,9 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.video && this.video.nativeElement.play()) {
-      this.video.nativeElement.controls = false;
-      this.video.nativeElement.play()
-        .then(_ => this.isPlayOverlayVisible = false)
-        .catch(_ => this.isPlayOverlayVisible = true);
-      this.cdr.detectChanges();
+    if (this.video) {
+      const playPromise = this.video.nativeElement.play();
+      if (playPromise) { playPromise.catch(_ => this.isPlayOverlayVisible = this.video.nativeElement.paused); }
     }
   }
 

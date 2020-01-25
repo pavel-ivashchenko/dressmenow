@@ -4,21 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-  MatSelectModule,
-  MatDialogModule,
-  MatButtonModule,
-  MatSnackBarModule,
-  MatInputModule,
-  MatCheckboxModule
+  MatSelectModule, MatDialogModule, MatButtonModule, MatSnackBarModule,
+  MatInputModule, MatCheckboxModule, MatTooltipModule
 } from '@angular/material';
 
 const MATERIAL_MODULES = [
-  MatSelectModule,
-  MatDialogModule,
-  MatButtonModule,
-  MatSnackBarModule,
-  MatInputModule,
-  MatCheckboxModule
+  MatSelectModule, MatDialogModule, MatButtonModule, MatSnackBarModule,
+  MatInputModule, MatCheckboxModule, MatTooltipModule
 ];
 
 import { COMPONENTS, ENTRY_COMPONENTS } from './components';

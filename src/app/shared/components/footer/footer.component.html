@@ -1,9 +1,9 @@
 
-<header i18n="@@footerTitle" class="d-flex justify-content-center">
-  <h5 class="header-text">Дізнатись першим</h5>
-</header>
+<section class="container bg-white d-flex flex-column">
 
-<section class="container-fluid">
+  <header i18n="@@footerTitle" class="d-flex justify-content-center">
+    <h5 class="header-text">Дізнатись першим</h5>
+  </header>
   
   <div i18n="@@footerEmaiInput" class="email row no-gutters">
     <mat-form-field class="col-6 col-sm-4 col-lg-3">
@@ -57,17 +57,17 @@
     </li>
   </ul>
 
-</section>
+  <footer class="row d-flex justify-content-center position-relative">
+    <p i18n="@@footerRights" class="footer-text col-4 col-lg-6">
+      <span>&copy; 2019 DressMeNow Всі права захищені</span>
+      <a class="policy" href="#">Політика конфіденційності</a>
+    </p>
+    <div class="language-bar" (click)="onLanguageClick($event.target.value)">
+      <i class="language-bar__icon icon-globe d-none d-sm-block"></i>
+      <a class="language-bar__link" href="#">UA</a>
+      <a class="language-bar__link" href="#">RU</a>
+      <a class="language-bar__link language-bar__link--last" href="#">EN</a>
+    </div>
+  </footer>
 
-<footer class="row d-flex justify-content-center position-relative">
-  <p i18n="@@footerRights" class="footer-text col-4 col-lg-6">
-    <span>&copy; 2019 DressMeNow Всі права захищені</span>
-    <a class="policy" href="#">Політика конфіденційності</a>
-  </p>
-  <div class="language-bar" (click)="onLanguageClick($event.target.value)">
-    <i class="language-bar__icon icon-globe d-none d-sm-block"></i>
-    <a class="language-bar__link" href="#">UA</a>
-    <a class="language-bar__link" href="#">RU</a>
-    <a class="language-bar__link language-bar__link--last" href="#">EN</a>
-  </div>
-</footer>
+</section>

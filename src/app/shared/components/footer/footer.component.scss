@@ -2,12 +2,7 @@
 @import 'colors';
 @import 'mixins/_all';
 
-:host {
-  padding: 45px 15px 0;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-}
+:host { width: 100%; }
 
 .mat-form-field {
   position: relative;

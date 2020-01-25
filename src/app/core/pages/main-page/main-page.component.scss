@@ -10,6 +10,15 @@
   background-size: cover;
 }
 
+.border-y-orange {
+  border-top: 1px solid $main-orange;
+  border-bottom: 1px solid $main-orange;
+}
+
+.background-white {
+  background-color: #fff;
+}
+
 .parallax {
   height: 100vh;
   overflow-x: hidden;
@@ -28,7 +37,7 @@
   &::after {
     content: '';
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
+    top: 0; right: 0; bottom: 0; left: -15px;
     transform: translateZ(-1px) scale(1.5);
     background-size: 100%;
     z-index: -1;
@@ -37,7 +46,7 @@
 }
 
 .video {
-  position: absolute;
+  position: absolute; left: -10px;
   min-width: 100%; min-height: 100%;
   transform: translateZ(-3px) scale(2.5);
   z-index: -1;
@@ -158,10 +167,10 @@
   background-repeat: no-repeat;
 }
 
-.bg1::after {
-  background-image: url('https://placekitten.com/g/900/700');
+.ad-image {
+  width: 100%;
+  min-width: 250px;
+  height: auto;
 }
 
-.bg2::after {
-  background-image: url('https://placekitten.com/g/800/600');
-}
+.main-bg-grey::after { background-image: url('assets/img/main-bg-grey.jpg'); }

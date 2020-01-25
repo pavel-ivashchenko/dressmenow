@@ -1,0 +1,20 @@
+
+@import 'mixins/_all';
+
+.bg-white { background-color: #fff; }
+
+@include sm {
+  .bg-sm-white { background-color: #fff; }
+}
+
+@include md {
+  .bg-md-white { background-color: #fff; }
+}
+
+@include lg {
+  .bg-lg-white { background-color: #fff; }
+}
+
+@include xl {
+  .bg-xl-white { background-color: #fff; }
+}

@@ -26,13 +26,10 @@
     align-self: center;
   }
   @include e('close') {
-    top: -4px; right: 0;
+    position: absolute; top: 50%; right: 20px;
+    transform: translateY(-50%);
     font-size: 12px;
     color: #fff;
-    &:before {
-      width: 20px;
-      height: 20px;
-    }
   }
 }
 

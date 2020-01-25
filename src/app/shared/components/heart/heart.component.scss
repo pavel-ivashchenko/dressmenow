@@ -1,0 +1,20 @@
+
+.heart {
+  width: 120px;
+  margin: 20px auto 0 auto;
+}
+
+.heartSVG {
+  margin-top: 3rem;
+  fill: transparent;
+  stroke: #fff;
+  stroke-width: 2;
+  width: 100%;
+  animation: 5s pulse ease infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}

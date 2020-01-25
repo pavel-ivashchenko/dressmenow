@@ -1,25 +1,48 @@
 
 @import 'mixins/_all';
 
-.p-t-0 { padding-top: 0; }
 .p-0 { padding: 0; }
 
+.p-y-40 { padding-top: 40px; padding-bottom: 40px; }
+.p-y-60 { padding-top: 60px; padding-bottom: 60px; }
+
+.p-t-0 { padding-top: 0; }
+.p-t-60 { padding-top: 60px; }
+
+.p-b-30 { padding-bottom: 30px; }
+
 @include sm {
-  .p-t-sm-0 { padding-top: 0; }
   .p-sm-0 { padding: 0; }
+  .p-y-sm-40 { padding-top: 40px; padding-bottom: 40px; }
+  .p-y-sm-60 { padding-top: 60px; padding-bottom: 60px; }
+  .p-t-sm-0 { padding-top: 0; }
+  .p-t-sm-60 { padding-top: 60px; }
+  .p-b-sm-30 { padding-bottom: 30px; }
 }
 
 @include md {
-  .p-t-md-0 { padding-top: 0; }
   .p-md-0 { padding: 0; }
+  .p-y-md-40 { padding-top: 40px; padding-bottom: 40px; }
+  .p-y-md-60 { padding-top: 60px; padding-bottom: 60px; }
+  .p-t-md-0 { padding-top: 0; }
+  .p-t-md-60 { padding-top: 60px; }
+  .p-b-md-30 { padding-bottom: 30px; }
 }
 
 @include lg {
-  .p-t-lg-0 { padding-top: 0; }
   .p-lg-0 { padding: 0; }
+  .p-y-lg-40 { padding-top: 40px; padding-bottom: 40px; }
+  .p-y-lg-60 { padding-top: 60px; padding-bottom: 60px; }
+  .p-t-lg-0 { padding-top: 0; }
+  .p-t-lg-60 { padding-top: 60px; }
+  .p-b-lg-30 { padding-bottom: 30px; }
 }
 
 @include xl {
-  .p-t-xl-0 { padding-top: 0; }
   .p-xl-0 { padding: 0; }
+  .p-y-xl-40 { padding-top: 40px; padding-bottom: 40px; }
+  .p-y-xl-60 { padding-top: 60px; padding-bottom: 60px; }
+  .p-t-xl-0 { padding-top: 0; }
+  .p-t-xl-60 { padding-top: 60px; }
+  .p-b-xl-30 { padding-bottom: 30px; }
 }

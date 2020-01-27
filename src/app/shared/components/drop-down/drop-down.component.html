@@ -1,0 +1,10 @@
+
+<div (click)="isOptionsListVisible = !isOptionsListVisible" class="dd-container col-sm-12 d-md-none">
+  <div class="open-trigger d-flex justify-content-start align-items-center" [ngClass]="{ 'disabled': false }">
+    <h4 class="m-r-10">Boots</h4>
+    <i class="fa fa-caret-down"></i>
+  </div>
+  <ul class="dd-list" [ngClass]="{ 'visible': isOptionsListVisible }">
+    <ng-content></ng-content>
+  </ul>
+</div>

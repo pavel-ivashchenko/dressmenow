@@ -1,2 +1,7 @@
 
-<li class="dd-list__item" (click)="onChange($event)" [value]="option.value">{{ option.name }}</li>
+<li
+  class="dd-list__item"
+  (click)="onChange()"
+  [value]="option.value"
+  [ngClass]="{ 'dd-list__item--is-selected': isSelected }"
+>{{ option.name }}</li>

@@ -1,12 +1,12 @@
 
 import {
   Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectionStrategy,
-  ContentChildren, QueryList, EventEmitter, Output, Input
+  ContentChildren, QueryList, EventEmitter, Output, Input, ChangeDetectorRef
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
-import { Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { Subject, merge } from 'rxjs';
+import { takeUntil, tap, map, switchMap, startWith } from 'rxjs/operators';
 
 import { DropDownOptionComponent } from './components/drop-down-option/drop-down-option.component';
 
@@ -19,7 +19,7 @@ import { DropDownOptionComponent } from './components/drop-down-option/drop-down
     useExisting: DropDownComponent,
     multi: true
   }],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropDownComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
@@ -31,23 +31,29 @@ export class DropDownComponent implements ControlValueAccessor, OnInit, AfterVie
   public isOptionsListVisible: boolean;
   private componentDestroyed$: Subject<void> = new Subject();
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() { }
 
   ngAfterViewInit() {
+    let currOption = null;
     this.options.changes
       .pipe(
-        tap((res: any) => {
-          debugger;
-          console.log(this.options);
-          this.setSelectedStyleToOption();
-        }),
-        // takeUntil(this.componentDestroyed$)
-      ).subscribe(res => {
-        this.onChange(res);
-        this.change.emit(res);
+        startWith(this.options),
+        map((options: any) => options.map(o => {
+          currOption = !currOption && o.isSelected ? o : currOption;
+          return o.change;
+        })),
+        switchMap((optionsChanges: any[]) => merge(...optionsChanges)),
+        takeUntil(this.componentDestroyed$)
+      ).subscribe((newValue: any) => {
+        this.removeSelectedStyleFromOption(this.options, this.selectedValue ? this.selectedValue.optionId : null);
+        this.selectedValue = newValue;
+        this.change.emit(newValue.option);
+        this.onChange(newValue.option);
       });
+    this.selectedValue = this.setSelectedStyleToOption(currOption || this.options.first);
+    this.cdr.detectChanges();
   }
 
   public onChange(value: any) { }
@@ -55,12 +61,20 @@ export class DropDownComponent implements ControlValueAccessor, OnInit, AfterVie
 
   public registerOnChange(fn: any) { this.onChange = fn; }
   public registerOnTouched(fn: any) { this.onTouched = fn; }
-  public writeValue(value: any): void {
-    this.selectedValue = value;
+  public writeValue(value: any): void { this.selectedValue = value; }
+
+  // PRIVATE METHODS
+
+  private setSelectedStyleToOption(optionComponent: DropDownOptionComponent): any {
+    optionComponent.isSelected = true;
+    return {
+      option: optionComponent.option,
+      optionId: optionComponent.optionId
+    };
   }
 
-  private setSelectedStyleToOption(): void {
-    //
+  private removeSelectedStyleFromOption(options: any, optionId: number): void {
+    if (optionId) { options.find(o => o.optionId === optionId).isSelected = false; }
   }
 
   ngOnDestroy(): void {

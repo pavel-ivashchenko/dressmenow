@@ -45,5 +45,6 @@
     transition: background 0.5s ease;
     cursor: pointer;
     &:hover { background: $grey-2; }
+    @include m('is-selected') { background-color: grey; }
   }
 }

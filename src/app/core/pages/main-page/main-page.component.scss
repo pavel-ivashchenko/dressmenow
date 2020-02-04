@@ -167,10 +167,53 @@
   background-repeat: no-repeat;
 }
 
-.ad-image {
-  width: 100%;
-  min-width: 250px;
-  height: auto;
+.pop-section {
+  position: relative;
+  @include e('image') {
+    width: 100%;
+    height: auto;
+    transition: transform 1s, filter 1.5s ease-in-out;
+    transform-origin: center center;
+    filter: brightness(85%);
+  }
+  @include e('title') {
+    width: 100%;
+    position: absolute; top: 50%;
+    letter-spacing: 10px;
+    text-align: center;
+    transition: all 1s;
+    color: #fff;
+    transform: translateY(-50%);
+    z-index: 1;
+    cursor: pointer;
+  }
+  @include e('caption') {
+    font-size: 20px;
+    font-family: 'Homemade Apple';
+    color: $main-orange;
+  }
+  &:hover {
+    .pop-section__image { filter: brightness(100%); transform: scale(1.05); }
+    .pop-section__title { color: $main-orange; transform: translateY(-50%) scale(1.1); }
+  }
 }
 
 .main-bg-grey::after { background-image: url('assets/img/main-bg-grey.jpg'); }
+
+
+// @include e('heart') {
+//   width: 30px; height: 30px;
+//   position: absolute; top: 20px; right: 10%;
+//   display: flex;
+//   background-image: url('./../../../../assets/img/svg/heart.svg');
+//   background-repeat: no-repeat;
+//   background-position: center;
+//   transition: all 1s;
+//   cursor: pointer;
+// }
+// .pop-section__heart { animation: 1s pulse ease infinite; }
+// @keyframes pulse {
+//   0% { transform: scale(3); }
+//   50% { transform: scale(1); }
+//   100% { transform: scale(3); }
+// }

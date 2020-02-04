@@ -1,0 +1,20 @@
+
+@import 'mixins/_all';
+
+.b-shadow-1 { box-shadow: 0px 2px 5px 0px rgba(0,0,0,.75) }
+
+@include sm {
+  .b-shadow-sm-1 { box-shadow: 0px 2px 5px 0px rgba(0,0,0,.75) }
+}
+
+@include md {
+  .b-shadow-md-1 { box-shadow: 0px 2px 5px 0px rgba(0,0,0,.75) }
+}
+
+@include lg {
+  .b-shadow-lg-1 { box-shadow: 0px 2px 5px 0px rgba(0,0,0,.75) }
+}
+
+@include xl {
+  .b-shadow-xl-1 { box-shadow: 0px 2px 5px 0px rgba(0,0,0,.75) }
+}

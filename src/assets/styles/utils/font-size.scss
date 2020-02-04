@@ -7,6 +7,7 @@
 .font-16 { font-size: 16px; }
 .font-18 { font-size: 18px; }
 .font-20 { font-size: 20px; }
+.font-24 { font-size: 24px; }
 
 @include sm {
   .font-sm-10 { font-size: 10px; }
@@ -15,6 +16,7 @@
   .font-sm-16 { font-size: 16px; }
   .font-sm-18 { font-size: 18px; }
   .font-sm-20 { font-size: 20px; }
+  .font-sm-24 { font-size: 24px; }
 }
 
 @include md {
@@ -24,22 +26,25 @@
   .font-md-16 { font-size: 16px; }
   .font-md-18 { font-size: 18px; }
   .font-md-20 { font-size: 20px; }
+  .font-md-24 { font-size: 24px; }
 }
 
-@include md {
+@include lg {
   .font-lg-10 { font-size: 10px; }
   .font-lg-12 { font-size: 20px; }
   .font-lg-14 { font-size: 30px; }
   .font-lg-16 { font-size: 16px; }
   .font-lg-18 { font-size: 18px; }
   .font-lg-20 { font-size: 20px; }
+  .font-lg-24 { font-size: 24px; }
 }
 
-@include md {
+@include xl {
   .font-xl-10 { font-size: 10px; }
   .font-xl-12 { font-size: 20px; }
   .font-xl-14 { font-size: 30px; }
   .font-xl-16 { font-size: 16px; }
   .font-xl-18 { font-size: 18px; }
   .font-xl-20 { font-size: 20px; }
+  .font-xl-24 { font-size: 24px; }
 }

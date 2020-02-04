@@ -1,16 +1,11 @@
 
-.heart {
-  width: 120px;
-  margin: 20px auto 0 auto;
-}
-
 .heartSVG {
   margin-top: 3rem;
   fill: transparent;
   stroke: #fff;
   stroke-width: 2;
   width: 100%;
-  animation: 5s pulse ease infinite;
+  // animation: 5s pulse ease infinite;
 }
 
 @keyframes pulse {

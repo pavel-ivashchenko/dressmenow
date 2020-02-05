@@ -25,7 +25,7 @@
     </div>
   </section>
 
-  <section class="parallax__block applied-parallax height-100 p-y-60 border-y-orange">
+  <section class="parallax__block applied-parallax height-100 border-y-orange">
     <div class="collection" appDeferLoad (deferLoad)="isCollectionVisible = $event">
       <p class="collection__name" [ngClass]="{ 'collection__name--visible': isCollectionVisible }">Ocean Breeze</p>
       <p class="collection__slogan" [ngClass]="{ 'collection__slogan--visible': isCollectionVisible }">Елегантні візерунки та морські відтінки втілюють спокійну вишуканість</p>
@@ -94,7 +94,7 @@
   </section>
 
   <section
-    class="parallax__block p-y-60 border-y-orange bg-white row no-gutters align-items-stretch"
+    class="parallax__block border-y-orange bg-white row no-gutters align-items-stretch"
     appDeferLoad checkOnce="true" (deferLoad)="isCarouselVisible = $event">
       <div class="col-2">
         <p class="banner"></p>

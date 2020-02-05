@@ -40,9 +40,13 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    debugger;
     if (this.video) {
       const playPromise = this.video.nativeElement.play();
-      if (playPromise) { playPromise.catch(_ => this.isPlayOverlayVisible = this.video.nativeElement.paused); }
+      if (playPromise) { playPromise.catch(_ => {
+        this.isPlayOverlayVisible = this.video.nativeElement.paused;
+        this.cdr.detectChanges();
+      }); }
     }
   }
 

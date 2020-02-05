@@ -57,7 +57,7 @@
 }
 
 .play-overlay {
-  width: 100%; height: 100%;
+  width: 100%; height: calc(100% + 121px);
   position: absolute;
   opacity: 0;
   transition: opacity .3s;
@@ -68,7 +68,7 @@
 
 .play-btn {
   width: 75px; height: 75px;
-  position: absolute; bottom: 50px; right: 50px;
+  position: absolute; bottom: 100px; right: 50px;
   border: 1px solid $main-orange;
   display: flex;
   justify-content: center;

@@ -1,0 +1,26 @@
+
+@import 'mixins/_all';
+@import './../colors';
+
+.color-white { color: #fff; }
+.color-main-orange { color: $main-orange; }
+
+@include sm {
+  .color-sm-white { color: #fff; }
+  .color-sm-main-orange { color: $main-orange; }
+}
+
+@include md {
+  .color-md-white { color: #fff; }
+  .color-md-main-orange { color: $main-orange; }
+}
+
+@include lg {
+  .color-lg-white { color: #fff; }
+  .color-lg-main-orange { color: $main-orange; }
+}
+
+@include xl {
+  .color-xl-white { color: #fff; }
+  .color-xl-main-orange { color: $main-orange; }
+}

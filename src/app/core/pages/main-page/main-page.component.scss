@@ -180,7 +180,7 @@
     width: 100%;
     position: absolute; top: 50%;
     letter-spacing: 10px;
-    text-align: center;
+    justify-content: center;
     transition: all 1s;
     color: #fff;
     transform: translateY(-50%);
@@ -188,9 +188,9 @@
     cursor: pointer;
   }
   @include e('caption') {
-    font-size: 20px;
+    position: absolute; bottom: 5px; right: 30px;
     font-family: 'Homemade Apple';
-    color: $main-orange;
+    cursor: pointer;
   }
   &:hover {
     .pop-section__image { filter: brightness(100%); transform: scale(1.05); }
@@ -199,21 +199,3 @@
 }
 
 .main-bg-grey::after { background-image: url('assets/img/main-bg-grey.jpg'); }
-
-
-// @include e('heart') {
-//   width: 30px; height: 30px;
-//   position: absolute; top: 20px; right: 10%;
-//   display: flex;
-//   background-image: url('./../../../../assets/img/svg/heart.svg');
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   transition: all 1s;
-//   cursor: pointer;
-// }
-// .pop-section__heart { animation: 1s pulse ease infinite; }
-// @keyframes pulse {
-//   0% { transform: scale(3); }
-//   50% { transform: scale(1); }
-//   100% { transform: scale(3); }
-// }

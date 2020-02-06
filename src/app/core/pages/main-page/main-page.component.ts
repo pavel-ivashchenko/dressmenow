@@ -24,6 +24,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   public isPlayOverlayVisible = false;
   public isCarouselVisible = false;
   public isCollectionVisible = false;
+  public isTitlesSectionVisible = false;
   public isAdFeaturesVisible = true;
   public isSloganVisible$: Observable<boolean>;
 
@@ -40,13 +41,14 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    debugger;
     if (this.video) {
       const playPromise = this.video.nativeElement.play();
-      if (playPromise) { playPromise.catch(_ => {
-        this.isPlayOverlayVisible = this.video.nativeElement.paused;
-        this.cdr.detectChanges();
-      }); }
+      if (playPromise) {
+        playPromise.catch(_ => {
+          this.isPlayOverlayVisible = this.video.nativeElement.paused;
+          this.cdr.detectChanges();
+        });
+      }
     }
   }
 

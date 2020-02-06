@@ -7,22 +7,26 @@
     <app-header></app-header>
   </header>
 
+  <div class="slogan-parallax font-42 font-lg-60" [ngClass]="{ 'slogan-parallax--visible': !isCollectionVisible }">
+    <h1>Some Big Title</h1>
+    <h6>some long text smaller than the title</h6>
+  </div>
+
   <section class="parallax__block applied-parallax height-100" [ngClass]="{ 'bg-placeholder': !isVideoBgVisible }">
+
     <div class="play-overlay" [ngClass]="{ 'play-overlay--visible': isPlayOverlayVisible }">
       <div class='play-btn' (click)="onPlay()" [ngClass]="{ 'play-btn--visible': isSloganVisible$ | async }">
         <i class="play-btn__triangle fa fa-caret-right"></i>
       </div>
     </div>
+
     <ng-container *ngIf="isVideoBgVisible">
       <video #video autoplay muted loop playsinline class="video">
         <source src="http://thenewcode.com/assets/videos/polina.webm" type="video/webm">
         <source src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4">
       </video>
     </ng-container>
-    <div class="slogan" [ngClass]="{ 'slogan--visible': isSloganVisible$ | async }">
-      <h1>Some Big Title</h1>
-      <h6>some long text smaller than the title</h6>
-    </div>
+
   </section>
 
   <section class="parallax__block applied-parallax height-100 border-y-orange">

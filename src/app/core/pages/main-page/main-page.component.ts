@@ -30,6 +30,65 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
   private sloganVisibilityHeight = 500;
 
+  public AdSectionData = [
+    {
+      tooltipMsg: 'Найпопулярніше',
+      tooltipPos: 'above',
+      title: 'НАЙЦІКАВІШЕ',
+      routerLink: '#',
+      imageSrc: 'https://www.lulus.com/images/product/xlarge/2025102_344812.jpg?w=560',
+      imageAlt: 'Bestsellers title image',
+      figCaption: 'Bestsellers'
+    }, {
+      tooltipMsg: 'Літні сукні',
+      tooltipPos: 'above',
+      title: 'ВІДПУСТКА',
+      routerLink: '#',
+      imageSrc: 'https://www.lulus.com/images/product/xlarge/5145450_1025582.jpg?w=560',
+      imageAlt: 'Vacation title image',
+      figCaption: 'A place in the sun'
+    }, {
+      tooltipMsg: 'Міні сукні',
+      tooltipPos: 'above',
+      title: 'ВЕЧІРКА',
+      routerLink: '#',
+      imageSrc: 'https://www.lulus.com/images/product/xlarge/3911990_607602.jpg?w=560',
+      imageAlt: 'Party title image',
+      figCaption: 'Make it mini'
+    }, {
+      tooltipMsg: 'Вечірні сукні',
+      tooltipPos: 'above',
+      title: 'ЕЛЕГАНТНІСТЬ',
+      routerLink: '#',
+      imageSrc: 'https://www.lulus.com/images/product/xlarge/2717262_511092.jpg?w=560',
+      imageAlt: 'Dresses title image',
+      figCaption: 'Save the night'
+    }, {
+      tooltipMsg: 'Denim & casual',
+      tooltipPos: 'above',
+      title: 'ЩОДНЯ',
+      routerLink: '#',
+      imageSrc: 'https://www.lulus.com/images/product/xlarge/4521570_858582.jpg?w=560',
+      imageAlt: 'Casual title image',
+      figCaption: 'The way you are'
+    }
+  ];
+  public Benefits = [
+    {
+      title: 'GIVE $20, GET $20',
+      subtitle: 'Share the love and refer a friend'
+    }, {
+      title: 'LOVE REWARDS',
+      subtitle: 'Share the love and refer a friend'
+    }, {
+      title: 'UNIDAYS',
+      subtitle: 'Share the love and refer a friend'
+    }, {
+      title: 'GET APP-Y',
+      subtitle: 'Share the love and refer a friend'
+    }
+  ];
+
   constructor(
     private cdr: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: Document

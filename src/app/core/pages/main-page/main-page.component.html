@@ -40,77 +40,26 @@
   <section
     class="parallax__block applied-parallax p-y-60 main-bg-grey flex-column"
     appDeferLoad checkOnce="true" (deferLoad)="isTitlesSectionVisible = $event">
+
       <div class="row width-100 max-width-1200 m-b-30">
-
-        <figure
-          class="pop-section col-4 d-flex flex-column align-items-center"
-          matTooltip="Найпопулярніше" matTooltipPosition="above">
-            <h3 class="pop-section__title d-none d-lg-flex">НАЙЦІКАВІШЕ</h3>
-            <a class="width-100 height-100 b-shadow-1 d-flex overflow-hidden" href="#">
-              <img
-                *ngIf="isTitlesSectionVisible"
-                class="pop-section__image"
-                src="https://www.lulus.com/images/product/xlarge/2025102_344812.jpg?w=560" alt="Bestsellers title image">
-            </a>
-            <figcaption class="pop-section__caption color-white font-16 font-md-20">Bestsellers</figcaption>
-        </figure>
-
-        <figure
-          class="pop-section col-4 d-flex flex-column align-items-center"
-          matTooltip="Літні сукні" matTooltipPosition="above">
-            <h3 class="pop-section__title d-none d-lg-flex">ВІДПУСТКА</h3>
-            <a class="width-100 height-100 b-shadow-1 d-flex overflow-hidden" href="#">
-              <img
-                *ngIf="isTitlesSectionVisible"
-                class="pop-section__image"
-                src="https://www.lulus.com/images/product/xlarge/5145450_1025582.jpg?w=560" alt="Vacation title image">
-            </a>
-            <figcaption class="pop-section__caption color-white font-16 font-md-20">A place in the sun</figcaption>
-        </figure>
-
-        <figure
-          class="pop-section col-4 d-flex flex-column align-items-center"
-          matTooltip="Міні сукні" matTooltipPosition="above">
-            <h3 class="pop-section__title d-none d-lg-flex">ВЕЧІРКА</h3>
-            <a class="width-100 height-100 b-shadow-1 d-flex overflow-hidden" href="#">
-              <img
-                *ngIf="isTitlesSectionVisible"
-                class="pop-section__image"
-                src="https://www.lulus.com/images/product/xlarge/3911990_607602.jpg?w=560" alt="Party title image">
-            </a>
-            <figcaption class="pop-section__caption color-main-orange font-16 font-md-20">Make it mini</figcaption>
-        </figure>
-
+        <div *ngFor="let adData of AdSectionData | slice:0:3" class="col-4 d-flex flex-column align-items-center">
+          <ng-container *ngTemplateOutlet="adSection; context: { data: adData }"></ng-container>
+        </div>
       </div>
+
+      <ul class="width-100 p-y-40 row">
+        <li class="benefit d-flex justify-content-center align-items-center flex-column col-3" *ngFor="let benefit of Benefits">
+          <h3>{{ benefit.title }}</h3>
+          <h6>{{ benefit.subtitle }}</h6>
+        </li>
+      </ul>
+
       <div class="row width-100 max-width-992">
-
-        <figure
-          class="pop-section col-6 d-flex flex-column align-items-center"
-          matTooltip="Вечірні сукні" matTooltipPosition="above">
-            <h3 class="pop-section__title d-none d-lg-flex">ЕЛЕГАНТНІСТЬ</h3>
-            <a class="width-100 height-100 b-shadow-1 d-flex overflow-hidden" href="#">
-              <img
-                *ngIf="isTitlesSectionVisible"
-                class="pop-section__image"
-                src="https://www.lulus.com/images/product/xlarge/2717262_511092.jpg?w=560" alt="Dresses title image">
-            </a>
-            <figcaption class="pop-section__caption color-main-orange font-16 font-md-20">Save the night</figcaption>
-        </figure>
-
-        <figure
-          class="pop-section col-6 d-flex flex-column align-items-center"
-          matTooltip="Denim & casual" matTooltipPosition="above">
-            <h3 class="pop-section__title d-none d-lg-flex">ЩОДНЯ</h3>
-            <a class="width-100 height-100 b-shadow-1 d-flex overflow-hidden" href="#">
-              <img
-                *ngIf="isTitlesSectionVisible"
-                class="pop-section__image"
-                src="https://www.lulus.com/images/product/xlarge/4521570_858582.jpg?w=560" alt="Casual title image">
-            </a>
-            <figcaption class="pop-section__caption color-main-orange font-16 font-md-20">The way you are</figcaption>
-        </figure>
-
+        <div *ngFor="let adData of AdSectionData | slice:3" class="col-6 d-flex flex-column align-items-center">
+          <ng-container *ngTemplateOutlet="adSection; context: { data: adData }"></ng-container>
+        </div>
       </div>
+
   </section>
 
   <section
@@ -129,3 +78,16 @@
   </footer>
 
 </section>
+
+<ng-template #adSection let-data="data">
+  <figure class="pop-section" [matTooltip]="data.tooltipMsg" [matTooltipPosition]="data.tooltipPos">
+    <h3 class="pop-section__title d-none d-lg-flex">{{ data.title }}</h3>
+    <a class="width-100 height-100 b-shadow-1 d-flex overflow-hidden" [routerLink]="[data.routerLink]">
+      <img
+        *ngIf="isTitlesSectionVisible"
+        class="pop-section__image"
+        [src]="data.imageSrc" [alt]="data.imageAlt">
+    </a>
+    <figcaption class="pop-section__caption color-white font-16 font-md-20">{{ data.figCaption }}</figcaption>
+  </figure>
+</ng-template>

@@ -41,7 +41,7 @@
     class="parallax__block applied-parallax p-y-60 main-bg-grey flex-column"
     appDeferLoad checkOnce="true" (deferLoad)="isTitlesSectionVisible = $event">
 
-      <div class="width-100 max-width-1200 m-b-30 row">
+      <div class="width-100 max-width-1200 row">
         <div *ngFor="let adData of AdSectionData | slice:0:3" class="col-4">
           <ng-container *ngTemplateOutlet="adSection; context: { data: adData }"></ng-container>
         </div>
@@ -52,6 +52,7 @@
           <div class="benefit">
             <h3>{{ benefit.title }}</h3>
             <h6>{{ benefit.subtitle }}</h6>
+            <img class="benefit__image" [src]="benefit.imageSrc" [alt]="benefit.imageAlt">
           </div>
         </li>
       </ul>

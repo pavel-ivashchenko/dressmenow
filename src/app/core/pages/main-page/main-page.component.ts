@@ -76,16 +76,24 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   public Benefits = [
     {
       title: 'GIVE $20, GET $20',
-      subtitle: 'Share the love and refer a friend'
+      subtitle: 'Share the love and refer a friend',
+      imageSrc: 'https://image.flaticon.com/icons/svg/1746/1746336.svg',
+      imageAlt: ''
     }, {
       title: 'LOVE REWARDS',
-      subtitle: 'Share the love and refer a friend'
+      subtitle: 'Share the love and refer a friend',
+      imageSrc: 'https://image.flaticon.com/icons/svg/2485/2485909.svg',
+      imageAlt: ''
     }, {
       title: 'UNIDAYS',
-      subtitle: 'Share the love and refer a friend'
+      subtitle: 'Share the love and refer a friend',
+      imageSrc: 'https://image.flaticon.com/icons/svg/1046/1046342.svg',
+      imageAlt: ''
     }, {
       title: 'GET APP-Y',
-      subtitle: 'Share the love and refer a friend'
+      subtitle: 'Share the love and refer a friend',
+      imageSrc: 'https://image.flaticon.com/icons/svg/1579/1579817.svg',
+      imageAlt: ''
     }
   ];
 

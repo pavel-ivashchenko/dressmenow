@@ -206,5 +206,19 @@
 
 .benefit {
   width: 100%;
+  padding: 40px;
   background-color: antiquewhite;
+  position: relative;
+  overflow: hidden;
+  transition: all 1s;
+  @include e('image') {
+    width: 30%; height: auto;
+    position: absolute; top: 50%; right: 0;
+    transform: translate(40%, -50%);
+    transition: all 1s;
+    opacity: .1;
+  }
+  &:hover {
+    .benefit__image { transform: translate(20%, -50%); }
+  }
 }

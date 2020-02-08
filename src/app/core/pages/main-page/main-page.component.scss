@@ -168,13 +168,15 @@
   background-repeat: no-repeat;
 }
 
-.pop-section {
+.ad-section {
   position: relative;
   @include e('image') {
-    width: 100%;
-    height: auto;
+    width: calc(100% + 1px); height: auto;
+    display: flex;
+    backface-visibility: hidden;
     transition: transform 1s, filter 1.5s ease-in-out;
     transform-origin: center center;
+    transform: translateZ(0) scale(1.0);
     filter: brightness(85%);
   }
   @include e('title') {
@@ -190,17 +192,19 @@
   }
   @include e('caption') {
     position: absolute; bottom: 5px; right: 30px;
+    color: $main-orange;
     font-family: 'Homemade Apple';
     cursor: pointer;
   }
   &:hover {
-    .pop-section__image { filter: brightness(100%); transform: scale(1.05); }
-    .pop-section__title { color: $main-orange; transform: translateY(-50%) scale(1.1); }
+    .ad-section__image { filter: brightness(100%); transform: translateZ(0) scale(1.05); }
+    .ad-section__title { color: $main-orange; transform: translateY(-50%) scale(1.1); }
   }
 }
 
 .main-bg-grey::after { background-image: url('assets/img/main-bg-grey.jpg'); }
 
 .benefit {
+  width: 100%;
   background-color: antiquewhite;
 }

@@ -12,7 +12,7 @@
     <h6>some long text smaller than the title</h6>
   </div>
 
-  <section class="parallax__block applied-parallax height-100" [ngClass]="{ 'bg-placeholder': !isVideoBgVisible }">
+  <section class="parallax__block applied-parallax height-100 overflow-hidden" [ngClass]="{ 'bg-placeholder': !isVideoBgVisible }">
 
     <div class="play-overlay" [ngClass]="{ 'play-overlay--visible': isPlayOverlayVisible }">
       <div class='play-btn' (click)="onPlay()" [ngClass]="{ 'play-btn--visible': isSloganVisible$ | async }">

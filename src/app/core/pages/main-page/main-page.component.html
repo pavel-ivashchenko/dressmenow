@@ -47,13 +47,15 @@
         </div>
       </div>
 
-      <ul class="width-100 max-width-1200 p-y-40 row">
+      <ul class="width-100 max-width-1200 p-y-80 row">
         <li class="d-flex justify-content-center align-items-center flex-column col-3" *ngFor="let benefit of Benefits">
-          <div class="benefit">
-            <h3>{{ benefit.title }}</h3>
-            <h6>{{ benefit.subtitle }}</h6>
+          <figure class="benefit">
             <img class="benefit__image" [src]="benefit.imageSrc" [alt]="benefit.imageAlt">
-          </div>
+            <figcaption>
+              <h3>{{ benefit.title }}</h3>
+              <p class="m-t-10 font-14">{{ benefit.subtitle }}</p>
+            </figcaption>
+          </figure>
         </li>
       </ul>
 

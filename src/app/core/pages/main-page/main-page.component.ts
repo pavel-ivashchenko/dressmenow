@@ -66,7 +66,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }, {
       tooltipMsg: 'Denim & casual',
       tooltipPos: 'above',
-      title: 'ЩОДНЯ',
+      title: 'КОЖНОГО ДНЯ',
       routerLink: '#',
       imageSrc: 'https://www.lulus.com/images/product/xlarge/4521570_858582.jpg?w=560',
       imageAlt: 'Casual title image',

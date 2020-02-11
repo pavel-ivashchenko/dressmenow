@@ -2,19 +2,24 @@
 @import 'mixins/_all';
 
 .pos-fixed { position: fixed; }
+.pos-relative { position: relative; }
 
 @include sm {
   .pos-sm-fixed { position: fixed; }
+  .pos-relative { position: relative; }
 }
 
 @include md {
   .pos-md-fixed { position: fixed; }
+  .pos-relative { position: relative; }
 }
 
 @include lg {
   .pos-lg-fixed { position: fixed; }
+  .pos-relative { position: relative; }
 }
 
 @include xl {
   .pos-xl-fixed { position: fixed; }
+  .pos-relative { position: relative; }
 }

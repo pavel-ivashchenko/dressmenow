@@ -68,13 +68,13 @@
   </section>
 
   <section
-    class="parallax__block border-y-orange bg-white row no-gutters align-items-stretch"
-    appDeferLoad checkOnce="true" (deferLoad)="isCarouselVisible = $event">
-      <div class="col-2">
-        <p *ngIf="isCarouselVisible" class="banner"></p>
+    *ngIf="isTitlesSectionVisible"
+    class="parallax__block border-y-orange bg-white row no-gutters align-items-stretch">
+      <div class="pos-relative col-2">
+        <h4 class="banner font-18 font-lg-26 font-xl-40">Sale</h4>
       </div>
       <div class="col-10">
-        <app-carousel-small *ngIf="isCarouselVisible"></app-carousel-small>
+        <app-carousel-small></app-carousel-small>
       </div>
   </section>
 

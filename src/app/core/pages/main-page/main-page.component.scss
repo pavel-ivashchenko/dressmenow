@@ -160,11 +160,11 @@
 }
 
 .banner {
-  width: 100%; height: 100%;
-  background-image: url('assets/img/sale.png');
-  background-size: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
+  position: absolute; top: 45%; left: 55%;
+  transform: translate(-50%) rotate(270deg) scale(5);
+  letter-spacing: 5px;
+  font-family: 'Yesteryear';
+  color: $main-orange;
 }
 
 .ad-section {

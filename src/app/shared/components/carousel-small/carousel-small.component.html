@@ -1,37 +1,28 @@
 
 <div #carousel class="carousel-wrapper">
-
   <ul class="items">
 
     <li
       *ngFor="let product of products; let i = index"
       class="items__item"
       [ngClass]=
-        "{
-          'items__item--active': i === active,
+        "{ 'items__item--active': i === active,
           'items__item--next': i === next,
-          'items__item--prev': i === prev
-        }">
-
-      <a href="">
-        <img class="item-image" src="{{ product.src }}" alt="{{ product.name }}">
-        <p class="item-text" [ngClass]="{ 'item-text--active': i === active }">поглянь на мене <span class="item-text--heart">&#10084;</span></p>
-      </a>
-
+          'items__item--prev': i === prev }">
+        <a href="">
+          <img class="item-image" src="{{ product.src }}" alt="{{ product.name }}">
+          <p class="item-text" [ngClass]="{ 'item-text--active': i === active }">поглянь на мене <span class="item-text--heart">&#10084;</span></p>
+        </a>
     </li>
 
   </ul>
 
   <ul class="controls">
-
     <li class="slider-ctrl slider-ctrl--left" (click)="gotoPrev()">
       <i class="fa fa-angle-left"></i>
     </li>
-  
     <li class="slider-ctrl slider-ctrl--right" (click)="gotoNext()">
       <i class="fa fa-angle-right"></i>
     </li>
-
   </ul>
-
 </div>

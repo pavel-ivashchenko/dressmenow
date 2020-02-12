@@ -38,7 +38,7 @@
   </section>
 
   <section
-    class="parallax__block applied-parallax p-y-60 main-bg-grey flex-column"
+    class="parallax__block applied-parallax p-y-60 ad-section-bg flex-column"
     appDeferLoad checkOnce="true" (deferLoad)="isTitlesSectionVisible = $event">
 
       <div class="width-100 max-width-1200 row">
@@ -67,15 +67,15 @@
 
   </section>
 
-  <section
-    *ngIf="isTitlesSectionVisible"
-    class="parallax__block border-y-orange bg-white row no-gutters align-items-stretch">
+  <section *ngIf="isTitlesSectionVisible" class="parallax__block border-y-orange sale-section-bg">
+    <div class="width-100 max-width-1200 row">
       <div class="pos-relative col-2">
         <h4 class="banner font-18 font-lg-26 font-xl-40">Sale</h4>
       </div>
       <div class="col-10">
         <app-carousel-small></app-carousel-small>
       </div>
+    </div>
   </section>
 
   <footer class="parallax__block width-100 p-t-60">

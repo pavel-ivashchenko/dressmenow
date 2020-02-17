@@ -1,0 +1,156 @@
+
+@import 'mixins/_all';
+@import './../colors';
+
+.border-1 { border: 1px solid; }
+.border-2 { border: 2px solid; }
+.border-3 { border: 3px solid; }
+.border-4 { border: 4px solid; }
+
+.border-y-1 { border-top: 1px solid; border-bottom: 1px solid; }
+
+.border-top-1 { border-top: 1px solid; }
+.border-top-2 { border-top: 2px solid; }
+.border-top-3 { border-top: 3px solid; }
+.border-top-4 { border-top: 4px solid; }
+
+.border-bottom-1 { border-bottom: 1px solid; }
+.border-bottom-2 { border-bottom: 2px solid; }
+.border-bottom-3 { border-bottom: 3px solid; }
+.border-bottom-4 { border-bottom: 4px solid; }
+
+.border-left-1 { border-left: 1px solid; }
+.border-left-2 { border-left: 2px solid; }
+.border-left-3 { border-left: 3px solid; }
+.border-left-4 { border-left: 4px solid; }
+
+.border-right-1 { border-right: 1px solid; }
+.border-right-2 { border-right: 2px solid; }
+.border-right-3 { border-right: 3px solid; }
+.border-right-4 { border-right: 4px solid; }
+
+.border-color-main-orange { border-color: $main-orange; }
+
+@include sm {
+  .border-sm-1 { border: 1px solid; }
+  .border-sm-2 { border: 2px solid; }
+  .border-sm-3 { border: 3px solid; }
+  .border-sm-4 { border: 4px solid; }
+
+  .border-y-sm-1 { border-top: 1px solid; border-bottom: 1px solid; }
+
+  .border-top-sm-1 { border-top: 1px solid; }
+  .border-top-sm-2 { border-top: 2px solid; }
+  .border-top-sm-3 { border-top: 3px solid; }
+  .border-top-sm-4 { border-top: 4px solid; }
+
+  .border-bottom-sm-1 { border-bottom: 1px solid; }
+  .border-bottom-sm-2 { border-bottom: 2px solid; }
+  .border-bottom-sm-3 { border-bottom: 3px solid; }
+  .border-bottom-sm-4 { border-bottom: 4px solid; }
+
+  .border-left-sm-1 { border-left: 1px solid; }
+  .border-left-sm-2 { border-left: 2px solid; }
+  .border-left-sm-3 { border-left: 3px solid; }
+  .border-left-sm-4 { border-left: 4px solid; }
+
+  .border-right-sm-1 { border-right: 1px solid; }
+  .border-right-sm-2 { border-right: 2px solid; }
+  .border-right-sm-3 { border-right: 3px solid; }
+  .border-right-sm-4 { border-right: 4px solid; }
+
+  .border-color-sm-main-orange { border-color: $main-orange; }
+}
+
+@include md {
+  .border-md-1 { border: 1px solid; }
+  .border-md-2 { border: 2px solid; }
+  .border-md-3 { border: 3px solid; }
+  .border-md-4 { border: 4px solid; }
+
+  .border-y-md-1 { border-top: 1px solid; border-bottom: 1px solid; }
+  
+  .border-top-md-1 { border-top: 1px solid; }
+  .border-top-md-2 { border-top: 2px solid; }
+  .border-top-md-3 { border-top: 3px solid; }
+  .border-top-md-4 { border-top: 4px solid; }
+  
+  .border-bottom-md-1 { border-bottom: 1px solid; }
+  .border-bottom-md-2 { border-bottom: 2px solid; }
+  .border-bottom-md-3 { border-bottom: 3px solid; }
+  .border-bottom-md-4 { border-bottom: 4px solid; }
+  
+  .border-left-md-1 { border-left: 1px solid; }
+  .border-left-md-2 { border-left: 2px solid; }
+  .border-left-md-3 { border-left: 3px solid; }
+  .border-left-md-4 { border-left: 4px solid; }
+  
+  .border-right-md-1 { border-right: 1px solid; }
+  .border-right-md-2 { border-right: 2px solid; }
+  .border-right-md-3 { border-right: 3px solid; }
+  .border-right-md-4 { border-right: 4px solid; }
+  
+  .border-color-md-main-orange { border-color: $main-orange; }
+}
+
+@include lg {
+  .border-lg-1 { border: 1px solid; }
+  .border-lg-2 { border: 2px solid; }
+  .border-lg-3 { border: 3px solid; }
+  .border-lg-4 { border: 4px solid; }
+
+  .border-y-lg-1 { border-top: 1px solid; border-bottom: 1px solid; }
+  
+  .border-top-lg-1 { border-top: 1px solid; }
+  .border-top-lg-2 { border-top: 2px solid; }
+  .border-top-lg-3 { border-top: 3px solid; }
+  .border-top-lg-4 { border-top: 4px solid; }
+  
+  .border-bottom-lg-1 { border-bottom: 1px solid; }
+  .border-bottom-lg-2 { border-bottom: 2px solid; }
+  .border-bottom-lg-3 { border-bottom: 3px solid; }
+  .border-bottom-lg-4 { border-bottom: 4px solid; }
+  
+  .border-left-lg-1 { border-left: 1px solid; }
+  .border-left-lg-2 { border-left: 2px solid; }
+  .border-left-lg-3 { border-left: 3px solid; }
+  .border-left-lg-4 { border-left: 4px solid; }
+  
+  .border-right-lg-1 { border-right: 1px solid; }
+  .border-right-lg-2 { border-right: 2px solid; }
+  .border-right-lg-3 { border-right: 3px solid; }
+  .border-right-lg-4 { border-right: 4px solid; }
+  
+  .border-color-lg-main-orange { border-color: $main-orange; }
+}
+
+@include xl {
+  .border-xl-1 { border: 1px solid; }
+  .border-xl-2 { border: 2px solid; }
+  .border-xl-3 { border: 3px solid; }
+  .border-xl-4 { border: 4px solid; }
+
+  .border-y-xl-1 { border-top: 1px solid; border-bottom: 1px solid; }
+  
+  .border-top-xl-1 { border-top: 1px solid; }
+  .border-top-xl-2 { border-top: 2px solid; }
+  .border-top-xl-3 { border-top: 3px solid; }
+  .border-top-xl-4 { border-top: 4px solid; }
+  
+  .border-bottom-xl-1 { border-bottom: 1px solid; }
+  .border-bottom-xl-2 { border-bottom: 2px solid; }
+  .border-bottom-xl-3 { border-bottom: 3px solid; }
+  .border-bottom-xl-4 { border-bottom: 4px solid; }
+  
+  .border-left-xl-1 { border-left: 1px solid; }
+  .border-left-xl-2 { border-left: 2px solid; }
+  .border-left-xl-3 { border-left: 3px solid; }
+  .border-left-xl-4 { border-left: 4px solid; }
+  
+  .border-right-xl-1 { border-right: 1px solid; }
+  .border-right-xl-2 { border-right: 2px solid; }
+  .border-right-xl-3 { border-right: 3px solid; }
+  .border-right-xl-4 { border-right: 4px solid; }
+  
+  .border-color-xl-main-orange { border-color: $main-orange; }
+}

@@ -3,23 +3,28 @@
 
 .pos-fixed { position: fixed; }
 .pos-relative { position: relative; }
+.pos-absolute { position: absolute; }
 
 @include sm {
   .pos-sm-fixed { position: fixed; }
-  .pos-relative { position: relative; }
+  .pos-sm-relative { position: relative; }
+  .pos-sm-absolute { position: absolute; }
 }
 
 @include md {
   .pos-md-fixed { position: fixed; }
-  .pos-relative { position: relative; }
+  .pos-md-relative { position: relative; }
+  .pos-md-absolute { position: absolute; }
 }
 
 @include lg {
   .pos-lg-fixed { position: fixed; }
-  .pos-relative { position: relative; }
+  .pos-lg-relative { position: relative; }
+  .pos-lg-absolute { position: absolute; }
 }
 
 @include xl {
   .pos-xl-fixed { position: fixed; }
-  .pos-relative { position: relative; }
+  .pos-xl-relative { position: relative; }
+  .pos-xl-absolute { position: absolute; }
 }

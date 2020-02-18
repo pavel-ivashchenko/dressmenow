@@ -7,15 +7,15 @@
     <app-header></app-header>
   </header>
 
-  <section class="width-100 height-vh-100 pos-absolute overflow-hidden">
-    <div class="slogan-parallax font-42 font-lg-60" [ngClass]="{ 'slogan-parallax--visible': !isCollectionVisible }">
+  <section class="height-vh-100 width-100 overflow-hidden pos-absolute">
+    <div class="parallax__slogan font-42 font-lg-60" [ngClass]="{ 'parallax__slogan--visible': !isCollectionVisible }">
       <h1>Some Big Title</h1>
       <h6>some long text smaller than the title</h6>
     </div>
   </section>
 
-  <section class="height-vh-100 pos-relative overflow-hidden">
-    <div class="parallax__block applied-parallax height-100 overflow-hidden" [ngClass]="{ 'bg-placeholder': !isVideoBgVisible }">
+  <section class="height-vh-100 width-100 overflow-hidden pos-relative">
+    <div class="parallax__applied height-100 overflow-hidden" [ngClass]="{ 'main-bg': !isVideoBgVisible }">
 
       <div class="play-overlay" [ngClass]="{ 'play-overlay--visible': isPlayOverlayVisible }">
         <div class='play-btn' (click)="onPlay()" [ngClass]="{ 'play-btn--visible': isSloganVisible$ | async }">
@@ -33,7 +33,7 @@
     </div>
   </section>
 
-  <section class="parallax__block height-100 border-y-1 border-color-main-orange">
+  <section class="height-100 border-y-1 border-color-main-orange">
     <div class="collection" appDeferLoad (deferLoad)="isCollectionVisible = $event">
       <p class="collection__name" [ngClass]="{ 'collection__name--visible': isCollectionVisible }">Ocean Breeze</p>
       <p class="collection__slogan" [ngClass]="{ 'collection__slogan--visible': isCollectionVisible }">Елегантні візерунки та морські відтінки втілюють спокійну вишуканість</p>
@@ -43,7 +43,7 @@
 
   <section class="pos-relative overflow-hidden">
     <div
-      class="parallax__block applied-parallax p-y-60 flex-column"
+      class="parallax__applied ad-section-bg p-y-60 d-flex justify-content-center align-items-center flex-column"
       appDeferLoad checkOnce="true" (deferLoad)="isTitlesSectionVisible = $event">
 
         <div class="width-100 max-width-1200 row">
@@ -56,7 +56,7 @@
           <li class="d-flex justify-content-center align-items-center flex-column col-3" *ngFor="let benefit of Benefits">
             <figure class="benefit p-10 p-y-lg-20 p-x-lg-30">
               <img class="benefit__image" [src]="benefit.imageSrc" [alt]="benefit.imageAlt">
-              <figcaption>
+              <figcaption class="color-white">
                 <h3 class="font-20 font-lg-24">{{ benefit.title }}</h3>
                 <p class="m-t-5 m-t-lg-10 font-12 font-lg-14">{{ benefit.subtitle }}</p>
               </figcaption>
@@ -73,7 +73,7 @@
     </div>
   </section>
 
-  <section *ngIf="isTitlesSectionVisible" class="parallax__block sale-section-bg border-y-1 border-color-main-orange">
+  <section *ngIf="isTitlesSectionVisible" class="sale-section-bg border-y-1 border-color-main-orange d-flex justify-content-center overflow-hidden">
     <div class="width-100 max-width-1200 row">
       <div class="pos-relative col-2">
         <h4 class="banner font-18 font-lg-26 font-xl-40">Sale</h4>
@@ -84,7 +84,7 @@
     </div>
   </section>
 
-  <footer class="parallax__block width-100 p-t-60">
+  <footer class="width-100 p-t-60">
     <app-footer></app-footer>
   </footer>
 

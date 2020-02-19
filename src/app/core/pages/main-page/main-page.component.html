@@ -15,7 +15,7 @@
   </section>
 
   <section class="height-vh-100 width-100 overflow-hidden pos-relative">
-    <div class="parallax__applied height-100 overflow-hidden" [ngClass]="{ 'main-bg': !isVideoBgVisible }">
+    <div class="parallax__applied height-100 overflow-hidden" [ngClass]="{ 'main-parallax-bg': !isVideoBgVisible }">
 
       <div class="play-overlay" [ngClass]="{ 'play-overlay--visible': isPlayOverlayVisible }">
         <div class='play-btn' (click)="onPlay()" [ngClass]="{ 'play-btn--visible': isSloganVisible$ | async }">
@@ -39,11 +39,11 @@
       <p class="collection__slogan" [ngClass]="{ 'collection__slogan--visible': isCollectionVisible }">Елегантні візерунки та морські відтінки втілюють спокійну вишуканість</p>
       <a class="collection__btn" href="">Побачити колекцію</a>
     </div>
-  </section> -->
+  </section>
 
   <section class="pos-relative overflow-hidden">
     <div
-      class="parallax__applied ad-section-bg p-y-60 d-flex justify-content-center align-items-center flex-column"
+      class="parallax__applied ad-section-parallax-bg p-y-60 d-flex justify-content-center align-items-center flex-column"
       appDeferLoad checkOnce="true" (deferLoad)="isTitlesSectionVisible = $event">
 
         <div class="width-100 max-width-1200 row">
@@ -74,7 +74,7 @@
   </section>
 
   <section *ngIf="isTitlesSectionVisible" class="sale-section-bg border-y-1 border-color-main-orange d-flex justify-content-center overflow-hidden">
-    <div class="width-100 max-width-1200 row">
+    <div class="width-100 row no-gutters">
       <div class="pos-relative col-2">
         <h4 class="banner font-18 font-lg-26 font-xl-40">Sale</h4>
       </div>

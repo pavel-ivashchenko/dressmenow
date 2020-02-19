@@ -179,9 +179,9 @@
   }
 }
 
-.main-bg { &::after { background-image: url('assets/img/main-bg.jpg'); } }
-.ad-section-bg { &::after { background-image: url('assets/img/main-bg-grey.jpg'); } }
-.sale-section-bg { &::after { background-image: url('https://img5.goodfon.com/wallpaper/nbig/7/18/wallpaper-background-4k-ultra-hd-graffiti-wall-paint-flowers.jpg'); } }
+.main-parallax-bg { &::after { background-image: url('assets/img/main-bg.jpg'); } }
+.ad-section-parallax-bg { &::after { background-image: url('assets/img/main-bg-grey.jpg'); } }
+.sale-section-bg { background-image: url('https://img5.goodfon.com/wallpaper/nbig/7/18/wallpaper-background-4k-ultra-hd-graffiti-wall-paint-flowers.jpg'); }
 
 .benefit {
   width: 100%; height: 100%;

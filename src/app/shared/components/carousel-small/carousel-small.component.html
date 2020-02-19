@@ -1,7 +1,7 @@
 
-<div #carousel class="carousel-wrapper">
-  <ul class="items">
+<section #carousel class="carousel-wrapper">
 
+  <ul class="items">
     <li
       *ngFor="let product of products; let i = index"
       class="items__item"
@@ -9,12 +9,13 @@
         "{ 'items__item--active': i === active,
           'items__item--next': i === next,
           'items__item--prev': i === prev }">
-        <a href="">
-          <img class="item-image" src="{{ product.src }}" alt="{{ product.name }}">
-          <p class="item-text" [ngClass]="{ 'item-text--active': i === active }">поглянь на мене <span class="item-text--heart">&#10084;</span></p>
-        </a>
+        <figure>
+          <a href="">
+            <img class="item-image" src="{{ product.src }}" alt="{{ product.name }}">
+            <figcaption class="item-text" [ngClass]="{ 'item-text--active': i === active }">поглянь на мене <span class="item-text--heart">&#10084;</span></figcaption>
+          </a>
+        </figure>
     </li>
-
   </ul>
 
   <ul class="controls">
@@ -25,4 +26,5 @@
       <i class="fa fa-angle-right"></i>
     </li>
   </ul>
-</div>
+
+</section>

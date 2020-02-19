@@ -7,6 +7,8 @@ import {
 import { interval, Subject, Observable, merge, fromEvent } from 'rxjs';
 import { takeUntil, switchMap, take, tap } from 'rxjs/operators';
 
+import { MockProducts } from './models';
+
 @Component({
   selector: 'app-carousel-small',
   templateUrl: './carousel-small.component.html',
@@ -15,24 +17,7 @@ import { takeUntil, switchMap, take, tap } from 'rxjs/operators';
 })
 export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
 
-  @Input() products = [
-    {
-      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw142d5aa2/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-1.jpg?yocs=D_&yoloc=eu',
-      name: 'product_1'
-    },
-    {
-      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw89239cdd/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-4.jpg?yocs=D_&yoloc=eu',
-      name: 'product_2'
-    },
-    {
-      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dw4bb4f3cb/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-3.jpg?yocs=D_&yoloc=eu',
-      name: 'product_3',
-    },
-    {
-      src: 'https://cdn-eu-ec.yottaa.net/5a8c2777312e587e9dba4f45/www.melanielyne.com/v~4b.1f/on/demandware.static/-/Sites/default/dwf8ffdd65/melanie-lyne/2019/homepage/june-17/ml-trend-day-dresses-2.jpg?yocs=D_&yoloc=eu',
-      name: 'product_4'
-    }
-  ];
+  @Input() products = MockProducts;
 
   @ViewChild('carousel') carousel: ElementRef;
 
@@ -54,7 +39,7 @@ export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
   }
 
   private startShiftInterval(): void {
-    interval(3000)
+    interval(5000)
       .pipe(
         takeUntil(
           merge(

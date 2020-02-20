@@ -3,20 +3,16 @@
 @import 'z-index';
 @import 'colors';
 
-$btn-position-xs: 70px;
-$btn-position-sm: 120px;
-$btn-position-lg: 240px;
-
-:host { z-index: $carousel-small; }
+:host {
+  height: 100%;
+  z-index: $carousel-small;
+}
 
 .carousel-wrapper {
-  width: 100%; height: 350px;
+  width: 100%; height: 100%;
   overflow: hidden;
   position: relative;
   background-color: #fff;
-  @include breakpoint-up(md) { height: 400px; }
-  @include breakpoint-up(md) { height: 600px; }
-  @include breakpoint-up(lg) { height: 800px; }
   &:hover { .slider-ctrl { background-color: rgba(0, 0, 0, 0.8); } }
 }
 
@@ -60,7 +56,7 @@ $btn-position-lg: 240px;
 }
 
 .item-image {
-  width: 100%; height: auto;
+  width: auto; height: 100%;
   object-fit: cover;
 }
 
@@ -78,28 +74,13 @@ $btn-position-lg: 240px;
     padding: 15px 0;
     font-size: 16px;
   }
-  @include m('active') {
-    opacity: 1;
-  }
-  @include m('heart') {
-    color: $main-orange;
-  }
+  @include m('active') { opacity: 1; }
+  @include m('heart') { color: $main-orange; }
 }
 
-.controls {
-  position: absolute; top: 0; left: 50%;
-  width: 1px; height: 100%;
-  .slider-ctrl {
-    z-index: 3;
-    @include m('left') {
-      right: $btn-position-xs;
-      @include breakpoint-up(sm) { right: $btn-position-sm; }
-      @include breakpoint-up(lg) { right: $btn-position-lg; }
-    }
-    @include m('right') {
-      left: $btn-position-xs;
-      @include breakpoint-up(sm) { left: $btn-position-sm; }
-      @include breakpoint-up(lg) { left: $btn-position-lg; }
-    }
-  }
+.slider-ctrl {
+  border: 0;
+  z-index: 3;
+  @include m('left') { left: 2%; }
+  @include m('right') { right: 2%; }
 }

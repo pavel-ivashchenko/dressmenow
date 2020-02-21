@@ -3,10 +3,12 @@ import {
   Component, ChangeDetectionStrategy, Input, AfterViewInit,
   ChangeDetectorRef, ViewChild, ElementRef, OnDestroy
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { interval, Subject, Observable, merge, fromEvent } from 'rxjs';
 import { takeUntil, switchMap, take, tap } from 'rxjs/operators';
 
+import { PRODUCT_STARS_COUNT } from '@app/core/constants';
 import { MockProducts } from './models';
 
 @Component({
@@ -17,7 +19,7 @@ import { MockProducts } from './models';
 })
 export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
 
-  @Input() products = MockProducts;
+  @Input() products: { id: string, src: string, name: string }[] = MockProducts;
 
   @ViewChild('carousel') carousel: ElementRef;
 
@@ -28,8 +30,12 @@ export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
   public active = 0;
   public next = 1;
   public prev = this.products.length - 1;
+  public starsCount: number = PRODUCT_STARS_COUNT;
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) { }
 
   ngAfterViewInit() {
     this.carouselMouseLeave$ = this.getCarouselMouseLeaveListener();
@@ -82,18 +88,17 @@ export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
   }
 
   private gotoNum(number): void {
-
     this.active = number;
-
     this.prev = this.active - 1 === -1 ?
       this.products.length - 1 : this.active - 1;
-
     this.next =
       this.active + 1 === this.products.length ?
         0 : this.active + 1;
-
     this.cdr.detectChanges();
+  }
 
+  public goToProduct(productId: string, isActive: boolean = false): void {
+    if (isActive) { this.router.navigate(['/product', productId]); }
   }
 
   ngOnDestroy(): void {

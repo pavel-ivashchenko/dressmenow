@@ -9,11 +9,17 @@
         "{ 'items__item--active': i === active,
           'items__item--next': i === next,
           'items__item--prev': i === prev }">
+        <div *ngFor="let i of starsCount | times">
+          <i *ngIf="product.starsCount" class="fas fa-star"></i>
+          <i *ngIf="product.starsCount" class="far fa-star"></i>
+          <i *ngIf="product.starsCount" class="fas fa-star-half-alt"></i>
+        </div>
         <figure>
-          <a href="">
+          <a (click)="goToProduct(product.id, i === active)">
             <img class="item-image" src="{{ product.src }}" alt="{{ product.name }}">
             <figcaption class="item-text" [ngClass]="{ 'item-text--active': i === active }">поглянь на мене <span class="item-text--heart">&#10084;</span></figcaption>
           </a>
+          <figcaption>{{ product.name }}</figcaption>
         </figure>
     </li>
   </ul>
@@ -24,14 +30,5 @@
   <button class="slider-ctrl slider-ctrl--right" (click)="gotoNext()">
     <i class="fa fa-angle-right"></i>
   </button>
-
-  <!-- <ul class="controls">
-    <li class="slider-ctrl slider-ctrl--left" (click)="gotoPrev()">
-      <i class="fa fa-angle-left"></i>
-    </li>
-    <li class="slider-ctrl slider-ctrl--right" (click)="gotoNext()">
-      <i class="fa fa-angle-right"></i>
-    </li>
-  </ul> -->
 
 </section>

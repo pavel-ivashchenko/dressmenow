@@ -5,26 +5,51 @@
 .pos-relative { position: relative; }
 .pos-absolute { position: absolute; }
 
+.left-0 { left: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.top-0 { top: 0; }
+
 @include sm {
   .pos-sm-fixed { position: fixed; }
   .pos-sm-relative { position: relative; }
   .pos-sm-absolute { position: absolute; }
+
+  .left-sm-0 { left: 0; }
+  .right-sm-0 { right: 0; }
+  .bottom-sm-0 { bottom: 0; }
+  .top-sm-0 { top: 0; }
 }
 
 @include md {
   .pos-md-fixed { position: fixed; }
   .pos-md-relative { position: relative; }
   .pos-md-absolute { position: absolute; }
+
+  .left-0 { left: 0; }
+  .right-md-0 { right: 0; }
+  .bottom-md-0 { bottom: 0; }
+  .top-md-0 { top: 0; }
 }
 
 @include lg {
   .pos-lg-fixed { position: fixed; }
   .pos-lg-relative { position: relative; }
   .pos-lg-absolute { position: absolute; }
+
+  .left-lg-0 { left: 0; }
+  .right-lg-0 { right: 0; }
+  .bottom-lg-0 { bottom: 0; }
+  .top-lg-0 { top: 0; }
 }
 
 @include xl {
   .pos-xl-fixed { position: fixed; }
   .pos-xl-relative { position: relative; }
   .pos-xl-absolute { position: absolute; }
+
+  .left-xl-0 { left: 0; }
+  .right-xl-0 { right: 0; }
+  .bottom-xl-0 { bottom: 0; }
+  .top-xl-0 { top: 0; }
 }

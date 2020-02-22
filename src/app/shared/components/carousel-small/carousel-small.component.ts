@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { interval, Subject, Observable, merge, fromEvent } from 'rxjs';
 import { takeUntil, switchMap, take, tap } from 'rxjs/operators';
 
-import { PRODUCT_STARS_COUNT } from '@app/core/constants';
 import { MockProducts } from './models';
 
 @Component({
@@ -19,7 +18,13 @@ import { MockProducts } from './models';
 })
 export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
 
-  @Input() products: { id: string, src: string, name: string }[] = MockProducts;
+  @Input() products: {
+    id: string,
+    src: string,
+    name: string,
+    starsRate?: number,
+    colors?: string[]
+  }[] = MockProducts;
 
   @ViewChild('carousel') carousel: ElementRef;
 
@@ -30,7 +35,6 @@ export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
   public active = 0;
   public next = 1;
   public prev = this.products.length - 1;
-  public starsCount: number = PRODUCT_STARS_COUNT;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -41,7 +45,7 @@ export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
     this.carouselMouseLeave$ = this.getCarouselMouseLeaveListener();
 
     this.startMouseEnterListening();
-    this.startShiftInterval();
+    // this.startShiftInterval();
   }
 
   private startShiftInterval(): void {
@@ -71,7 +75,7 @@ export class CarouselSmallComponent implements AfterViewInit, OnDestroy {
     return fromEvent(this.carousel.nativeElement, 'mouseleave')
       .pipe(
         take(1),
-        tap(_ => { this.startShiftInterval(); })
+        // tap(_ => { this.startShiftInterval(); })
       );
   }
 

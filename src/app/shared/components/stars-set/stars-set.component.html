@@ -1,0 +1,12 @@
+
+<ul class="width-100 height-100 d-flex">
+  <li
+    class="star"
+    *ngFor="let currNum of STARS_QTY | times"
+    [ngClass]="{
+      'star--half': currNum === halfStarIdx,
+      'star--full': currNum <= fullStarsQty,
+      'star--empty': halfStarIdx ? currNum > halfStarIdx : currNum > fullStarsQty
+    }"
+  ></li>
+</ul>

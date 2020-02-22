@@ -4,6 +4,8 @@
 .p-0 { padding: 0; }
 .p-10 { padding: 10px; }
 
+.p-x-10 { padding-left: 10px; padding-right: 10px; }
+.p-x-20 { padding-left: 20px; padding-right: 20px; }
 .p-x-30 { padding-left: 30px; padding-right: 30px; }
 
 .p-y-20 { padding-top: 20px; padding-bottom: 20px; }
@@ -18,6 +20,8 @@
 
 @include sm {
   .p-sm-0 { padding: 0; }
+  .p-x-sm-10 { padding-left: 10px; padding-right: 10px; }
+  .p-x-sm-20 { padding-left: 20px; padding-right: 20px; }
   .p-x-sm-30 { padding-left: 30px; padding-right: 30px; }
   .p-y-sm-20 { padding-top: 20px; padding-bottom: 20px; }
   .p-y-sm-40 { padding-top: 40px; padding-bottom: 40px; }
@@ -30,6 +34,8 @@
 
 @include md {
   .p-md-0 { padding: 0; }
+  .p-x-md-10 { padding-left: 10px; padding-right: 10px; }
+  .p-x-md-20 { padding-left: 20px; padding-right: 20px; }
   .p-x-md-30 { padding-left: 30px; padding-right: 30px; }
   .p-y-md-20 { padding-top: 20px; padding-bottom: 20px; }
   .p-y-md-40 { padding-top: 40px; padding-bottom: 40px; }
@@ -42,6 +48,8 @@
 
 @include lg {
   .p-lg-0 { padding: 0; }
+  .p-x-lg-10 { padding-left: 10px; padding-right: 10px; }
+  .p-x-lg-20 { padding-left: 20px; padding-right: 20px; }
   .p-x-lg-30 { padding-left: 30px; padding-right: 30px; }
   .p-y-lg-20 { padding-top: 20px; padding-bottom: 20px; }
   .p-y-lg-40 { padding-top: 40px; padding-bottom: 40px; }
@@ -54,6 +62,8 @@
 
 @include xl {
   .p-xl-0 { padding: 0; }
+  .p-x-xl-10 { padding-left: 10px; padding-right: 10px; }
+  .p-x-xl-20 { padding-left: 20px; padding-right: 20px; }
   .p-x-xl-30 { padding-left: 30px; padding-right: 30px; }
   .p-y-xl-20 { padding-top: 20px; padding-bottom: 20px; }
   .p-y-xl-40 { padding-top: 40px; padding-bottom: 40px; }

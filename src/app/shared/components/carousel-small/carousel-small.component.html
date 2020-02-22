@@ -1,25 +1,25 @@
 
 <section #carousel class="carousel-wrapper">
 
-  <ul class="items">
+  <ul class="height-100 m-y-0 m-x-auto d-flex pos-relative">
     <li
-      *ngFor="let product of products; let i = index"
-      class="items__item"
+      *ngFor="let product of products; let currIdx = index"
+      class="item"
       [ngClass]=
-        "{ 'items__item--active': i === active,
-          'items__item--next': i === next,
-          'items__item--prev': i === prev }">
-        <div *ngFor="let i of starsCount | times">
-          <i *ngIf="product.starsCount" class="fas fa-star"></i>
-          <i *ngIf="product.starsCount" class="far fa-star"></i>
-          <i *ngIf="product.starsCount" class="fas fa-star-half-alt"></i>
+        "{'item--active': currIdx === active,
+          'item--next': currIdx === next,
+          'item--prev': currIdx === prev }">
+        <div *ngIf="product.starsRate && currIdx === active" class="pos-absolute right-0 p-y-20 p-x-20">
+          <app-stars-set [rate]="product.starsRate"></app-stars-set>
         </div>
+        <ul *ngIf="product.colors && product.colors.length && currIdx === active" class="colors">
+          <li class="colors__item" *ngFor="let color of product.colors" [ngStyle]="{ 'background-color': color }"></li>
+        </ul>
         <figure>
-          <a (click)="goToProduct(product.id, i === active)">
-            <img class="item-image" src="{{ product.src }}" alt="{{ product.name }}">
-            <figcaption class="item-text" [ngClass]="{ 'item-text--active': i === active }">поглянь на мене <span class="item-text--heart">&#10084;</span></figcaption>
+          <a (click)="goToProduct(product.id, currIdx === active)">
+            <img class="item__image" src="{{ product.src }}" alt="{{ product.name }}">
+            <figcaption class="item__text" [ngClass]="{ 'item__text--active': currIdx === active }">{{ product.name }} <span class="item__text--heart">&#10084;</span></figcaption>
           </a>
-          <figcaption>{{ product.name }}</figcaption>
         </figure>
     </li>
   </ul>

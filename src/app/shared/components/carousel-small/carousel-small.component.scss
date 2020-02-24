@@ -8,6 +8,10 @@
   z-index: $carousel-small;
 }
 
+.bottom-px-100 { bottom: 100px; }
+
+.left-px-20 { left: 20px; }
+
 .carousel-wrapper {
   width: 100%; height: 100%;
   overflow: hidden;
@@ -54,32 +58,19 @@
   @include e('text') {
     width: 100%;
     position: absolute; bottom: 0; left: 0;
-    padding: 10px 0;
+    padding: 15px 0;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     background-color: rgba(0,0,0,.4);
     color: $grey-2;
     opacity: 0;
     transition: 1s;
-    @include breakpoint-up(lg) {
-      padding: 15px 0;
-      font-size: 16px;
-    }
     @include m('active') { opacity: 1; }
     @include m('heart') { color: $main-orange; }
   }
-}
-
-.colors {
-  position: absolute; bottom: 50px; left: 20px;
-  display: flex;
-  @include e('item') {
-    width: 30px; height: 30px;
-    padding: 0 2px;
-    border: 1px solid #fff;
-    border-radius: 50px;
-    transition: all .1s;
-    &:hover { transform: scale(1.05); }
+  @include e('heart') {
+    height: 30px; width: 30px;
+    background-image: url('/assets/img/svg/heart.svg');
   }
 }
 

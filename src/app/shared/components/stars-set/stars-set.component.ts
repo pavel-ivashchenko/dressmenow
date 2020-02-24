@@ -10,6 +10,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 export class StarsSetComponent implements OnInit {
 
   @Input('rate') rate: number = 0;
+  @Input('isWhite') isWhite: boolean = false;
 
   public STARS_QTY: number = 5;
   public fullStarsQty: number;

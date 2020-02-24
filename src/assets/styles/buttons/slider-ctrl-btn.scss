@@ -14,6 +14,6 @@
   transition: all .3s ease-in-out;
   cursor: pointer;
   &:hover { color: $main-orange; }
-  .fa-angle-left { transform: translateX(-2px); }
-  .fa-angle-right { transform: translateX(2px); }
+  .fa-angle-left { transform: translateX(-1px); }
+  .fa-angle-right { transform: translateX(1px); }
 }

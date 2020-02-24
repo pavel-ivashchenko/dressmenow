@@ -6,7 +6,10 @@
     [ngClass]="{
       'star--half': currNum === halfStarIdx,
       'star--full': currNum <= fullStarsQty,
-      'star--empty': halfStarIdx ? currNum > halfStarIdx : currNum > fullStarsQty
+      'star--empty': halfStarIdx ? currNum > halfStarIdx : currNum > fullStarsQty,
+      'star--white-half': isWhite && currNum === halfStarIdx,
+      'star--white-full': isWhite && currNum <= fullStarsQty,
+      'star--white-empty': isWhite && (halfStarIdx ? currNum > halfStarIdx : currNum > fullStarsQty)
     }"
   ></li>
 </ul>

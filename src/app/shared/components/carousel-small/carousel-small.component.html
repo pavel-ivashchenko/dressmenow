@@ -12,9 +12,12 @@
         <div *ngIf="product.starsRate && currIdx === active" class="pos-absolute right-0 p-y-20 p-x-20">
           <app-stars-set [rate]="product.starsRate"></app-stars-set>
         </div>
-        <ul *ngIf="product.colors && product.colors.length && currIdx === active" class="colors">
-          <li class="colors__item" *ngFor="let color of product.colors" [ngStyle]="{ 'background-color': color }"></li>
-        </ul>
+        <a class="pos-absolute left-0 p-y-20 p-x-20 d-flex">
+          <i class="item__heart"></i>
+        </a>
+        <div *ngIf="product.colors && product.colors.length && currIdx === active" class="pos-absolute bottom-px-100 left-px-20 d-flex">
+          <app-colors-set [colors]="product.colors"></app-colors-set>
+        </div>
         <figure>
           <a (click)="goToProduct(product.id, currIdx === active)">
             <img class="item__image" src="{{ product.src }}" alt="{{ product.name }}">

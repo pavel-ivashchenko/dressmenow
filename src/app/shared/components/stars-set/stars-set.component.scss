@@ -11,4 +11,7 @@
   @include m('half') { background-image: url('assets/img/svg/star-half.svg'); }
   @include m('full') { background-image: url('assets/img/svg/star-full.svg'); }
   @include m('empty') { background-image: url('assets/img/svg/star-empty.svg'); }
+  @include m('white-half') { background-image: url('assets/img/svg/star-half-white.svg'); }
+  @include m('white-full') { background-image: url('assets/img/svg/star-full-white.svg'); }
+  @include m('white-empty') { background-image: url('assets/img/svg/star-empty-white.svg'); }
 }

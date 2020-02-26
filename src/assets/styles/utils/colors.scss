@@ -5,22 +5,28 @@
 .color-white { color: #fff; }
 .color-main-orange { color: $main-orange; }
 
+.bg-color-black { background-color: #000; }
+
 @include sm {
   .color-sm-white { color: #fff; }
   .color-sm-main-orange { color: $main-orange; }
+  .bg-color-sm-black { background-color: #000; }
 }
 
 @include md {
   .color-md-white { color: #fff; }
   .color-md-main-orange { color: $main-orange; }
+  .bg-color-md-black { background-color: #000; }
 }
 
 @include lg {
   .color-lg-white { color: #fff; }
   .color-lg-main-orange { color: $main-orange; }
+  .bg-color-lg-black { background-color: #000; }
 }
 
 @include xl {
   .color-xl-white { color: #fff; }
   .color-xl-main-orange { color: $main-orange; }
+  .bg-color-xl-black { background-color: #000; }
 }

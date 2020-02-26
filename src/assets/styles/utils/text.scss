@@ -1,0 +1,31 @@
+
+@import 'mixins/_all';
+@import './../colors';
+
+.text-transform-uppercase { text-transform: uppercase; }
+.text-align-center { text-align: center; }
+.text-decoration-underline { text-decoration: underline; };
+
+@include sm {
+  .text-transform-sm-uppercase { text-transform: uppercase; }
+  .text-align-sm-center { text-align: center; }
+  .text-decoration-sm-underline { text-decoration: underline; };
+}
+
+@include md {
+  .text-transform-md-uppercase { text-transform: uppercase; }
+  .text-align-md-center { text-align: center; }
+  .text-decoration-md-underline { text-decoration: underline; };
+}
+
+@include lg {
+  .text-transform-lg-uppercase { text-transform: uppercase; }
+  .text-align-lg-center { text-align: center; }
+  .text-decoration-lg-underline { text-decoration: underline; };
+}
+
+@include xl {
+  .text-transform-xl-uppercase { text-transform: uppercase; }
+  .text-align-xl-center { text-align: center; }
+  .text-decoration-xl-underline { text-decoration: underline; };
+}

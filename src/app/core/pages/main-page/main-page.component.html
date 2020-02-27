@@ -1,9 +1,13 @@
 
 <app-scroll-down [elem]="parallax"></app-scroll-down>
 
+<aside class="refer-a-friend-btn b-shadow-2">
+  <a href="">Отримай $20!</a>
+</aside>
+
 <section #parallax class="parallax">
 
-  <!-- <header class="width-100 pos-fixed z-index-3">
+  <header class="width-100 pos-fixed z-index-3">
     <app-header></app-header>
   </header>
 
@@ -82,16 +86,16 @@
         <app-carousel-small></app-carousel-small>
       </div>
     </div>
-  </section> -->
+  </section>
 
   <section class="width-100 m-t-30 bg-color-black d-flex justify-content-center">
-    <div class="width-lg-50 max-width-992 p-20 font-12 color-white bg-color-black text-align-center d-flex align-items-center">
-      <img src="assets/img/svg/coupon.svg" alt="Discount for subscribing">
-      <p class="p-x-20">
-        <span class="text-transform-uppercase">Підпишись на сповіщення від Dressmenow та отримай 15% дискаунт!</span><br>
-        Відправ sms з текстом 'Dressmenow' на короткий номер 54858, щоб отримати знижку<br>
-        <span class="font-10">(за тарифами вашого оператора)</span><br>
-        <a [routerLink]="['/']" class="font-10 color-white text-decoration-underline">Деталі</a>
+    <div class="width-lg-50 max-width-992 p-x-20 p-x-md-0 p-y-10 p-y-md-0 font-12 color-white bg-color-black text-align-center d-flex align-items-center justify-content-center">
+      <img class="height-px-100 width-auto m-r-20" src="assets/img/svg/coupon.svg" alt="Discount for subscribing">
+      <p class="p-y-lg-20">
+        <span class="text-transform-uppercase d-flex justify-content-center">Підпишись на сповіщення від Dressmenow та отримай 15% дисконт!</span>
+        <span class="d-none d-xl-flex justify-content-center">Відправ sms з текстом 'Dressmenow' на короткий номер 54858, щоб отримати знижку</span>
+        <span class="font-10 d-none d-xl-flex justify-content-center">(за тарифами вашого оператора)</span>
+        <a [routerLink]="['/']" class="color-white text-decoration-underline d-flex justify-content-center">Деталі</a>
       </p>
     </div>
   </section>

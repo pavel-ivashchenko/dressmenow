@@ -9,7 +9,7 @@
         "{'item--active': currIdx === active,
           'item--next': currIdx === next,
           'item--prev': currIdx === prev }">
-        <div *ngIf="product.starsRate && currIdx === active" class="pos-absolute right-0 p-y-20 p-x-20">
+        <div *ngIf="product.starsRate && currIdx === active" class="pos-absolute right-0 p-20 d-none d-md-flex">
           <app-stars-set [rate]="product.starsRate"></app-stars-set>
         </div>
         <a *ngIf="currIdx === active" class="pos-absolute left-0 p-y-20 p-x-20 d-flex">

@@ -1,12 +1,12 @@
 
-<section class="container bg-white d-flex flex-column">
+<section class="container-fluid bg-white d-flex flex-column">
 
   <header i18n="@@footerTitle" class="d-flex justify-content-center">
     <h5 class="header-text">Дізнатись першим</h5>
   </header>
   
   <div i18n="@@footerEmaiInput" class="email row no-gutters">
-    <mat-form-field class="col-6 col-sm-4 col-lg-3">
+    <mat-form-field class="col-12 col-sm-8 col-md-6 col-lg-4">
       <input
         matInput
         type="email" email
@@ -25,20 +25,11 @@
   </div>
   
   <ul i18n="@@footerMenu" class="menu row">
-    <li class="d-flex col-12 col-md-2 justify-content-center">
-      <a href="#" class="menu__link">Допомога</a>
-    </li>
-    <li class="d-flex col-12 col-md-2 justify-content-center">
-      <a href="#" class="menu__link">Зв'язатись</a>
-    </li>
-    <li class="d-flex col-12 col-md-2 justify-content-center">
-      <a href="#" class="menu__link">Регістрація</a>
-    </li>
-    <li class="d-flex col-12 col-md-2 justify-content-center">
-      <a href="#" class="menu__link">Компанія</a>
-    </li>
-    <li class="d-flex col-12 col-md-2 justify-content-center">
-      <a href="#" class="menu__link">Про нас пишуть</a>
+    <li
+      *ngFor="let menuItem of menuItems; let last = last;"
+      class="d-flex col-12 col-md-2 justify-content-center"
+      [ngClass]="{ 'm-b-20': !last }">
+        <a [href]="menuItem.link" class="menu__link">{{ menuItem.uiName }}</a>
     </li>
   </ul>
 

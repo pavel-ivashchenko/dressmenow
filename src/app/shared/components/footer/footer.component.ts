@@ -1,6 +1,8 @@
 
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
+import { MenuItems } from './models';
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -9,10 +11,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
+  public menuItems = MenuItems;
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   public onLanguageClick(languageName) { }
 

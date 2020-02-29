@@ -12,7 +12,7 @@
   </header>
 
   <section class="height-vh-100 width-100 overflow-hidden pos-absolute">
-    <div class="parallax__slogan font-42 font-lg-60" [ngClass]="{ 'parallax__slogan--visible': !isCollectionVisible }">
+    <div class="parallax__slogan font-24 font-sm-30 font-md-42 font-lg-60" [ngClass]="{ 'parallax__slogan--visible': !isCollectionVisible }">
       <h1>Some Big Title</h1>
       <h6>some long text smaller than the title</h6>
     </div>
@@ -37,7 +37,7 @@
     </div>
   </section>
 
-  <section class="height-100 border-y-1 border-color-main-orange">
+  <section class="height-100 border-y-1 border-color-main-orange d-none d-md-flex">
     <div class="collection" appDeferLoad (deferLoad)="isCollectionVisible = $event">
       <p class="collection__name" [ngClass]="{ 'collection__name--visible': isCollectionVisible }">Ocean Breeze</p>
       <p class="collection__slogan" [ngClass]="{ 'collection__slogan--visible': isCollectionVisible }">Елегантні візерунки та морські відтінки втілюють спокійну вишуканість</p>
@@ -45,7 +45,7 @@
     </div>
   </section>
 
-  <section class="pos-relative overflow-hidden">
+  <section class="pos-relative overflow-hidden border-top-1 border-top-md-0 border-color-main-orange">
     <div
       class="parallax__applied ad-section-parallax-bg p-y-60 d-flex justify-content-center align-items-center flex-column"
       appDeferLoad checkOnce="true" (deferLoad)="isTitlesSectionVisible = $event">
@@ -57,14 +57,17 @@
         </div>
 
         <ul class="width-100 max-width-1200 p-y-40 p-md-60 p-y-lg-80 row">
-          <li class="d-flex justify-content-center align-items-center flex-column col-3" *ngFor="let benefit of Benefits">
-            <figure class="benefit p-10 p-y-lg-20 p-x-lg-30">
-              <img class="benefit__image" [src]="benefit.imageSrc" [alt]="benefit.imageAlt">
-              <figcaption class="color-white">
-                <h3 class="font-20 font-lg-24">{{ benefit.title }}</h3>
-                <p class="m-t-5 m-t-lg-10 font-12 font-lg-14">{{ benefit.subtitle }}</p>
-              </figcaption>
-            </figure>
+          <li
+            *ngFor="let benefit of Benefits; let last = last;"
+            class="m-b-md-0 d-flex justify-content-center align-items-center flex-column col-12 col-md-3"
+            [ngClass]="{ 'm-b-30': !last }">
+              <figure class="benefit p-10 p-y-lg-20 p-x-lg-30">
+                <img class="benefit__image height-80 height-md-auto" [src]="benefit.imageSrc" [alt]="benefit.imageAlt">
+                <figcaption class="color-white">
+                  <h3 class="font-20 font-lg-24">{{ benefit.title }}</h3>
+                  <p class="m-t-5 m-t-lg-10 font-12 font-lg-14">{{ benefit.subtitle }}</p>
+                </figcaption>
+              </figure>
           </li>
         </ul>
 
@@ -78,11 +81,10 @@
   </section>
 
   <section *ngIf="isTitlesSectionVisible" class="sale-section sale-section-bg border-y-1 border-color-main-orange d-flex justify-content-center overflow-hidden">
-    <div class="width-100 row no-gutters">
-      <div class="pos-relative col-2">
-        <h4 class="banner font-18 font-lg-26 font-xl-40">Sale</h4>
-      </div>
-      <div class="height-100 col-10">
+    <div class="width-100 height-100 pos-relative row no-gutters">
+      <h4 class="banner font-18 font-lg-26 font-xl-40">Sale</h4>
+      <div class="pos-relative d-none d-sm-flex col-2"></div>
+      <div class="height-100 col-12 col-sm-10">
         <app-carousel-small></app-carousel-small>
       </div>
     </div>
@@ -115,6 +117,6 @@
         class="ad-section__image"
         [src]="data.imageSrc" [alt]="data.imageAlt">
     </a>
-    <figcaption class="ad-section__caption font-16 font-md-20">{{ data.figCaption }}</figcaption>
+    <figcaption class="ad-section__caption font-16 font-md-20 d-none d-sm-flex">{{ data.figCaption }}</figcaption>
   </figure>
 </ng-template>

@@ -2,6 +2,7 @@
 @import 'mixins/_all';
 
 .height-100 { height: 100%; }
+.height-80 { height: 80%; }
 .height-50 { height: 50%; }
 
 .height-vh-100 { height: 100vh; }
@@ -20,6 +21,7 @@
 
 @include sm {
   .height-sm-100 { height: 100%; }
+  .height-sm-80 { height: 80%; }
   .height-sm-50 { height: 50%; }
   .height-vh-sm-100 { height: 100vh; }
   .height-vh-sm-50 { height: 50vh; }
@@ -35,6 +37,7 @@
 
 @include md {
   .height-md-100 { height: 100%; }
+  .height-md-80 { height: 80%; }
   .height-md-50 { height: 50%; }
   .height-vh-md-100 { height: 100vh; }
   .height-px-md-50 { height: 50px; }
@@ -50,6 +53,7 @@
 
 @include lg {
   .height-lg-100 { height: 100%; }
+  .height-lg-80 { height: 80%; }
   .height-lg-50 { height: 50%; }
   .height-vh-lg-100 { height: 100vh; }
   .height-vh-lg-50 { height: 50vh; }
@@ -65,6 +69,7 @@
 
 @include xl {
   .height-xl-100 { height: 100%; }
+  .height-xl-80 { height: 80%; }
   .height-xl-50 { height: 50%; }
   .height-vh-xl-100 { height: 100vh; }
   .height-vh-xl-50 { height: 50vh; }

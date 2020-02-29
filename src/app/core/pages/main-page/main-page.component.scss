@@ -131,17 +131,23 @@
     text-align: center;
     color: #fff;
     transition: all .3s;
-    @include breakpoint-up(md) { font-size: 15px; }
+    @include breakpoint-up('md') { font-size: 15px; }
     &:hover { background-color: #000; }
   }
 }
 
 .banner {
-  position: absolute; top: 45%; left: 55%;
-  transform: translate(-50%) rotate(270deg) scale(5);
+  position: absolute; left: 20px; top: 0;
+  transform-origin: top left;
+  transform: scale(4);
   letter-spacing: 5px;
   font-family: 'Yesteryear';
-  color: $main-orange;
+  color: #e65540;
+  z-index: 10;
+  @include breakpoint-up('sm') {
+    top: 50%;
+    transform: scale(4) rotate(-90deg) translateX(-60%);
+  }
 }
 
 .ad-section {
@@ -167,10 +173,18 @@
     cursor: pointer;
   }
   @include e('caption') {
-    position: absolute; bottom: 5px; right: 30px;
+    width: 150%;
+    position: absolute; bottom: 5px; left: 0;
     color: $main-orange;
     font-family: 'Homemade Apple';
+    transform-origin: top left;
+    transform: rotate(-90deg);
     cursor: pointer;
+    @include breakpoint-up('md') {
+      width: 100%;
+      transform: rotate(0);
+      justify-content: center;
+    }
   }
   &:hover {
     .ad-section__image { filter: brightness(100%); transform: translateZ(0) scale(1.05); }
@@ -192,7 +206,7 @@
   background-color: rgba(136, 136, 136, .3);
   cursor: pointer;
   @include e('image') {
-    width: 45%; height: auto;
+    width: 45%;
     position: absolute; top: 50%; right: 0;
     transform: translate(40%, -50%);
     transition: all 1s;

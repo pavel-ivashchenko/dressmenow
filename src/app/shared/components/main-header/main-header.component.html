@@ -1,8 +1,22 @@
 
-<section class="width-100 container-fluid d-flex" style="height: 60px; background-color: beige;">
+<section class="width-100 row no-gutters d-flex" style="height: 60px; background-color: beige;">
 
   <a href="/" class="dressmenow-logo height-100" style="background-color: grey;">dressmenow</a>
 
-  <div></div>
+  <div class="likes"></div>
+  <div class="user"></div>
+  <div class="cart"></div>
+
+  <div i18n="@@footerEmaiInput" class="col-2">
+    <mat-form-field class="col-12 col-sm-8 col-md-6 col-lg-4">
+      <input
+        matInput
+        type="text"
+        ngModel #emailCtrl="ngModel"
+        (focus)="emailCtrl.focused=true"
+        (blur)="emailCtrl.focused=false"
+        placeholder="Email">
+    </mat-form-field>
+  </div>
 
 </section>

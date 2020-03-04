@@ -1,0 +1,20 @@
+
+@import 'mixins/_all';
+
+.user-menu {
+  height: 100%;
+  @include e('link') {
+    width: 30px; height: 100%;
+    display: flex;
+    background: center no-repeat;
+  }
+}
+
+.user-menu-link {
+  width: 100%; height: 100%;
+  background: center no-repeat;
+}
+
+.loves { background-image: url('assets/img/svg/main-heart.svg'); }
+.user { background-image: url('assets/img/svg/user.svg'); }
+.cart { background-image: url('assets/img/svg/main-bag.svg'); }

@@ -1,14 +1,10 @@
 
-<section class="width-100 row no-gutters d-flex" style="height: 60px; background-color: beige;">
+<section class="width-100 row no-gutters d-flex align-items-center justify-content-between" style="height: 60px; background-color: beige;">
 
-  <a href="/" class="dressmenow-logo height-100" style="background-color: grey;">dressmenow</a>
+  <a href="/" class="dressmenow-logo height-100 col-2" style="background-color: grey;">dressmenow</a>
 
-  <div class="likes"></div>
-  <div class="user"></div>
-  <div class="cart"></div>
-
-  <div i18n="@@footerEmaiInput" class="col-2">
-    <mat-form-field class="col-12 col-sm-8 col-md-6 col-lg-4">
+  <div class="height-100 position-relative overflow-hidden col-8">
+    <mat-form-field class="position-absolute width-100">
       <input
         matInput
         type="text"
@@ -18,5 +14,17 @@
         placeholder="Email">
     </mat-form-field>
   </div>
+
+  <ul class="height-50 col-1 d-flex">
+    <li class="height-100 m-x-5 d-flex flex-grow-1">
+      <a class="user-menu-link loves"></a>
+    </li>
+    <li class="height-100 m-x-5 d-flex flex-grow-1">
+      <a class="user-menu-link user"></a>
+    </li>
+    <li class="height-100 m-x-5 d-flex flex-grow-1">
+      <a class="user-menu-link cart"></a>
+    </li>
+  </ul>
 
 </section>

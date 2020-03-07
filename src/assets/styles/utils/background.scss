@@ -1,20 +1,26 @@
 
 @import 'mixins/_all';
 
+.bg-center-norepeat { background: center no-repeat; }
+
 .bg-white { background-color: #fff; }
 
 @include sm {
   .bg-sm-white { background-color: #fff; }
+  .bg-sm-center-norepeat { background: center no-repeat; }
 }
 
 @include md {
   .bg-md-white { background-color: #fff; }
+  .bg-md-center-norepeat { background: center no-repeat; }
 }
 
 @include lg {
   .bg-lg-white { background-color: #fff; }
+  .bg-lg-center-norepeat { background: center no-repeat; }
 }
 
 @include xl {
   .bg-xl-white { background-color: #fff; }
+  .bg-xl-center-norepeat { background: center no-repeat; }
 }

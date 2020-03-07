@@ -12,7 +12,6 @@ import { CreateAccountComponent } from './user-modal/components/create-account/c
 import { CarouselSimpleComponent } from './carousel-simple/carousel-simple.component';
 import { StarsSetComponent } from './stars-set/stars-set.component';
 import { ColorsSetComponent } from './colors-set/colors-set.component';
-import { MainHeaderComponent } from './main-header/main-header.component';
 
 export const COMPONENTS = [
   HeaderComponent,
@@ -27,8 +26,7 @@ export const COMPONENTS = [
   CreateAccountComponent,
   CarouselSimpleComponent,
   StarsSetComponent,
-  ColorsSetComponent,
-  MainHeaderComponent
+  ColorsSetComponent
 ];
 
 export const ENTRY_COMPONENTS = [

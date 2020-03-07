@@ -1,4 +1,7 @@
+
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
+import { UserMenuItems } from './models';
 
 @Component({
   selector: 'app-main-header',
@@ -10,7 +13,6 @@ export class MainHeaderComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

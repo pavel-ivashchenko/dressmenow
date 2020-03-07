@@ -1,0 +1,15 @@
+
+:host { width: 100%; height: 100%; }
+
+.cart-btn-menu {
+  display: none;
+  border: 1px solid red;
+  position: absolute;
+}
+
+.cart-btn {
+  background-image: url('assets/img/svg/main-bag.svg');
+  &:hover + div.cart-btn-menu {
+    display: flex;
+  }
+}

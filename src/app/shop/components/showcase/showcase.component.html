@@ -20,5 +20,12 @@
         {{ type.name }}
       </mat-option>
   </mat-select> -->
+  
+  <app-drop-down>
+    <app-drop-down-option
+      *ngFor="let option of sortOptions"
+      [option]="option"
+    ></app-drop-down-option>
+  </app-drop-down>
 
 </section>

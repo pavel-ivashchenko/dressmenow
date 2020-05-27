@@ -25,9 +25,7 @@ export class ShowcaseComponent implements OnInit {
 
   // PUBLIC METHODS
 
-  public onTypeChange(): void {
-
-  }
+  public onTypeChange(): void {}
 
   public onTest(): void {
     this.isVisible = !this.isVisible;
